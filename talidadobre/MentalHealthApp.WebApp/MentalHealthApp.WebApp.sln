@@ -1,0 +1,61 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32616.157
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MentalHealthApp.WebApp", "MentalHealthApp.WebApp.csproj", "{D16672FA-EA36-4D93-BF28-AA648BF673A2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Clients", "Clients", "{3BCD83F1-3287-4DB3-A921-83F7D574FD32}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{E4F5DAE9-A8A8-4778-8A62-C405EF526023}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{53A9E540-99E1-4324-8819-D38D697313C4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MentalHealthApp.Common", "..\MentalHealthApp.Common\MentalHealthApp.Common.csproj", "{EC4007CD-429E-4CCD-9DFA-B98B69BDA2CF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MentalHealthApp.DataAccess", "..\MentalHealthApp.DataAccess\MentalHealthApp.DataAccess.csproj", "{BCF3198B-48D7-454D-90BD-2EE7FA1FF235}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MentalHealthApp.BusinessLogic", "..\MentalHealthApp.BusinessLogic\MentalHealthApp.BusinessLogic.csproj", "{4CB58A9D-2C30-481E-9977-C2D81CED7B44}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MentalHealthApp.Entities", "..\MentalHealthApp.Entities\MentalHealthApp.Entities.csproj", "{EBEDD4A6-15CB-4C48-94F8-053FFF9ABDD8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D16672FA-EA36-4D93-BF28-AA648BF673A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D16672FA-EA36-4D93-BF28-AA648BF673A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D16672FA-EA36-4D93-BF28-AA648BF673A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D16672FA-EA36-4D93-BF28-AA648BF673A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC4007CD-429E-4CCD-9DFA-B98B69BDA2CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC4007CD-429E-4CCD-9DFA-B98B69BDA2CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC4007CD-429E-4CCD-9DFA-B98B69BDA2CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC4007CD-429E-4CCD-9DFA-B98B69BDA2CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BCF3198B-48D7-454D-90BD-2EE7FA1FF235}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BCF3198B-48D7-454D-90BD-2EE7FA1FF235}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BCF3198B-48D7-454D-90BD-2EE7FA1FF235}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BCF3198B-48D7-454D-90BD-2EE7FA1FF235}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CB58A9D-2C30-481E-9977-C2D81CED7B44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CB58A9D-2C30-481E-9977-C2D81CED7B44}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CB58A9D-2C30-481E-9977-C2D81CED7B44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CB58A9D-2C30-481E-9977-C2D81CED7B44}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EBEDD4A6-15CB-4C48-94F8-053FFF9ABDD8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EBEDD4A6-15CB-4C48-94F8-053FFF9ABDD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EBEDD4A6-15CB-4C48-94F8-053FFF9ABDD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EBEDD4A6-15CB-4C48-94F8-053FFF9ABDD8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D16672FA-EA36-4D93-BF28-AA648BF673A2} = {3BCD83F1-3287-4DB3-A921-83F7D574FD32}
+		{BCF3198B-48D7-454D-90BD-2EE7FA1FF235} = {53A9E540-99E1-4324-8819-D38D697313C4}
+		{4CB58A9D-2C30-481E-9977-C2D81CED7B44} = {E4F5DAE9-A8A8-4778-8A62-C405EF526023}
+		{EBEDD4A6-15CB-4C48-94F8-053FFF9ABDD8} = {E4F5DAE9-A8A8-4778-8A62-C405EF526023}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BAE494C0-25F4-45D2-A6A4-42A3474B9B0F}
+	EndGlobalSection
+EndGlobal

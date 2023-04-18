@@ -1,0 +1,79 @@
+﻿:root {
+    --width-A: 100px;
+    --width-B: calc(var(--width-A) / 2);
+    --width-C: calc(50% - var(--width-B));
+    --color-1: #27f;
+    --color-1a: #05d;
+    --color-2: #eee;
+    --color-3: #ddd;
+    --color-4: #3b1;
+    --color-4a: #280;
+    --color-5: rgba(0,0,0,0.75);
+    --modal-width: 40vw;
+    --modal-calc: calc(var(--modal-width) / 2);
+    --modal-position-x: calc(50% - var(--modal-calc));
+}
+
+header
+ {
+    padding-left: 140px;
+}
+
+body {
+    backgroud: white;
+}
+
+@media only screen and (max-width: 992px) {
+    header,
+    main{
+        padding-left: 0;
+    }
+}
+
+#credits li,
+#credits li a {
+    color: white;
+}
+
+    #credits li a {
+        font-weight: bold;
+    }
+
+.fab-tip {
+    position: fixed;
+    right: 85px;
+    padding: 0px 0.5rem;
+    text-align: right;
+    background-color: #323232;
+    border-radius: 2px;
+    color: #FFF;
+    width: auto;
+}
+
+.btn {
+    color: #eee;
+    display: block;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+}
+
+.btn-sm {
+    background-color: rgba(0,0,0,0.75);
+    border-radius: 50%;
+    display: block;
+    padding: 5px 10px;
+    top: 5px;
+    right: 5px;
+}
+
+.btn-std {
+    border-radius: 5px;
+    /*padding: 10px 20px;*/
+    width: var(--width-A);
+    transition: 1s ease-in;
+}
+
+    .btn-std:hover {
+        transition: 1s ease-out;
+    }

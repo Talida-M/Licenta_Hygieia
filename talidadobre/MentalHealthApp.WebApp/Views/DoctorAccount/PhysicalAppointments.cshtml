@@ -1,0 +1,66 @@
+﻿@model MentalHealthApp.BusinessLogic.Implementation.Appointments.ViewModels.AcceptedAppointmentsVM
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Appointment Cards</title>
+	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
+	<link rel="stylesheet" type="text/css" href="~/css/style.css">
+</head>
+<body>
+	<section class="main-content">
+		<div class="container">
+			<h1>Programari Fizice</h1>
+			<br>
+			<br>
+
+			<div class="row">
+				 @foreach(var programare in @Model.AcceptedAppointmentsVMs)
+                {
+					<div class="col-sm-6 col-md-6 col-lg-4">
+						<div class="card bg-white p-3 mb-4 shadow">
+							<div class="d-flex justify-content-between mb-4">
+								<div class="user-info">
+									<div class="user-info__img">
+										<img src="~/images/Userprofile.jpg" alt="User Img">
+									</div>
+									<div class="user-info__basic">
+										<h5 class="mb-0">@programare.Pacient</h5>
+										<p class="text-muted mb-0">@programare.BirthDate, Categorie: @programare.SocialCategory </p>
+											<p class="text-muted mb-0">Asigurat: @programare.HasInsurance </p>
+									</div>
+								</div>
+								<div class="dropdown open">
+									<a href="#!" class="px-2" id="triggerId1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										<i class="fa fa-ellipsis-v"></i>
+									</a>
+									<div class="dropdown-menu" aria-labelledby="triggerId1">
+										<a class="dropdown-item" href="#"><i class="fa fa-pencil mr-1"></i> Edit</a>
+										<a class="dropdown-item text-danger" href="#"><i class="fa fa-trash mr-1"></i> Delete</a>
+									</div>
+								</div>
+							</div>
+							<h6 class="mb-0">@programare.PhoneNumber</h6>
+							<h6 class="mb-0">@programare.Email</h6>
+							<a href="#!"><small>Contact</small></a>
+							<div class="d-flex justify-content-between mt-4">
+								<div>
+									<h5 class="mb-0">
+										<small class="ml-1">@programare.AppointmentDate</small>
+									</h5>
+								</div>
+								<span class="text-success font-weight-bold">@programare.AppointmentStatus</span>
+							</div>
+						</div>
+					</div>
+				}
+			
+		</div>
+	</section>
+	
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

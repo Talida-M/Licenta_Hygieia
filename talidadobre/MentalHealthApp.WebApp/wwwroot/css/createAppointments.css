@@ -1,0 +1,8 @@
+﻿select {
+    font-size: .95em;
+}
+
+select {
+    -moz-appearanc: none;
+    -webkit-appearanc: none;
+}

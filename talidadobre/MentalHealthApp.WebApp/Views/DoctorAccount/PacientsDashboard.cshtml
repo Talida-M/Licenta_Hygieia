@@ -1,0 +1,55 @@
+﻿<head>
+  <link rel="stylesheet" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+  <link src="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+  <link  src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css" rel="stylesheet"/>
+  <link  src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/font/material-design-icons/Material-Design-Icons.woff" rel="stylesheet"/>
+  <link rel="stylesheet" href="~/css/dashboard.css"/>
+  <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
+   <script href="~/js/admin/dashboard.js" ></script>
+</head>
+<body>
+
+  <main>
+    <div class="row" >
+      <div class="col s6" >
+                <div style="padding: 35px;box-shadow: 0 0.40rem 0.75rem rgb(241 0 44);background: radial-gradient(ellipse at bottom, #f7f7f7 0%, #2f6196 100%);" align="center" class="card">
+          <div class="row">
+    
+          </div>
+
+          <div class="row">
+            <a  asp-controller="Admin" asp-action="UsersPage" asp-route-page="0">
+              <div style="padding: 30px;" class="grey lighten-3 col s5 waves-effect">
+                <span class="indigo-text text-lighten-1"><h5>Istoric Medical</h5></span>
+              </div>
+            </a>
+            <div class="col s1">&nbsp;</div>
+            <div class="col s1">&nbsp;</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col s6">
+                <div style="background: radial-gradient(ellipse at bottom, #f7f7f7 0%, #2f6196 100%); padding: 35px; box-shadow: 0 0.40rem 0.75rem rgb(241 0 44);" align="center" class="card">
+   
+          <div class="row">
+            <a asp-controller="DoctorAccount" asp-action="GetJournalPagesForDoctor" asp-route-id="@ViewData["UserId"]">
+              <div style="padding: 30px;" class="grey lighten-3 col s5 waves-effect">
+                <span class="indigo-text text-lighten-1"><h5>Jurnal Pacient</h5></span>
+              </div>
+            </a>
+
+            <div class="col s1">&nbsp;</div>
+            <div class="col s1">&nbsp;</div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</body>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

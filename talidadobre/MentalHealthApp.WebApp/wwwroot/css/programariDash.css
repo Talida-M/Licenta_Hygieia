@@ -1,0 +1,40 @@
+﻿.vuecal {
+    margin: auto;
+    max-width: 1300px;
+    max-height: 662px;
+}
+
+.vuecal__event {
+    background-color: rgba(173, 216, 230, 0.5);
+    box-sizing: border-box;
+    padding: 5px;
+    &.lunch
+
+{
+    background: repeating-linear-gradient(45deg, transparent, transparent 10px, #f2f2f2 10px, #f2f2f2 20px);
+}
+
+}
+
+// General styles.
+* {
+    font: 12px sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+html, body, #app {
+    height: 100%;
+}
+
+#app {
+    padding: 40px;
+    box-sizing: border-box;
+}
+
+a {
+    position: fixed;
+    top: 5px;
+    right: 5px;
+    color: #333;
+}

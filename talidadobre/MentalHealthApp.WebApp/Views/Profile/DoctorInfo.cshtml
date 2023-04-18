@@ -1,0 +1,323 @@
+﻿@using MentalHealthApp.BusinessLogic.Implementation.Reviews.ViewModel
+@model MentalHealthApp.Common.DTOs.EditDoctorDto
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+  
+    <!-- google font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+
+    <link href="~/css/map.css" rel="stylesheet" type="text/css" />
+    <script  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDoXRvHuYgJDyVIhkYxJN8zhPa_6tRbces&libraries=places"></script>
+    <script  defer src="~/js/googleAPIScript.js" type="text/javascript"></script>  
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src='http://jquery-star-rating-plugin.googlecode.com/svn/trunk/jquery.rating.js'
+            type="text/javascript"></script>
+    <link rel="Stylesheet" href="http://jquery-star-rating-plugin.googlecode.com/svn/trunk/jquery.rating.css" />
+    <link rel="stylesheet" href="~/css/doctorRating.css">
+    <link rel="stylesheet" href="~/css/doctorAvgRating.css">
+    <title>JrP Creation</title>
+  </head>
+ 
+  <body >
+      <!-- BREADCRUM-PART START -->
+      
+      <section class="breadcrumb-bar">
+          <div class="container-fluid">
+              <div class="row">
+                  <div class="col-lg-12 col-md-12 col-12">
+                      <nav class="page-breadcrum" aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                              <li class="breadcrumb-item"><a href="DoctorsProfile">Doctors</a></li>
+                              <li class="breadcrumb-item active" aria-current="page">Doctor Profile</li>
+                              </ol>
+                          </nav>
+                          <h3 class="breadcrumb-title">Doctor Profile</h3>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        <!-- BREADCRUM-PART END -->
+
+    <!--DOCTOR PROFILE PART START -->
+<section class="doctor-profile py-3">
+    <div class="container">
+      
+      <div class="row" >
+        <div class="col-lg-6 profile-box">
+          <div class="media d-flex">
+             @{ 
+                 var base64 = Convert.ToBase64String(@Model.DoctorImage);                  
+                 var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                 if(@imgSrc == "data:image/gif;base64,")
+                 {
+                             <img style="width: 140px; height: 140px;" class ="mr-4" src="~/images/Userprofile.jpg" alt="">
+                 }
+                 else{
+                             <img style="width: 140px; height: 140px;" class ="mr-4" src="@imgSrc" alt="" />
+                 }
+              } 
+                               
+              <div class="media-body flex-grow-1">
+              <h3> Dr. @Model.LastName @Model.FirstName</h3>
+                <span style="color: white; text-shadow: 2px 2px 3px black; font-size: 20px;">@Model.Specialty</span>
+              <p> <i class="fas fa-map-marker-alt"></i>  @Model.City, @Model.Country</p>
+              <a  style="color: white; text-shadow: 2px 2px 3px black; font-size: 20px;" class="d-block" href="tel:@Model.PhoneNumber">@Model.PhoneNumberCountryPrefix @Model.PhoneNumber</a>
+              <h5 >Email:</h5>
+               <p id="emailM">@Model.Email</p>
+               <div>
+              <svg  style="background-color: white;" focusable="false" width="20" height="20" viewBox="0 0 24 24" class="AJ50zb NMm5M" aria-hidden="true"><path d="M16.24 7.75A5.974 5.974 0 0 0 12 5.99v6l-4.24 4.24c2.34 2.34 6.14 2.34 8.49 0a5.99 5.99 0 0 0-.01-8.48zM12 1.99c-5.52 0-10 4.48-10 10s4.48 10 10 10 10-4.48 10-10-4.48-10-10-10zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"></path></svg>
+              <div style="color: white; text-shadow: 2px 2px 3px black; font-size: 20px;">@Model.AppointmentDate min durata sedintei <br /> Pret sedinta: @Model.Price</div>
+
+              </div>
+                            <div class="Stars" style="--rating: @ViewData["Rating"];" aria-label="Rating of this product is @ViewData["Rating"] out of 5.">
+            </div>
+          </div>
+        </div>
+        </div>
+    </div>
+  </section>
+  <!--DOCTOR PROFILE PART END -->
+
+ <section class="best-services-section">
+        <div class="container">
+          <div class="row">
+            <div class="col">
+             <div class="Services-item">
+
+                   <div class="service-border">
+                    <ul class="nav mb-3 text-center overview-service" id="pills-tab" role="tablist">
+                        <li class="nav-item">
+                          <a class="nav-link" id="pills-home-tab" data-toggle="pill" href="#pills-Overview" role="tab" aria-controls="pills-home" aria-selected="true">
+                        <strong class="d-block">Descriere</strong></a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-Hospital" role="tab" aria-controls="pills-profile" aria-selected="false">
+                       <strong class="d-block">Locatie Cabinet</strong></a>
+                        </li>
+                         <li class="nav-item">
+                             <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-Ratings" role="tab" aria-controls="pills-profile" aria-selected="false">
+                                <strong class="d-block">Rating & Comments</strong>
+                             </a>
+                         </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="@Url.Action("Appointments", "Profile", new {id=@Model.SpecialistId})" id="pills-contact-tab" onclick="SetInLocalStorage()" >
+                           <strong class="d-block">Programare Sedinta</strong></a>
+                        </li>
+                       </ul>
+                   </div>
+
+                   <div class="tab-content" id="pills-tabContent">
+                    <div class="tab-pane fade show active" id="pills-Overview" role="tabpanel" aria-labelledby="pills-home-tab">
+                    <div class="about-sec">
+                      <div class="row">
+                       
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                          <div class="Review-tab-content">
+                            <h3>Despre</h3>
+                            <p>@Model.Description</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div></div>
+              
+          
+                     <div class="tab-pane fade" id="pills-Hospital" role="tabpanel" aria-labelledby="pills-profile-tab">
+                        <div class="col-lg-12 col-sm-12">
+                          <div class="hospital-info">
+                           <div class="hospital-name">
+                              <h3>Locatie Clinica</h3>
+                              
+                                            @{
+                                                if ((!@Model.ApartmentBuildingFloor.Equals('-') || @Model.ApartmentBuildingFloor != null) & @Model.Sector != null)
+                                                {
+                                                             <p id="p-adresa"> <i class="fas fa-map-marker-alt"></i>@Model.Country,  @Model.City, @Model.Sector, @Model.StreetNumber, @Model.ApartmentBuildingFloor</p>
+                                                }
+                                                if(@Model.Sector == null & (@Model.ApartmentBuildingFloor.Equals('-') || @Model.ApartmentBuildingFloor == null))
+                                                {
+                                                            <p id="p-adresa"> <i class="fas fa-map-marker-alt"></i>@Model.Country,  @Model.City, @Model.StreetNumber</p>   
+
+                                                }
+                                                if(@Model.Sector != null & (@Model.ApartmentBuildingFloor.Equals('-') || @Model.ApartmentBuildingFloor == null))
+                                                {
+                                                           <p id="p-adresa"> <i class="fas fa-map-marker-alt"></i>@Model.Country,  @Model.City, @Model.County @Model.Sector, @Model.StreetNumber</p>   
+                                                }
+                                            }
+                              
+                              <a class="d-block" href="tel:@Model.PhoneNumber">@Model.PhoneNumber</a>
+                              
+                              </div>
+                          </div>
+                        </div>
+
+                        <div>
+                          <input id="txtsearch" class="apply" type="text" placeholder="Search a medical office" value="@Model.Country,  @Model.City, @Model.StreetNumber, @Model.ApartmentBuildingFloor">  
+                        <div>
+                            <div id="map" style="position:relative; z-index: 2; height: 500px; width: 100%; padding: 25px;">
+                            </div>
+                       </div>
+                        </div>
+
+
+                      </div>
+                      <div class="tab-pane fade" id="pills-Ratings" role="tabpanel" aria-labelledby="pills-profile-tab" style="background:#e9ecef">
+                                <div class="container">
+                                    <button onclick="ReviewSection()" id="review-button" style="background:radial-gradient(ellipse at bottom, #a866f1 0%, #577be7 100%); border-color: #577be7; color:white">Lasa un review</button>
+
+                                    <div class="feedback"   id="review-section" style="display:none">
+                                        <div class="rating">
+                                            <form id="revForm">
+                                                <h3> Leave a review!</h3>
+                                                <label  for="comments">Comments: </label> <br />
+                                                <textarea  name="comments" class="new-review-area" id="comments" placeholder="Lasa un review medicului." cols="40" rows="5" required></textarea>
+                                                <br />
+
+                                                <div class="rating" id="rating-div" style="   background: white;border-radius: 2rem; width: 25%;">
+                                                    <input type="radio" name="rating" id="rating-5">
+                                                    <label id="l-rating-5" for="rating-5"></label>
+                                                    <input type="radio" name="rating" id="rating-4">
+                                                    <label id="l-rating-4" for="rating-4"></label>
+                                                    <input type="radio" name="rating" id="rating-3">
+                                                    <label id="l-rating-3" for="rating-3"></label>
+                                                    <input type="radio" name="rating" id="rating-2">
+                                                    <label id="l-rating-2" for="rating-2"></label>
+                                                    <input type="radio" name="rating" id="rating-1">
+                                                    <label id="l-rating-1" for="rating-1"></label>
+                                                </div>
+                                                <br />
+                                            </form>
+                                            <button style="margin-top:2%;" class="btn" onclick="CreateReview('@Model.Email')">Submit!</button>
+
+                                            <section id="reviews">
+                                            </section>
+                                            </div>
+
+                                         
+                    
+                </div>
+                                    <div>
+                                        <div id="store-review">
+                                            @if (ViewData["reviewsModel"] != null)
+                                            {
+                                                <div class="store-review-container">
+                                                <div class="container">
+                                                    @foreach (var review in ViewData["reviewsModel"] as List<DoctorReviewVM>)
+                                                    {
+                                                        var basee64 = Convert.ToBase64String(@review.UserImage);
+                                                        var imgSrcc = String.Format("data:image/gif;base64,{0}", basee64);
+                                                       
+                                                            <div class="comment-review-item fivestars">
+                                                                <div class="commenter-img">
+
+                                                                    <img src="@imgSrcc" style = "width: 100%; height:100%;">
+                                                                </div>
+                                                                <div>
+                                                                    <div class="review-star-rating">
+                                                                        <div class="rating" data-rating="@review.StarsNumber">
+                                                                            @for(int star = 0; star < (int)review.StarsNumber; star++){
+                                                                                <i class="star-@star">★</i>
+                                                                            }
+                                                                            
+                              
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="review-title">
+                                                                        By @review.PacientName
+                                                                    </div>
+                                                                    <div class="review-date">
+                                                                        Reviewed on @review.CommentDate
+                                                                    </div>
+                                                                    <div class="review-content">
+                                                                        @review.Review
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                        
+                                                    }
+                                                    </div>
+
+
+                                                </div>
+                                            }
+
+                                    </div>
+                   </div>
+                      </div>
+                      </div>
+                     </div>
+                   </div>
+                 </div>
+               </div>
+            </div>
+      </section>
+      
+     
+    <!-- Optional JavaScript -->
+    <!-- Popper.js first, then Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
+  </body>
+</html>
+<script>
+   function ReviewSection(){
+       let  buton = document.getElementById("review-button");
+        let sectiune = document.getElementById("review-section");
+        buton.style.display = "none";
+        sectiune.style.display = "block";
+
+   }
+    //r.childNodes[2].nextSibling.style.backgroundImage  r.childNodes[1].labels.
+
+    function CreateReview(email) {
+        let doctorId = event.srcElement.id;
+        let review = document.getElementsByClassName("new-review-area").comments.value;
+        let stars = 0;
+        //let s = getComputedStyle(r);
+        for (var star = 1; star <= 5; star++){
+            let label = document.getElementById("l-rating-" + star);
+            if (getComputedStyle(label).backgroundImage == `url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='126.729' height='126.73'%3e%3cpath fill='%23fcd93a' d='M121.215 44.212l-34.899-3.3c-2.2-.2-4.101-1.6-5-3.7l-12.5-30.3c-2-5-9.101-5-11.101 0l-12.4 30.3c-.8 2.1-2.8 3.5-5 3.7l-34.9 3.3c-5.2.5-7.3 7-3.4 10.5l26.3 23.1c1.7 1.5 2.4 3.7 1.9 5.9l-7.9 32.399c-1.2 5.101 4.3 9.3 8.9 6.601l29.1-17.101c1.9-1.1 4.2-1.1 6.1 0l29.101 17.101c4.6 2.699 10.1-1.4 8.899-6.601l-7.8-32.399c-.5-2.2.2-4.4 1.9-5.9l26.3-23.1c3.8-3.5 1.6-10-3.6-10.5z'/%3e%3c/svg%3e")`) {
+                stars += 1;
+            }
+           
+        }
+        $.ajax({
+
+            url: '@Url.Action("CreateReview", "Profile")',
+
+            type: "POST",
+
+            //dataType:"json",
+
+            data: { review: review, stars: stars, doctorId: doctorId },
+
+            success: function (response) {
+                //url: '@Url.Action("DoctorInfo", "Profile")',
+
+                //type: "GET",
+
+                ////dataType:"json",
+
+                //data: {email: email },
+            },
+
+            error: function (response) {
+                console.log(JSON.stringify(response));
+            }
+
+        });
+   }
+</script>
+<style>
+    .d-block {
+    color: #f9f9f9;
+}
+</style>

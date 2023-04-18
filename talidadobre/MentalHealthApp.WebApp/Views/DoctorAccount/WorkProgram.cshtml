@@ -1,0 +1,90 @@
+﻿@model MentalHealthApp.BusinessLogic.Implementation.Account.ViewModels.DoctorWorkProgramVM
+<head>
+    <link  rel="stylesheet" href="~/css/createAppointments.css"/>
+    <!-- google font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+
+     <script src="~/js/appointment/viewAppoinments.js"></script>
+ </head>  
+
+  <body> 
+   
+        <div class="row">
+            <div class="col offset-md-1">
+                <form asp-action="AddWorkProgram" asp-controller="DoctorAccount">
+                        <div class="col form-group">
+                            <label asp-for="WorkDay" class="required">Date</label>
+                            <span class="custom-dropdown big" >
+                            <select id="div-dropdown" asp-for="WorkDay">    
+                                    @foreach(var day in @Model.workDaysVMs)
+                                    {
+
+                                        <option>@day.Name</option>
+                                    }
+                                </select>
+                            </span>
+                           <span asp-validation-for="WorkDay" class="text-danger"></span>
+                        </div>
+       
+                        <div class="col form-group">
+                            <label asp-for="Start" class="required">Ora Inceput</label>
+                             <input asp-for="Start" class="form-control" type="text" id="description">
+                             <span asp-validation-for="Start" class="text-danger"></span>
+                    </div>
+                      <div class="col form-group" >
+                            <label asp-for="End" class="control-label">Ora Sfarsit</label>
+                            <input asp-for="End" class="form-control" type="text" id="description"/>
+                           <span asp-validation-for="End" class="text-danger"></span>
+                        </div>
+                         <div class="col form-group" >
+                            <label asp-for="Notes" class="control-label">Descriere suplimentara</label>
+                            <input asp-for="Notes" class="form-control" type="text" id="description"/>
+                           <span asp-validation-for="Notes" class="text-danger"></span>
+                        </div>
+                        <div></div>
+                    <div class="form-row">
+                        <div class="col form-group">
+                            <button type="submit" value="Save" class="btn btn-primary" id="submit">Add Work Program</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+
+            <div class="col offset-md-1">
+                <div class="row">
+                    <div class="col">
+                    </div>
+                </div>
+                <table class="table table-bordered table-hover table-striped table-sm" id="appointment_list">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col" class="text-center align-middle">Work Day</th>
+                            <th scope="col" class="text-center align-middle">Start</th>
+                            <th scope="col" class="text-center align-middle">End</th>
+                            <th scope="col" class="text-center align-middle">Notes</th>
+
+              @foreach(var program in @Model.DoctorWorkProgramVMs)
+                {
+                    <tr >
+                        <td>@program.WorkDay</td>
+                        <td>@program.Start</td>
+                        <td>@program.End</td>
+                        <td>@program.Notes</td>
+                    </tr>
+                }
+            </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            </div>
+ 
+      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
+  
+</body>

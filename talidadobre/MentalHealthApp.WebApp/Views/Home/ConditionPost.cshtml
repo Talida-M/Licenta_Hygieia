@@ -1,0 +1,36 @@
+﻿@model MentalHealthApp.BusinessLogic.Implementation.Admin.ViewModels.ConditionsPostVM
+<header style="margin-top: 3%">
+	<h1>@Model.ConditionName</h1>
+</header>
+<div class="content">
+	<article>
+		@{var base64 = Convert.ToBase64String(Model.Image);
+		var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+				<img src="@imgSrc" alt="Imagine Articol" class="article-image">
+	}
+        <div class="article-text">@Html.Raw(Model.Description) </div>
+	</article>
+</div>
+<style>
+.content{
+min-height: 100vh;
+}
+	.article-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.article-image {
+  max-width: 100%;
+  max-height: 100vh;
+  display: block;
+  margin: 0 0 20px 20px;
+  float: right;
+}
+
+.article-text {
+  margin: 0 20px 20px 0;
+}
+
+
+</style>

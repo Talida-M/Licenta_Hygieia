@@ -1,0 +1,63 @@
+﻿
+@{
+    Layout = null;
+}
+
+
+
+<head>
+    <link rel="stylesheet" href="~/conference/controls/styles.css">
+
+    <link rel="stylesheet" href="~/conference/general/styles.css">
+
+    <link rel="stylesheet" href="~/conference/core/styles.css">
+    
+    <script src="~/js/videoConference/cards.js"></script>
+</head>
+
+<style>
+    table {
+        background-color: #717171 !important;
+    }
+</style>
+
+
+<div class="more" id="more-btn">
+
+</div>
+
+<div id="Dish">
+
+</div>
+
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <button class="btn-conference" id="btn-screenshare">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-share" viewBox="0 0 16 16">
+        <path d="M13.5 1a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5zm-8.5 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm11 5.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z" />
+            </svg>
+        </button>
+        <button class="btn-conference" id="btn-microphone">
+            
+        </button>
+        <button class="btn-conference" id="btn-video">
+            
+        </button>
+    </div>
+</div>
+
+@{
+    var isInitiator = (bool)ViewData["IsInitiator"] ? 1 : 0;
+    var myRoomId = (int)ViewData["id"];
+}
+
+<script>
+    const isInitiator = @isInitiator;
+    const myRoomId = @myRoomId;
+</script>
+
+<script src="~/lib/microsoft-signalr/signalr.js"></script>
+<script src="~/lib/webrtc-adapter/adapter.js"></script>
+<script src="~/js/videoConference/conference.js"></script>
+<script src="~/conference/controls/script.js"></script>

@@ -1,0 +1,198 @@
+﻿@model (MentalHealthApp.BusinessLogic.Implementation.Admin.ViewModels.TopReadsVM topReadsVM, int page)
+@using MentalHealthApp.BusinessLogic.Implementation.Admin.ViewModels
+<head>
+      <link href="~/css/map.css" rel="stylesheet" type="text/css" />
+    <script  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDoXRvHuYgJDyVIhkYxJN8zhPa_6tRbces&libraries=places"></script>
+    <script  defer src="~/js/googleAPIScript.js" type="text/javascript"></script>  
+    <link rel="stylesheet" href="~/css/dashboard.css"/>
+        <link  rel="stylesheet" href="~/css/createAppointments.css"/>
+    <!-- google font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+
+     <script src="~/js/appointment/viewAppoinments.js"></script>
+</head>
+<hr />
+       <section class="breadcrumb-bar">
+          <div class="container-fluid">
+              <div class="row">
+                  <div class="col-lg-12 col-md-12 col-12">
+                      <nav class="page-breadcrum" aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                              <li class="breadcrumb-item"><a asp-action="Dashboard" asp-controller="Admin">Dashboard</a></li>
+                             <li class="breadcrumb-item active" aria-current="page">Mental Health Articles</li>
+
+                              </ol>
+                          </nav>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        <!-- BREADCRUM-PART END -->
+<div class="row">
+    <div  class="col offset-md-1">
+        <form method="post" enctype="multipart/form-data" asp-action="AddArticle" asp-controller="Admin">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="topReadsVM.ArticleTile" class="control-label"></label>
+                <input asp-for="topReadsVM.ArticleTile" class="form-control" />
+                <span asp-validation-for="topReadsVM.ArticleTile" class="text-danger"></span>
+            </div>
+               <div class="form-group">
+                <label asp-for="topReadsVM.Author" class="control-label"></label>
+                <input asp-for="topReadsVM.Author" type="text" class="form-control" />
+                <span asp-validation-for="topReadsVM.Author" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="topReadsVM.Content" class="control-label"></label>
+                <textarea asp-for="topReadsVM.Content" class="form-control" ></textarea>
+                <span asp-validation-for="topReadsVM.Content" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="topReadsVM.ImageForm" class="control-label"></label>
+                <input asp-for="topReadsVM.ImageForm" type="file" class="form-control" />
+                <span asp-validation-for="topReadsVM.ImageForm" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+
+    </div>
+    
+
+</div>
+  <div class="col offset-md-1">
+                <div class="row">
+                    <div class="col">
+                        <h3>Mental Health Articles</h3>
+                    </div>
+                </div>
+                <table class="table table-bordered table-hover table-striped table-sm" id="appointment_list">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col" class="text-center align-middle">Id</th>
+                            <th scope="col" class="text-center align-middle">Article Title</th>
+                            <th scope="col" class="text-center align-middle">Author</th>
+                            <th scope="col" class="text-center align-middle">Content/th>
+
+              @foreach(var art in @Model.topReadsVM.TopReads)
+                {
+                    <tr data="tr-@art.Id" class="class-row" id="row-@art.ArticleTile">
+                        <td helper="@nameof(TopReadsVM.Id)">@art.Id</td>
+                        <td helper="@nameof(TopReadsVM.ArticleTile)">@art.ArticleTile</td>
+                        <td helper="@nameof(TopReadsVM.Author)">@art.Author</td>
+                        <td helper="@nameof(TopReadsVM.Content)" style=" text-overflow:ellipsis; overflow:hidden; max-width: 150px; white-space:nowrap;">@art.Content</td>
+                    </tr>
+                }
+            </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+                    <a  class="btn btn-std mb-link"  asp-action="ArticlesManagement" asp-controller="Admin" asp-route-page="@(Model.page - 1)" >Previous Page</a>
+                    <a   class="btn btn-std mb-link" asp-action="ArticlesManagement" asp-controller="Admin" asp-route-page="@(Model.page + 1)" >Next Page</a>
+            <p id="page-number">Page @Model.page</p>
+  
+            </div>
+<script>
+    let page = 0;
+function NextPage() {
+    page++;
+    $.ajax({
+
+                url:'@Url.Action("ArticlesNextPage", "Admin")',
+
+                type:"GET",
+
+                data: { page: page },
+
+                success:function (response) {
+                    let rows = document.getElementsByClassName("class-row");
+                    for (let i = 0; i < rows.length; i++){ 
+                        const newRow = response[i];
+                        rows[i].setAttribute("data", "tr-" + newRow["ArticleTitle"]);
+                        for (let column = 0; column < rows[i].children.length; column++) {
+                            let td = rows[i].children[column];
+                            const helperAttr = td.getAttribute("helper");
+                            if (!helperAttr || helperAttr === null) {
+                                continue;
+                            }
+                            //if (helperAttr === "td-two-childrens") {
+                            //    const childAttr = td.children[0].getAttribute("helper");
+                            //    const helperLowerCase = childAttr.charAt(0).toLowerCase() + childAttr.slice(1);
+                            //    const helper = newRow[helperLowerCase];
+                            //    td.children[0].innerHTML = helper;
+                            //}
+                            //else {
+                                const helperLowerCase = helperAttr.charAt(0).toLowerCase() + helperAttr.slice(1);
+                                const helper = newRow[helperLowerCase];
+                                td.innerHTML = helper;
+                           // }
+                            
+
+                            
+                        }
+                    }
+                    const pageNumber = document.getElementById("page-number");
+                    pageNumber.innerHTML = "Page " + (page + 1);
+                },
+
+                error:function (response) {
+                    console.log(JSON.stringify(response));
+                }
+
+            });
+}
+
+function PreviousPage() {
+    page = page - 1;
+    $.ajax({
+
+        url: '@Url.Action("ArticlesManagement", "Admin")',
+
+        type: "GET",
+
+
+        data: { page: page },
+
+        success: function(response) {
+            let rows = document.getElementsByClassName("class-row");
+            for (let i = 0; i < rows.length; i++) {
+                const newRow = response[i];
+                rows[i].setAttribute("data", "tr-" + newRow["ArticleTitle"]);
+                for (let column = 0; column < rows[i].children.length; column++) {
+                    let td = rows[i].children[column];
+                    const helperAttr = td.getAttribute("helper");
+                    if (!helperAttr || helperAttr === null) {
+                        continue;
+                    }
+                    //if (helperAttr === "td-two-childrens") {
+                    //    const childAttr = td.children[0].getAttribute("helper");
+                    //    const helperLowerCase = childAttr.charAt(0).toLowerCase() + childAttr.slice(1);
+                    //    const helper = newRow[helperLowerCase];
+                    //    td.children[0].innerHTML = helper;
+                    //}
+                   // else {
+                        const helperLowerCase = helperAttr.charAt(0).toLowerCase() + helperAttr.slice(1);
+                        const helper = newRow[helperLowerCase];
+                        td.innerHTML = helper;
+                   // }
+
+
+
+                }
+            }
+            const pageNumber = document.getElementById("page-number");
+            pageNumber.innerHTML = "Page " + (page + 1);
+        },
+    
+                error:function (response) {
+                    console.log(JSON.stringify(response));
+                }
+
+            });
+}
+</script>

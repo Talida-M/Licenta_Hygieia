@@ -1,0 +1,264 @@
+﻿* {
+    font-family: 'Source Sans Pro', 'Open Sans', Roboto, 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', 'Myriad Pro', 'Segoe UI', Myriad, Helvetica, 'Lucida Grande', 'DejaVu Sans Condensed', 'Liberation Sans', 'Nimbus Sans L', Tahoma, Geneva, Arial, sans-serif;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+h2, p {
+    margin: .5em 0;
+}
+
+/* Table Styles */
+@element '[data-table]' {
+    $this,
+    $this *,
+    $this *:before,
+    $this *:after {
+        -webkit-box-sizing: border-box !important;
+        -moz-box-sizing: border-box !important;
+        box-sizing: border-box !important;
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        font-kerning: auto;
+    }
+
+    $this {
+        width: 100%;
+        margin: 15px 0 10px 0 !important;
+        color: #333;
+        background-color: radial-gradient(ellipse at bottom, #8dcdf9 0 %, #322835 100 %);
+        border: 1px solid #999 !important;
+        font-size: 12pt;
+        border-collapse: collapse !important;
+    }
+
+        $this thead {
+            display: table-header-group;
+        }
+
+        $this tfoot {
+            display: table-footer-group;
+        }
+
+            $this thead th,
+            $this tfoot th {
+                color: #777;
+                background: rgba(0,0,0,.1);
+                border-bottom-color: #ccc !important;
+            }
+
+        $this caption {
+            padding: .5em;
+        }
+
+        $this tbody tr:nth-of-type(odd) {
+            background: rgba(0,0,0,.05);
+        }
+
+        $this td:last-child {
+            width: 100%;
+            text-align: center;
+        }
+
+        $this a {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            color: #999;
+            line-height: 27px !important;
+            font-size: 20px !important;
+            text-align: center;
+            border: 2px solid currentColor;
+            border-radius: 100%;
+            position: relative;
+            underline: none;
+            transition: all .2s ease-in-out;
+        }
+
+            $this a:nth-of-type(2) {
+                font-size: 18px !important;
+            }
+
+            $this a:hover {
+                color: #773570;
+            }
+
+            $this a[data-delete]:hover {
+                color: #c00;
+            }
+
+            $this a + a {
+                margin-left: 10px;
+            }
+
+            $this a:before {
+                content: '';
+                border: 5px solid transparent;
+                border-top-color: #773570;
+                position: absolute;
+                top: -7px;
+                left: calc(50% - 5px);
+            }
+
+            $this a:after {
+                content: attr(data-caption);
+                display: block;
+                width: auto;
+                padding: 5px 8px;
+                border-radius: 3px;
+                position: absolute;
+                top: -33px;
+                right: -10px;
+                font-size: 12pt;
+                line-height: 12pt;
+                font-weight: 500;
+                color: white;
+                text-align: center;
+                background: #773570;
+                box-shadow: inset rgba(0,0,0,.3) 0 0 1px, inset rgba(255,255,255,.3) 0 1px 0, rgba(0,0,0,.10) 0 1px 2px;
+            }
+
+            $this a:before,
+            $this a:after {
+                visibility: hidden;
+                opacity: 0;
+                pointer-events: none;
+                transition: all .2s ease-in-out;
+            }
+
+            $this a:hover:before,
+            $this a:hover:after {
+                visibility: visible;
+                opacity: 1;
+            }
+
+            $this a[data-delete]:before {
+                border-top-color: #c00;
+            }
+
+            $this a[data-delete]:after {
+                background: #c00;
+            }
+}
+/* Stacked Table */
+@element '[data-table]' and (max-width: 525px) {
+    $this caption,
+    $this tbody,
+    $this tr,
+    $this th,
+    $this td {
+        display: block;
+        width: 100%;
+    }
+
+    $this thead,
+    $this tfoot {
+        display: none;
+    }
+
+    $this td:before {
+        content: attr(data-header)' ';
+    }
+
+    $this td:first-child {
+        font-weight: 700;
+        color: #333;
+        font-size: 14pt;
+        line-height: 1.1;
+        letter-spacing: -.02em;
+        padding: 10px 5px 0 10px;
+    }
+
+    $this td:nth-child(2) {
+        padding: 0 5px 0 10px;
+        font-size: 10pt;
+        color: #777;
+        font-weight: 500;
+    }
+
+    $this td:first-child:before,
+    $this td:last-child:before {
+        content: '';
+    }
+
+    $this tr + tr {
+        border-top: 1px solid #ccc;
+    }
+
+    $this td {
+        border: none;
+        color: #333;
+        font-size: 12pt;
+        font-weight: 400;
+        text-align: center;
+        padding-bottom: 10px;
+    }
+}
+/* Wide Table */
+@element '[data-table]' and (min-width: 525px) {
+    $this {
+        display: table;
+        width: auto;
+    }
+
+        $this caption {
+            display: table-caption;
+            width: auto;
+        }
+
+        $this thead {
+            display: table-header-group;
+            width: auto;
+        }
+
+        $this tbody {
+            display: table-row-group;
+            width: auto;
+        }
+
+        $this tfoot {
+            display: table-footer-group;
+            width: auto;
+        }
+
+        $this tr {
+            display: table-row;
+            width: auto;
+        }
+
+        $this th,
+        $this td {
+            display: table-cell;
+            width: auto;
+        }
+
+            $this td:before {
+                display: none;
+            }
+
+        $this th,
+        $this td {
+            padding: 10px !important;
+            text-align: left;
+            border: 1px solid lightgrey;
+        }
+
+        $this td {
+            color: #333;
+            font-size: 12pt;
+            font-weight: 400;
+        }
+
+        $this a {
+            display: block;
+            float: left;
+        }
+
+        $this td:first-child {
+            font-weight: 600;
+            width: 100%;
+        }
+
+}

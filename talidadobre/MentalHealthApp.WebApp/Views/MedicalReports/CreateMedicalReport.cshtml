@@ -1,0 +1,76 @@
+﻿@model MentalHealthApp.BusinessLogic.Implementation.MedicalReports.ViewModels.DoctorMedicalReportVM
+@{
+    ViewData["Title"] = "View";
+}
+
+
+
+<h1>Raport Medical</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" enctype="multipart/form-data" asp-action="CreateMedicalReport" asp-controller="MedicalReports">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Pacient" class="control-label">Pacient</label>
+                <input asp-for="Pacient" class="form-control" />
+                <span asp-validation-for="Pacient" class="text-danger"></span>
+            </div>
+             <div class="form-group">
+                <label asp-for="PacientEmail" class="control-label">Email pacient</label>
+                <input asp-for="PacientEmail" class="form-control" />
+                <span asp-validation-for="PacientEmail" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Doctor" class="control-label">Medic Specialist</label>
+                <input asp-for="Doctor" class="form-control" />
+                <span asp-validation-for="Doctor" class="text-danger"></span>
+            </div>
+             <div class="form-group">
+                <label asp-for="ReportDate" class="control-label">Data Raport</label>
+                <input asp-for="ReportDate" class="form-control" type="datetime-local" value="@DateTime.Now" />
+                <span asp-validation-for="ReportDate" class="text-danger"></span>
+            </div>
+              <div class="form-group">
+                <label asp-for="ReportDescription" class="control-label">Descriere Raport</label>
+                <textarea asp-for="ReportDescription" class="form-control" ></textarea>
+                <span asp-validation-for="ReportDescription" class="text-danger"></span>
+            </div>
+               <div class="form-group">
+                <label asp-for="MedicalHistory" class="control-label">Istoric medical al pacientului</label>
+                <textarea asp-for="MedicalHistory" class="form-control" > </textarea>
+                <span asp-validation-for="MedicalHistory" class="text-danger"></span>
+            </div>
+               <div class="form-group">
+                <label asp-for="Condition" class="control-label">Diagnostic rezultat in urma consultului</label>
+                <input asp-for="Condition" type="text" class="form-control" />
+                <span asp-validation-for="Condition" class="text-danger"></span>
+            </div>
+               <div class="form-group">
+                <label asp-for="Strategy" class="control-label">Strategie de consult</label>
+                <textarea asp-for="Strategy" class="form-control" ></textarea>
+                <span asp-validation-for="Strategy" class="text-danger"></span>
+            </div>
+               <div class="form-group">
+                <label asp-for="Prescription" class="control-label">Prescriptie medicala</label>
+                <input asp-for="Prescription" class="form-control" />
+                <span asp-validation-for="Prescription" class="text-danger"></span>
+            </div>
+               <div class="form-group">
+                <label asp-for="DoctorNotes" class="control-label">Notite</label>
+                <textarea asp-for="DoctorNotes" class="form-control" ></textarea>
+                <span asp-validation-for="DoctorNotes" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input style="background: radial-gradient(ellipse at bottom, #8dcdf9 0%, #322835 100%); color:white" type="submit" value="Save" class="btn btn-primary" />
+                <button type="submit"  class="btn btn-default">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+
+

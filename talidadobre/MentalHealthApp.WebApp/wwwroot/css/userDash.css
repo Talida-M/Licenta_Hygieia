@@ -1,0 +1,44 @@
+﻿
+.table2 {
+    margin-top: 20px;
+    width: 100%;
+    color: #29516d;
+    font-size: 14px;
+    border-spacing: 0;
+}
+
+th, td {
+    padding: 10px;
+}
+
+thead th {
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+tbody tr:nth-of-type(odd) {
+    background-color: #f6f6f6;
+}
+
+tbody tr:hover {
+    background-color: #ecf7ff;
+}
+
+
+
+.delete-btn
+{
+padding: 10px;
+margin: 0 5px;
+border: 0;
+color: white;
+background-color: #00A8E8;
+ &:first-child {
+    margin-left: 0;
+  }
+}
+}
+
+.edit-btn {
+    background-color: #d90000;
+}

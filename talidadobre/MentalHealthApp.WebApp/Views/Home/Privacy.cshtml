@@ -1,0 +1,74 @@
+﻿
+@{
+    Layout = null;
+}
+
+
+<head>
+    <link rel="stylesheet" href="~/css/privacy.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/parallax/3.1.0/parallax.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+</head>
+   
+ <section class="wrapper">
+
+        <div class="container">
+
+            <div id="scene" class="scene" data-hover-only="false">
+
+
+                <div class="circle" data-depth="1.2"></div>
+
+                <div class="one" data-depth="0.9">
+                    <div class="content">
+                        <span class="piece"></span>
+                        <span class="piece"></span>
+                        <span class="piece"></span>
+                    </div>
+                </div>
+
+                <div class="two" data-depth="0.60">
+                    <div class="content">
+                        <span class="piece"></span>
+                        <span class="piece"></span>
+                        <span class="piece"></span>
+                    </div>
+                </div>
+
+                <div class="three" data-depth="0.40">
+                    <div class="content">
+                        <span class="piece"></span>
+                        <span class="piece"></span>
+                        <span class="piece"></span>
+                    </div>
+                </div>
+               
+                <p class="p404" data-depth="0.50">
+                     <img style=" height: 20%; width: 10%; z-index: 99999;" class="preloader-logo" src="~/images/Logo.png" width=90>
+                    Hygieia
+                </p>
+                <p class="p404" data-depth="0.10">
+                   <img style="height: 35%; width: 10%; filter: blur(100px); z-index: 99999; " class="preloader-logo" src="~/images/Logo.png" width=90>
+                    Hygieia
+                </p>
+            </div>
+
+            <div class="text">
+                <article>
+                    <p style="background-color: rgba(255, 255, 255, 0.5);font-weight: 700;">Bun venit la Hyegieia! <br> Misiunea noastra este de a te ajuta sa prioritizezi sanatatea ta mintala si sa gasesti echilibru.<br />Fiind tabu de zeci de ani,
+                        dacă nu de secole, sănătatea mintală este acum discutată pe scară largă.
+                        În aceste vremuri excepționale de pandemie, mulți dintre noi ne confruntăm cu
+                        probleme psihologice legate de izolare, anxietate, singurătate, frustrări, 
+                        dependențe, nesiguranțe, depresie, frici și îngrijorare – probleme abordate în mod
+                        regulat.Conștientizarea că singurătatea cuiva, de exemplu, este comună întregii omeniri, este esențială pentru a o înțelege, a fi liber de ea și a învăța ce înseamnă să fii în siguranță și bine într-o lume incertă.
+                    Dorim ca prin intermediul aplicatiei noastre sa va faceti povestea auzita iar drumul spre vindecare mai usor cu ajutorul specialistilor nostri licentiati.
+                    </p>   
+                    <a asp-action="Index" asp-controller="Home">Go to Homepage!</a>
+                        <p  style="background-color: rgba(255, 255, 255, 0.5);font-weight: 700; margin-top:5px">Daca sunteti medic licentiat si doriti sa faceti parte din echipa noastra, inregistrati-va aici:</p>
+                       <a asp-controller="Admin" asp-action="RegisterDoctor">Creati cont!</a>
+
+                    </article>
+            </div>
+
+        </div>
+    </section>

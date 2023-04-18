@@ -1,0 +1,107 @@
+﻿@model MentalHealthApp.BusinessLogic.Implementation.Admin.ViewModels.HomePageVM
+  <header class="top-header">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">  
+  <link rel="stylesheet" src="https://fonts.googleapis.com/css?family=Lato"/>
+   <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">  
+    <link rel="stylesheet" href="~/css/homePage.css" />
+    <script src="https://kit.fontawesome.com/bdd89edb33.js"></script>
+    <script src="https://kit.fontawesome.com/049529442a.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+    <script src="~/js/admin/caroussel.js"></script>
+</header>
+
+<!--dust particel-->
+<div>
+  <div class="starsec"></div>
+  <div class="starthird"></div>
+  <div class="starfourth"></div>
+  <div class="starfifth"></div>
+</div>
+<body style="display: flex;
+  flex-direction: column;">
+    <div id="header"></div>
+
+    <div class="video" id="content" style="  height: 100%; position: relative; border:3px solid white" >
+    <h1 style=" text-align: center;
+        color: white;
+        bottom: 4px;
+        font-size:16px;
+ text-shadow: 0 0 7px #fff,
+            0 0 10px #fff,
+            0 0 21px #8658f0,
+            0 0 42px #f09,
+            0 0 82px #862db9,
+            0 0 92px #f09,
+            0 0 102px #6b05a6,
+            0 0 151px #f09;">
+        Look after your mind...
+    </h1>
+        <video  autoplay muted loop style="   width: 100%;
+  object-fit: cover;" width="1000" height="300"><source src="~/videos/Mental Health Transparency - Award Winning Short Film.mp4"></video>
+</div>
+<div></div>
+<div class="container" style="border-top:2px solid white; border-bottom:2px solid white; margin-top: 10px;"> 
+  <div style="display:flex;">
+    <h2 style="color: white;text-shadow: 1px 2px 3px black; font-size: 20px"> Mental Health Conditions</h2>
+    <a asp-controller="Home" asp-action="AllConditionsPosts" style="color: white;text-shadow: 1px 2px 3px black; font-size: 20px; margin-left: 69%;"> See more...</a>  
+  </div>
+  <div class="row" style="margin-left: calc(var(--bs-gutter-x) * 4.8);">
+            @foreach( var conditionPost in @Model.ConditionsPostVMs)
+            {
+                var base64_2 = Convert.ToBase64String(@conditionPost.Image);                  
+                 var imgSrc = String.Format("data:image/gif;base64,{0}", base64_2);
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                  <div class="our-team">
+                        <div class="picture">
+                            <img style="max-height: 100%;  max-width: 100%;  width: 100%; height: 100%; object-fit:cover" class="img-fluid" src="@imgSrc">
+                        </div>
+                        <div class="team-content">
+                            <h3 style="opacity:100%; text-shadow: 1px 2px 3px black; font-size: 18px" class="name">@conditionPost.ConditionName</h3>
+                        </div>
+                  </div>
+            </div>
+            }
+</div>
+  </div>
+  <div class="container-" style="border-top:2px solid white; border-bottom:2px solid white; margin-top: 10px;">
+      <h1 style="color: white;text-shadow: 1px 2px 3px black; font-size: 22px; margin-top:5px;"> Top articles this week</h1>
+
+      <div class="landing">
+        <div id="slider" class="container" style="    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 2rem;
+    grid-gap: 0rem 6rem;">
+            @{
+                foreach (var article in Model.TopReads)
+                {
+                    var base64 = Convert.ToBase64String(@article.ArticleImage);
+                    var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                                                <div class="slide" style="height:300px; width: 300px; border:1px solid white">
+                                                    <div class="top-section">
+                                                            <img style="height: 200px; width:100%; " src="@imgSrc" alt="" />
+                                                        <div class="name">
+                                                            <span>@article.ArticleTile</span>
+                                                            <br />
+                                                        </div>
+                                                    </div>
+                                                    <div class="info-section" style="color:black">
+                                                        <span class="date">@article.Author</span>
+                                                        <p style=" text-overflow:ellipsis; color:black; font:20px; overflow:hidden; max-width: 200px; white-space:nowrap;">@article.Content</p>
+                                                        <span class="auteur">  Citeste mai departe...</span>
+                                              
+                                               
+                                                    </div>
+                                                </div>
+
+                }
+            }
+        </div>
+    </div> 
+</div>
+
+</body>
+

@@ -1,0 +1,110 @@
+﻿@model MentalHealthApp.BusinessLogic.Implementation.Appointments.ViewModels.AppointmentsDoctorProfileVM
+@using MentalHealthApp.Entities.Enums
+<header>
+    	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
+       	<link rel="stylesheet" href="https://fontawesome.com/releases/v5.10.0/css/all.css">
+        <link rel="stylesheet" href="~/css/onlineAppointment.css"/>
+</header>
+
+<body>
+
+  <div class="page-header">
+    <h3>Programari online in asteptare</h3>
+  </div>
+
+ <div>
+   <table class="table table-bordered table-hover table-striped table-sm" id="appointment_list">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col" class="text-center align-middle">Id Programare</th>
+                            <th scope="col" class="text-center align-middle">Data</th>
+                            <th scope="col" class="text-center align-middle">Pacient</th>
+                            <th scope="col" class="text-center align-middle">Status</th>
+                            <th scope="col" class="text-center align-middle">Actiune</th>
+
+
+              @foreach(var programare in @Model.AppointmentDoctorProfileVMs)
+                {
+                    <tr id="status-@programare.Id">
+                        <td>@programare.Id</td>
+                        <td>@programare.AppointmentDate</td>
+                        <td>@programare.Pacient</td>
+                        <td id="status-@programare.Id" >
+                            <p id="status-td-@programare.Id">@programare.AppointmentStatus</p>
+                         <div  id="edit-@programare.Id" style="display:none" >
+                                         <span class="custom-dropdown big" >
+                                                <select id="div-dropdown-@programare.Id">    
+                                                        <option>@AppointmentStatus.In_Asteptare.ToString()</option>
+                                                        <option>@AppointmentStatus.Programare_Respinsa.ToString()</option>
+                                                        <option>@AppointmentStatus.Programare_Acceptata.ToString()</option>
+                                                        <option>@AppointmentStatus.Programare_Anulata.ToString()</option>
+                                                        <option>@AppointmentStatus.Programare_Realizata.ToString()</option>
+                                                    </select>
+                                            </span>
+								<button class="btn btn-std mb-link" style="background-color:rgb(169,146,209)"  onclick="SaveStatus()" id="@programare.Id">Salveaza</button>
+						</div>
+                        </td>
+
+                        <td>
+                              <button  onclick="AcceptAppointment()" id="@programare.Id" ><i class="fa fa-check" title="Accept"></i></button>
+                              <button onclick="EditAppointmentStatus()" id="@programare.Id"  ><i class="fa fa-pen" title="Edit Status" aria-hidden="true"></i></button>
+                        </td>
+                    </tr>
+                }
+            </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+</div>
+</body>
+<script>
+     function AcceptAppointment(){
+    
+        const id = event.srcElement.id;
+         $.ajax({
+             url: '@Url.Action("AcceptAppointment", "DoctorAccount")',
+
+             type: "POST",
+
+             data: { appointmentId: id },
+             success: function(data) {
+                 console.log("Success");
+                 alert("Programare acceptata cu succes");
+                 document.getElementById('status-' + id).remove();
+             },
+
+             error: function(response) {
+                 console.log("Error");
+                 console.log(JSON.stringify(response));
+             }
+         });
+};
+function EditAppointmentStatus() {
+     let id = event.srcElement.parentNode.id;
+    let td = document.getElementById("status-td-" + id);
+    td.style.display = "none";
+    let select = document.getElementById("edit-" + id);
+    select.style.display = "block";
+}
+
+function SaveStatus() {
+    const id = event.srcElement.id;
+    const dropdownValue = document.getElementById("div-dropdown-"+id).value;
+     $.ajax({
+             url: '@Url.Action("AcceptAppointment", "DoctorAccount")',
+
+             type: "POST",
+
+             data: { appointmentId: id, stare:dropdownValue },
+             success: function(data) {
+                 alert("Status programare schimbat cu succes");
+                 document.getElementById('status-' + id).remove();
+             },
+
+             error: function(response) {
+                 console.log("Error");
+                 console.log(JSON.stringify(response));
+             }
+         });
+}
+</script>

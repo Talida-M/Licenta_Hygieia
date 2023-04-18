@@ -1,0 +1,280 @@
+﻿@model List<MentalHealthApp.BusinessLogic.Implementation.UserJournals.ViewModel.JournalPageVM>
+@inject MentalHealthApp.Common.DTOs.CurrentUserDto CurrentUser
+<head>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Caveat">
+	<link rel="stylesheet" href="~/css/journal.css" />
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/turn.js/3/turn.min.js"></script>
+	<!-- breadcrumb -->
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+
+</head>
+
+<section class="breadcrumb-bar">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-lg-12 col-md-12 col-12">
+				<nav class="page-breadcrum" aria-label="breadcrumb">
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Acasa</a></li>
+						<li class="breadcrumb-item"><a asp-controller="Profile" asp-action="UserProfile">Profil</a></li>
+						<li class="breadcrumb-item active" aria-current="page">Jurnalul meu</li>
+
+					</ol>
+				</nav>
+			</div>
+		</div>
+	</div>
+</section>
+<div class="wrapper_journal">
+	<div class="book">
+		<div id="pages" class="pages">
+			<div class="page" id="firstpage">
+				<h2 style="    margin-top: 30%;">O calatorie in trecut</h2>
+				<h1>@CurrentUser.FirstName</h1>
+
+				<h3 style="    margin-top: 10%;">Jurnal terapeutic</h3>
+			</div>
+			<div class="page" id="continut" >
+				<button id="new_page" class="btn modal-popup">Pagina Noua</button>
+				<div id="str"></div>
+			</div>
+			@if (Model != null)
+			{
+				@foreach (var pag in Model)
+				{
+					<div class="page" id="continut">
+						<p>@pag.PageDate</p>
+						<p>@pag.Content</p>
+						<div class="status">
+							<p>Status pagina:</p>
+							<label>
+								<input type="checkbox" name="confidentialitate" id="@pag.Id" value="@pag.IsPublic" @(pag.IsPublic ? "checked" : "")>
+								<span id="conf-@pag.Id" style="color:black;">@(pag.IsPublic == true ? "Public" : "Privat") </span>
+							</label>
+						</div>
+					</div>
+				}
+
+			}
+			<div class="page" id="lastpage" >
+			</div>
+		</div>
+	</div>
+</div>
+
+
+	@*<button class="btn modal-popup">Open me</button>*@
+
+	<div class="modal-frame">
+		<div class="modal-body">
+			<div class="modal-inner">
+				<button id="close" class="close"><i class="fa fa-times"></i></button>
+				<fieldset>
+					<legend>Alegeti daca doriti sa impartasiti pagina de jurnal cu terapeutul dvs.</legend>
+					<label>
+						<input type="radio" name="confidentialitate" id="confidentialitate_privat" value="privat">
+						<span style="color:black;">Privat</span>
+					</label>
+					<label>
+						<input type="radio" name="confidentialitate" id="confidentialitate_public" value="public">
+						<span style="color:black;">Public</span>
+					</label>
+				</fieldset>
+				<label class="floating-label full-width-field">
+					<span>Continut<span class="helper">Adauga continutul paginii de jurnal</span></span>
+					<textarea id="content" name="content" style="width: 90%;"></textarea>
+				</label>
+			</div>
+			<button onclick="createPage">Creare Pagina</button>
+
+		</div>
+		<div class="modal-overlay"></div>
+	</div>
+
+
+	<script>
+		$(document).ready(function () {
+			$('.page').each(function () {
+				var firstParagraphHeight = $(this).find('p:first').outerHeight();
+				$(this).find('.status').css('margin-top', firstParagraphHeight);
+			});
+		});
+
+	var string = "Este timpul să priviți în interior și să începeți să vă puneți marile întrebări. Cine eşti tu? Si ce doresti?  Acest jurnal este doar al tau, poti asterne in el toate sentimentele si experientele din timpul zilei, iar oricand doresti poti sa le faci publice terapeutului tau.";
+	var str = string.split("");
+	var el = document.getElementById('str');
+	var buton = document.getElementById('new_page');
+	(function animate() {
+		str.length > 0 ? el.innerHTML += str.shift() : clearTimeout(running);
+		var running = setTimeout(animate, 90);
+
+	});
+		//$(document).ready(function () {
+		//	$('input[type="checkbox"][name="confidentialitate"]').click(function () {
+		//		var isChecked = $(this).is(':checked');
+		//		var id = $(this).attr('id');
+		//		var url = '@Url.Action("ChangePublicField", "UserJournal")';
+		//		$.ajax({
+		//			type: "PATCH",
+		//			url: url,
+		//			data: { isPublic: isChecked, id: id },
+		//			success: function (result) {
+		//				let status = document.getElementById("conf-"+id);
+		//				if(status.innerHTML === "Public"){
+		//					status.innerHTML = "Privat";
+		//					}
+		//				else{
+		//					status.innerHTML = "Public";
+		//				}
+		//				console.log(result);
+		//			},
+		//			error: function (xhr, status, error) {
+		//				console.log(xhr.responseText);
+		//			}
+		//		});
+		//	});
+		//});
+
+		function createPage(){
+			const content = document.getElementById("content").value;
+			const confidentialitateMesaj = document.querySelector('input[name="confidentialitate"]:checked').value;
+			let confidentialitate = true;
+			if(confidentialitateMesaj === "privat"){
+				confidentialitate = false;
+			}
+
+			 	$.ajax({
+
+					url:'@Url.Action("CreateJournalPage", "UserJournal")',
+
+					type:"POST",
+
+					//dataType:"json",
+
+					data: { content: content, confidentialitate:confidentialitate},
+
+					success:function (response) {
+						alert('Pagina creata cu succes');
+						location.reload();
+					},
+
+					error:function (response) {
+						console.log(JSON.stringify(response));
+					}
+
+				});
+	};
+			$(document).ready(function () {
+			$('input[type="checkbox"][name="confidentialitate"]').click(function (event) {
+				event.stopPropagation(); // stop event propagation
+				var isChecked = $(this).is(':checked');
+				var id = $(this).attr('id');
+				var url = '@Url.Action("ChangePublicField", "UserJournal")';
+				$.ajax({
+					type: "PATCH",
+					url: url,
+					data: { isPublic: isChecked, id: id },
+					success: function (result) {
+						let status = document.getElementById("conf-"+id);
+						if(status.innerHTML.includes("Public")){
+							status.innerHTML = "Privat";
+						} else {
+							status.innerHTML = "Public";
+						}
+						console.log(result);
+					},
+					error: function (xhr, status, error) {
+						console.log(xhr.responseText);
+					}
+				});
+			});
+		});
+
+		var pages = document.getElementsByClassName("page");
+		for (var i = 0; i < pages.length; i++) {
+			var page = pages[i];
+			if (i % 2 === 0) {
+				page.style.zIndex = pages.length - i;
+			}
+		}
+
+		document.addEventListener("DOMContentLoaded", function () {
+			for (var i = 0; i < pages.length; i++) {
+				pages[i].pageNum = i + 1;
+				pages[i].onclick = function (event) {
+					// check if the clicked element is a checkbox
+					if (event.target.tagName !== 'INPUT') {
+						if (this.pageNum % 2 === 0) {
+							this.classList.remove("flipped");
+							this.previousElementSibling.classList.remove("flipped");
+						} else {
+							this.classList.add("flipped");
+							this.nextElementSibling.classList.add("flipped");
+						}
+					}
+				};
+			}
+		});
+
+				//var pages = document.getElementsByClassName("page");
+				//for (var i = 0; i < pages.length; i++) {
+				//	var page = pages[i];
+				//	if (i % 2 === 0) {
+				//		page.style.zIndex = pages.length - i;
+				//	}
+				//}
+
+				//document.addEventListener("DOMContentLoaded", function () {
+				//	for (var i = 0; i < pages.length; i++) {
+				//		//Or var page = pages[i];
+				//		pages[i].pageNum = i + 1;
+				//		pages[i].onclick = function () {
+				//			if (this.pageNum % 2 === 0) {
+				//				this.classList.remove("flipped");
+				//				this.previousElementSibling.classList.remove("flipped");
+				//			} else {
+				//				this.classList.add("flipped");
+				//				this.nextElementSibling.classList.add("flipped");
+				//			}
+				//		};
+				//	}
+				//});
+
+	
+
+		$modal = $('.modal-frame');
+
+		function enterNewConvo() {
+			$('.create-chat-input').focus();
+		}
+
+		function closeModal() {
+			$modal.removeClass('active');
+			$modal.addClass('leave');
+		}
+
+		$('.modal-popup').click(function () {
+			$modal.toggleClass('active');
+			$modal.removeClass('leave');
+			enterNewConvo();
+		})
+
+		$('.modal-overlay').click(function () {
+			closeModal();
+		})
+
+		$('#close').click(function () {
+			closeModal();
+		})
+
+		$(document).keyup(function (e) {
+			if (e.which === 27) {
+				closeModal();
+			}
+		})
+
+	</script>

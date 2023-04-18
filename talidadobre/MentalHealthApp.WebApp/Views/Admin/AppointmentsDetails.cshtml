@@ -1,0 +1,360 @@
+﻿@using MentalHealthApp.BusinessLogic.Implementation.Admin.ViewModels
+@using MentalHealthApp.Entities.Enums;
+@using PagedList.Mvc;
+@model (MentalHealthApp.BusinessLogic.Implementation.Admin.ViewModels.ListAppointmentsModel appointmentsModel, int page)
+<head>
+	<meta charset="UTF-8">
+	<title>Appointment Cards</title>
+	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
+	<link rel="stylesheet" type="text/css" href="~/css/style.css">
+    <link rel="stylesheet" type="text/css" href="~/css/dropdownAppointments.css">
+    <link  rel="stylesheet" href="~/css/createAppointments.css"/>
+    <!-- google font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+
+</head>
+<header>
+    <link rel="stylesheet" href="~/css/onlineAppointment.css"/>
+</header>
+
+      <section class="breadcrumb-bar">
+              <div class="row">
+                  <div class="col-lg-12 col-md-12 col-12">
+                      <nav class="page-breadcrum" aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                              <li class="breadcrumb-item"><a href="@Url.Action("Dashboard","Admin")">Dashboard</a></li>
+                             <li class="breadcrumb-item active" aria-current="page">Appointments Details</li>
+
+                              </ol>
+                          </nav>
+                    </div>
+                </div>
+            </section>
+  <div class="page-header">
+    <h3>Programari</h3>
+  </div>
+ 
+  <div>
+
+<span class="custom-dropdown big" >
+    <select id="div-dropdown">    
+            @foreach(var programare in @Model.appointmentsModel.DoctorNameModels)
+            {
+
+                <option>@programare.DoctorName</option>
+            }
+            <option>View All</option>
+        </select>
+</span>
+    <button onclick="DisplayDoctorAppointment()" style=" background: radial-gradient(ellipse at bottom, #a866f1 0%, #577be7 100%); border-color: #577be7; color:white">Search</button>
+
+</div>
+   <table class="table table-bordered table-hover table-striped table-sm" id="appointment_list">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col" class="text-center align-middle">Id Programare</th>
+                            <th scope="col" class="text-center align-middle">Data Programare</th>
+                            <th scope="col" class="text-center align-middle">Pacient</th>
+                            <th scope="col" class="text-center align-middle">Medic</th>
+                            <th scope="col" class="text-center align-middle">Status</th>
+                            <th scope="col" class="text-center align-middle">Actiune</th>
+</tr>
+
+              @foreach(var programare in @Model.appointmentsModel.AppointmentsAdminModels)
+                {
+                    <tr id="status-@programare.Id" class="class-row" data="tr-@programare.DoctorName" >
+                        <td helper="@nameof(AppointmentsAdminModel.Id)">@programare.Id</td>
+                        <td helper="@nameof(AppointmentsAdminModel.AppointmentDate)" id="h-@programare.Id">@programare.AppointmentDate</td>
+                        <td helper="@nameof(AppointmentsAdminModel.UserName)">@programare.UserName</td>
+                        <td helper="@nameof(AppointmentsAdminModel.DoctorName)">@programare.DoctorName</td>
+                         <td id="status-@programare.Id" helper="td-two-childrens">
+                            <p id="status-td-@programare.Id" helper="@nameof(AppointmentsAdminModel.AppointmentStatus)">@programare.AppointmentStatus</p>
+                         <div  id="edit-@programare.Id" style="display:none" >
+                                         <span class="custom-dropdown big" >
+                                                <select id="div-dropdown-@programare.Id">    
+                                                        <option>@AppointmentStatus.In_Asteptare.ToString()</option>
+                                                        <option>@AppointmentStatus.Programare_Respinsa.ToString()</option>
+                                                        <option>@AppointmentStatus.Programare_Acceptata.ToString()</option>
+                                                        <option>@AppointmentStatus.Programare_Anulata.ToString()</option>
+                                                        <option>@AppointmentStatus.Programare_Realizata.ToString()</option>
+                                                    </select>
+                                            </span>
+                        <button class="btn btn-std mb-link" style="background: radial-gradient(ellipse at bottom, #f7f7f7 0%, #2f6196 100%);" onclick="SaveStatus()" id="@programare.Id">Salveaza</button>
+						</div>
+                        <td id="td-@programare.Id">
+                              <button  onclick="EditAppointmentTime()" id="@programare.Id" ><i class="fa fa-clock"></i><i class="fa fa-marker" ></i></button>
+                              <button onclick="EditAppointmentStatus()" id="@programare.Id"  ><i class="fa fa-pen" title="Edit Status" aria-hidden="true"></i></button>
+                              @*<button onclick="AcceptAppointment()" id="@programare.Id"  ><i class="fa fa-check" title="Accept Status"></i></button>*@
+                        </td>
+                        <td id="td-forum-@programare.Id" style="display:none">
+                            <div  id="edit-@programare.Id" >
+									 <div class="form-group" id="modal-text" >
+										<label  class="control-label">Editeaza ora</label>
+										<input  class="form-control" id="c-@programare.Id" type="datetime-local" value="@programare.AppointmentDate"/>
+										<span  class="text-danger"></span>
+									 </div>
+								<button class="btn btn-std mb-link"  onclick="SaveTime()" data="@programare.Id">Salveaza</button>
+								</div>
+                        </td>
+                    </tr>
+                }
+            </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            <a  class="btn btn-std mb-link" asp-action="AppointmentsDetails" asp-controller="Admin" asp-route-page="@(Model.page - 1)">Previous Page</a>
+            <a  class="btn btn-std mb-link"  asp-action="AppointmentsDetails" asp-controller="Admin" asp-route-page="@(Model.page + 1)" >Next Page</a>
+            <p id="page-number">Page @Model.page</p>
+
+<script>
+
+let page = 0;
+function NextPage() {
+    page++;
+    $.ajax({
+
+                url:'@Url.Action("PageAppointmentsDetails", "Admin")',
+
+                type:"GET",
+
+                data: { page: page },
+
+                success:function (response) {
+                    let rows = document.getElementsByClassName("class-row");
+                    for (let i = 0; i < rows.length; i++){ 
+                        const newRow = response[i];
+                        rows[i].setAttribute("data", "tr-" + newRow["doctorName"]);
+                        for (let column = 0; column < rows[i].children.length; column++) {
+                            let td = rows[i].children[column];
+                            const helperAttr = td.getAttribute("helper");
+                            if (!helperAttr || helperAttr === null) {
+                                continue;
+                            }
+                            if (helperAttr === "td-two-childrens") {
+                                const childAttr = td.children[0].getAttribute("helper");
+                                const helperLowerCase = childAttr.charAt(0).toLowerCase() + childAttr.slice(1);
+                                const helper = newRow[helperLowerCase];
+                                td.children[0].innerHTML = helper;
+                            }
+                            else {
+                                const helperLowerCase = helperAttr.charAt(0).toLowerCase() + helperAttr.slice(1);
+                                const helper = newRow[helperLowerCase];
+                                td.innerHTML = helper;
+                            }
+                            
+
+                            
+                        }
+                    }
+                    const pageNumber = document.getElementById("page-number");
+                    pageNumber.innerHTML = "Page " + (page + 1);
+                },
+
+                error:function (response) {
+                    console.log(JSON.stringify(response));
+                }
+
+            });
+}
+
+function PreviousPage() {
+    page = page - 1;
+    $.ajax({
+
+        url: '@Url.Action("PageAppointmentsDetails", "Admin")',
+
+        type: "GET",
+
+
+        data: { page: page },
+
+        success: function(response) {
+            let rows = document.getElementsByClassName("class-row");
+            for (let i = 0; i < rows.length; i++) {
+                const newRow = response[i];
+                rows[i].setAttribute("data", "tr-" + newRow["doctorName"]);
+                for (let column = 0; column < rows[i].children.length; column++) {
+                    let td = rows[i].children[column];
+                    const helperAttr = td.getAttribute("helper");
+                    if (!helperAttr || helperAttr === null) {
+                        continue;
+                    }
+                    if (helperAttr === "td-two-childrens") {
+                        const childAttr = td.children[0].getAttribute("helper");
+                        const helperLowerCase = childAttr.charAt(0).toLowerCase() + childAttr.slice(1);
+                        const helper = newRow[helperLowerCase];
+                        td.children[0].innerHTML = helper;
+                    }
+                    else {
+                        const helperLowerCase = helperAttr.charAt(0).toLowerCase() + helperAttr.slice(1);
+                        const helper = newRow[helperLowerCase];
+                        td.innerHTML = helper;
+                    }
+
+
+
+                }
+            }
+            const pageNumber = document.getElementById("page-number");
+            pageNumber.innerHTML = "Page " + (page + 1);
+        },
+    
+                error:function (response) {
+                    console.log(JSON.stringify(response));
+                }
+
+            });
+}
+let countClick = 0;
+function DisplayDoctorAppointment() {
+    countClick++;
+    const dropdownValue = document.getElementById("div-dropdown").value.split().join(' ');
+    const rows = document.getElementsByClassName("class-row");
+    if (countClick > 1) {
+               for (let i = 0; i < rows.length; i++) {
+                    if (rows[i].style.display === "none") {
+                        rows[i].style.display = "";
+                    }
+        }
+        if (dropdownValue == "View All") {
+            return rows;
+        }
+    }
+   
+    for (let i = 0; i < rows.length; i++) {
+        if (rows[i].attributes['data'].value.split(' ').filter(x => x.length > 0).join(' ') != "tr-" + dropdownValue) {
+            rows[i].style.display = "none";
+        }
+    }
+
+   
+    };
+function EditAppointmentTime() {
+    let id = event.srcElement.parentNode.id;
+    let td = document.getElementById("td-" + id);
+    td.style.display = "none";
+    let tdforum = document.getElementById("td-forum-" + id);
+    tdforum.style.display = "block";
+
+};
+function SaveTime() {
+	const id = event.srcElement.getAttribute('data');
+    let newTime = document.getElementById("c-"+id).value;
+    newTime = newTime.toString();
+	 $.ajax({
+
+                url:'@Url.Action("EditAppointmentTime", "Admin")',
+
+                type:"POST",
+
+                //dataType:"json",
+
+                data: { id: id, newTime:newTime},
+
+                success:function (response) {
+                    alert('success');
+					let form = document.getElementById("td-forum-"+id);
+					form.style.display = "none";
+                    let td = document.getElementById("td-" + id);
+                    let result = document.getElementById("h-" + id);
+                    result.innerHTML = response;
+					td.style.display = "block";
+                },
+
+                error:function (response) {
+                    console.log(JSON.stringify(response));
+                }
+
+            });
+	
+};
+     
+  function DeleteAppointment() {
+
+        const id = event.srcElement.parentNode.id;
+
+            $.ajax({
+
+                url:'@Url.Action("DeleteAppointment", "Admin")',
+
+                type:"DELETE",
+
+                data: { id: id },
+
+                success:function (data) {
+                    console.log('deleted appointment ' + id);
+                   document.getElementById('status-'+ id).remove();
+
+
+
+                },
+
+                error:function (response) {
+                    console.log(JSON.stringify(response));
+                }
+
+            });
+
+};
+     function AcceptAppointment(){
+    
+        const id = event.srcElement.parentNode.id;
+         $.ajax({
+             url: '@Url.Action("AcceptAppointment", "DoctorAccount")',
+
+             type: "POST",
+
+             data: { appointmentId: id },
+             success: function(data) {
+                 alert("Programare acceptata cu succes");
+                 const element = document.getElementById("stare-" + id);
+                 element = "Programare_Acceptata";
+             },
+
+             error: function(response) {
+                 console.log(JSON.stringify(response));
+             }
+         });
+};
+function EditAppointmentStatus() {
+     let id = event.srcElement.parentNode.id;
+    let td = document.getElementById("status-td-" + id);
+    td.style.display = "none";
+    let select = document.getElementById("edit-" + id);
+    select.style.display = "block";
+}
+
+function SaveStatus() {
+    const id = event.srcElement.id;
+    const dropdownValue = document.getElementById("div-dropdown-"+id).value;
+     $.ajax({
+             url: '@Url.Action("AcceptAppointment", "DoctorAccount")',
+
+             type: "POST",
+
+             data: { appointmentId: id, stare:dropdownValue },
+             success: function(data) {
+                 alert("Status programare schimbat cu succes");
+                let select = document.getElementById("edit-" + id);
+                select.style.display = "none";
+                let td = document.getElementById("status-td-" + id);
+                td.style.display = "block";
+                 td.innerHTML = dropdownValue;
+
+             },
+
+             error: function(response) {
+                 console.log("Error");
+                 console.log(JSON.stringify(response));
+             }
+         });
+}
+</script>
+
+

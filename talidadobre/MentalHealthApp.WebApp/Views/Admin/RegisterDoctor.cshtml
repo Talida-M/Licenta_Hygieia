@@ -1,0 +1,125 @@
+﻿@model MentalHealthApp.BusinessLogic.Implementation.Account.ViewModels.RegisterDoctorModel
+@{
+    ViewData["Title"] = "View";
+}
+
+<head>
+      <link href="~/css/map.css" rel="stylesheet" type="text/css" />
+    <script  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDoXRvHuYgJDyVIhkYxJN8zhPa_6tRbces&libraries=places"></script>
+    <script  defer src="~/js/googleAPIScript.js" type="text/javascript"></script>  
+    <link rel="stylesheet" href="~/css/dashboard.css"/>
+</head>
+
+<h1>Register Doctor</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" enctype="multipart/form-data" asp-action="RegisterDoctor" asp-controller="Admin">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="LastName" class="control-label">Nume</label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FirstName" class="control-label">Prenume</label>
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+             <div class="form-group">
+                <label asp-for="BirthDate" class="control-label">Data nastere</label>
+                <input asp-for="BirthDate" class="form-control" />
+                <span asp-validation-for="BirthDate" class="text-danger"></span>
+            </div>
+              <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+               <div class="form-group">
+                <label asp-for="PhoneNumberCountryPrefix" class="control-label">Perfix telefon</label>
+                <input asp-for="PhoneNumberCountryPrefix" class="form-control" />
+                <span asp-validation-for="PhoneNumberCountryPrefix" class="text-danger"></span>
+            </div>
+               <div class="form-group">
+                <label asp-for="PhoneNumber" class="control-label">Numar Contact</label>
+                <input asp-for="PhoneNumber" class="form-control" />
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+               <div class="form-group">
+                <label asp-for="Specialty" class="control-label"></label>
+                <input asp-for="Specialty" class="form-control" />
+                <span asp-validation-for="Specialty" class="text-danger"></span>
+            </div>
+               <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+              <label  asp-for="AppointmentDate">Durata Sedinta</label>
+              <input class="form-control" asp-for="AppointmentDate" rows="3" >
+              <span asp-validation-for="AppointmentDate"class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PasswordHash" class="control-label">Parola</label>
+                <input asp-for="PasswordHash" type="password" class="form-control" />
+                <span asp-validation-for="PasswordHash" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Country" class="control-label">Tara</label>
+                <input asp-for="Country" class="form-control" />
+                <span asp-validation-for="Country" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="County" class="control-label">Judet</label>
+                <input asp-for="County" class="form-control" />
+                <span asp-validation-for="County" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="City" class="control-label">Oras</label>
+                <input asp-for="City" class="form-control" />
+                <span asp-validation-for="City" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StreetNumber" class="control-label">Strada, Numar</label>
+                <input asp-for="StreetNumber" class="form-control" />
+                <span asp-validation-for="StreetNumber" class="text-danger"></span>
+            </div>
+              <div class="form-group">
+                <label asp-for="ApartmentBuildingFloor" class="control-label">Bloc, Scara, Apartament</label>
+                <input asp-for="ApartmentBuildingFloor" class="form-control" />
+                <span asp-validation-for="ApartmentBuildingFloor" class="text-danger"></span>
+            </div>
+              <div class="form-group">
+                <label asp-for="Sector" class="control-label">Sector</label>
+                <input asp-for="Sector" class="form-control" />
+                <span asp-validation-for="Sector" class="text-danger"></span>
+            </div>
+              <div class="form-group">
+                <label asp-for="ZipCode" class="control-label">Cod Postal</label>
+                <input asp-for="ZipCode" class="form-control" />
+                <span asp-validation-for="ZipCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserImage" class="control-label">Imagine Profil </label>
+                <input asp-for="UserImage" type="file" class="form-control" />
+                <span asp-validation-for="UserImage" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input style="background: radial-gradient(ellipse at bottom, #8dcdf9 0%, #322835 100%); color:white; border-color:  #577be7" type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+        <a asp-action="DoctorsPage" asp-controller="Admin" style="background: radial-gradient(ellipse at bottom, #8dcdf9 0%, #322835 100%);color:white" class="btn btn-std mt-link">Cancel</a>
+
+    </div>
+</div>
+
+
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
