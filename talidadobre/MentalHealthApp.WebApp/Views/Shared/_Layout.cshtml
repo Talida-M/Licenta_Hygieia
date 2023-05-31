@@ -25,10 +25,10 @@
   <div class="starfifth"></div>
 </div>
     <header style="padding: 0px">
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light  border-bottom box-shadow mb-3 " style="background: radial-gradient(ellipse at bottom, #8dcdf9 0%, #322835 100%); box-shadow:0.3rem 0.5rem 0.95rem rgb(247 242 242 / 20%);">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light  border-bottom box-shadow mb-3 " style="background:radial-gradient(ellipse at bottom, #fff 0%, #ffffff 100%); box-shadow:0.3rem 0.5rem 0.95rem rgb(0 0 0 / 20%);">
             <div class="container-fluid">
-                  <img style="  z-index: 99999; width: 38px; max-height: 80%;  max-width: 80%;" class="preloader-logo" src="~/images/Logo.png" width=90>
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Hygieia</a>
+                <img style="  z-index: 99999; width: 130px; max-height: 80%;  max-width: 80%;" class="preloader-logo" src="~/images/logo3.png" width=90 onclick="goToFirstPage()">
+                @*<a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Hygieia</a>*@
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -48,21 +48,21 @@
                                     var role = User.Claims.Where(c => c.Type == ClaimTypes.Role).FirstOrDefault().Value;
                                     if (role == "Pacient" || role == "Specialist")
                                     {
-                                                    <li class="nav-item">
-                                                        <a class="nav-link text-dark" asp-controller="Forum" asp-action="ViewForumFirstPage" >Forum</a>
-                                                        </li>
+                                                                    <li class="nav-item">
+                                                                        <a class="nav-link text-dark" asp-controller="Forum" asp-action="ViewForumFirstPage" >Forum</a>
+                                                                        </li>
                                          
                                         
                                            
                                 }
                                 if(role == "Pacient")
                                   {
-                                           <li class="nav-item">
-                                                    <a class="nav-link text-dark" asp-controller="Profile" asp-action="DoctorsProfile" >Medici</a>
-                                        </li>
-                                                    <li class="nav-item">
-                                                            <a class="nav-link text-dark" asp-controller="Profile" asp-action="UserProfile" >Profil</a>
+                                                           <li class="nav-item">
+                                                                    <a class="nav-link text-dark" asp-controller="Profile" asp-action="DoctorsProfile" >Medici</a>
                                                         </li>
+                                                                    <li class="nav-item">
+                                                                            <a class="nav-link text-dark" asp-controller="Profile" asp-action="UserProfile" >Profil</a>
+                                                                        </li>
                                 }
 }
                             }
@@ -70,36 +70,36 @@
                            if (CurrentUser.isAuthenticated)
                             {
                               var role = User.Claims.Where(c => c.Type == ClaimTypes.Role).FirstOrDefault().Value;
-                                           @if (role == "Admin")
+                                                           @if (role == "Admin")
                                 {
                            
-                                                <li class="nav-item">
-                                            <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Dashboard">Administrare</a>
-                                            </li>
+                                                                <li class="nav-item">
+                                                            <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Dashboard">Administrare</a>
+                                                            </li>
                                 }
                         }
                                               
                            if (CurrentUser.isAuthenticated)
                             {
                               var role = User.Claims.Where(c => c.Type == ClaimTypes.Role).FirstOrDefault().Value;
-                                          @if (role == "Specialist")
+                                                          @if (role == "Specialist")
                             {
-                                     <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-controller="DoctorAccount" asp-action="GetPacients">Pacientii Mei</a>
-                                        </li>
-                                             <li class="nav-item">
-                                                    <a class="nav-link text-dark" asp-controller="MedicalReports" asp-action="CreateMedicalReport" >Creaza Raport</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                    <a class="nav-link text-dark" asp-controller="Profile" asp-action="DoctorProfile" >Profil</a>
-                                            </li>
-                                            <div class="dropdown">
-                                                    <li style="color:black" value="Programari" class="dropbtn">Programari</li>
-                                                <div class="dropdown-content">
-                                                        <a asp-area="" asp-controller="DoctorAccount" asp-action="PhysicalAppointments">Fizic</a>
-                                                        <a asp-area="" asp-controller="DoctorAccount" asp-action="OnlineAppointments">Online</a>
-                                                </div>
-                                            </div> 
+                                                     <li class="nav-item">
+                                                        <a class="nav-link text-dark" asp-controller="DoctorAccount" asp-action="GetPacients">Pacientii Mei</a>
+                                                        </li>
+                                                             <li class="nav-item">
+                                                                    <a class="nav-link text-dark" asp-controller="MedicalReports" asp-action="CreateMedicalReport" >Creaza Raport</a>
+                                                            </li>
+                                                            <li class="nav-item">
+                                                                    <a class="nav-link text-dark" asp-controller="Profile" asp-action="DoctorProfile" >Profil</a>
+                                                            </li>
+                                                            <div class="dropdown">
+                                                                    <li style="color:black" value="Programari" class="dropbtn">Programari</li>
+                                                                <div class="dropdown-content">
+                                                                        <a asp-area="" asp-controller="DoctorAccount" asp-action="PhysicalAppointments">Fizic</a>
+                                                                        <a asp-area="" asp-controller="DoctorAccount" asp-action="OnlineAppointments">Online</a>
+                                                                </div>
+                                                            </div> 
                              
 
                                 }
@@ -112,35 +112,35 @@
                     if(CurrentUser.isAuthenticated)
                     {
                        
-                                            <p style="flex-shrink: 0;  margin-right:3px;  margin-bottom: 0;">@CurrentUser.FirstName</p> 
+                                                            <p style="flex-shrink: 0;  margin-right:3px;  margin-bottom: 0; color:black;">@CurrentUser.FirstName</p> 
                               
 		                        var base64 = Convert.ToBase64String(@CurrentUser.UserImage);                  
 		                        var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
 		                        if(@imgSrc == "data:image/gif;base64,")
 		                        {
-                                                <img style="flex-shrink: 0;   margin-bottom: 0;  z-index: 99999;  height: 50px; width: 50px; max-height: 80%; object-fit:cover; max-width: 80%; margin-left:5px border-radius: 50%;" class="img-lg rounded-circle border shadow"  src="~/images/Userprofile.jpg" alt="">
+                                <img style="flex-shrink: 0;   margin-bottom: 0;  z-index: 99999;  height: 50px; width: 50px; max-height: 80%; object-fit:cover; max-width: 80%; margin-left:5px border-radius: 50%; border: 1px solid black !important;" class="img-lg rounded-circle border shadow" src="~/images/Userprofile.jpg" alt="">
 		                        }
 		                        else{
-                                                <img  width=120  style="flex-shrink: 0;   margin-bottom: 0;  z-index: 99999;  height: 50px; width: 50px; max-height: 80%; object-fit:cover; margin-left:5px;  max-width: 80%; border-radius: 50%;" class="img-lg rounded-circle border shadow"  src="@imgSrc" alt="" />
+                                                                <img  width=120  style="flex-shrink: 0;   margin-bottom: 0;  z-index: 99999;  height: 50px; width: 50px; max-height: 80%; object-fit:cover; margin-left:5px;  max-width: 80%; border-radius: 50%; border: 1px solid black !important;" class="img-lg rounded-circle border shadow"  src="@imgSrc" alt="" />
 		                        }
               
 
-                                                                        <div style="flex-shrink: 0;  margin-right: 2%; font-size: 1.4rem;  margin-bottom: 0;  z-index: 99999;" class="dropdown">
-                                                                            <a   value="Programari" class="dropbtn"><i class="fa fa-bars"></i></a>
-                                                                        <div class="dropdown-content" style=" margin-left: -40px;">
-                                                                                <a asp-controller="UserAccount" asp-action="Logout"> Log Out</a>
-                                                                        </div>
-                                                                        </div>
+                                                                                        <div style="flex-shrink: 0;  margin-right: 2%; font-size: 1.4rem;  margin-bottom: 0;  z-index: 99999;" class="dropdown">
+                                                                                            <a   value="Programari" class="dropbtn"><i class="fa fa-bars"></i></a>
+                                                                                        <div class="dropdown-content" style=" margin-left: -40px;">
+                                                                                                <a asp-controller="UserAccount" asp-action="Logout"> Log Out</a>
+                                                                                        </div>
+                                                                                        </div>
                     }
                     else
                     {
-                                        <div class="dropdown" style="flex-shrink: 0;  margin-right: 2%; font-size: 1.4rem;  margin-bottom: 0;  z-index: 99999;">
-                                        <a class="dropbtn"><i class="fa fa-bars"></i></a>
-                                    <div class="dropdown-content" style="font-size: 0.9rem;  margin-left: -40px;" >
-                                            <a asp-controller="UserAccount" asp-action="Login"> Log In</a>
-                                            <a asp-controller="UserAccount" asp-action="Register">Register User</a>
-                                    </div>
-                                </div> 
+                                                        <div class="dropdown" style="flex-shrink: 0;  margin-right: 2%; font-size: 1.4rem;  margin-bottom: 0;  z-index: 99999;">
+                                                        <a class="dropbtn"><i class="fa fa-bars"></i></a>
+                                                    <div class="dropdown-content" style="font-size: 0.9rem;  margin-left: -40px;" >
+                                                            <a asp-controller="UserAccount" asp-action="Login"> Log In</a>
+                                                            <a asp-controller="UserAccount" asp-action="Register">Register User</a>
+                                                    </div>
+                                                </div> 
                                             
                                           
                             }
@@ -169,8 +169,9 @@
                     </html>
 
 
- @*<script>
-    window.addEventListener("load", function() {
-        document.getElementById("ProfileImage").src = localStorage.getItem("image");
-    });
- </script>*@
+<script>
+    function goToFirstPage(){
+        window.location.href = '@Url.Action("Privacy", "Home")';
+
+    }
+ </script>

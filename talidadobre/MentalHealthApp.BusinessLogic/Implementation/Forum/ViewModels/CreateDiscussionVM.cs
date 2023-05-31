@@ -11,6 +11,7 @@ namespace MentalHealthApp.BusinessLogic.Implementation.Forum.ViewModels
         //public Guid Id { get; set; }
         public string Title { get; set; } = null!;
         public string MessageContent { get; set; } = null!;
+        public string Topic { get; set; } = null!;
         public List<DiscussionVM> DiscussionVMs { get; set; } = null!;
     }
 }

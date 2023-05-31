@@ -16,6 +16,8 @@ using System.Text.Json.Nodes;
 using MentalHealthApp.WebApp.Code.ExtensionMethods;
 using MentalHealthApp.WebApp.Models;
 using MentalHealthApp.BusinessLogic.Implementation.Appointments.ViewModels;
+using MentalHealthApp.Entities.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace MentalHealthApp.WebApp.Controllers
 {
@@ -252,6 +254,45 @@ namespace MentalHealthApp.WebApp.Controllers
             return View("DoctorsPage", model);
         }
 
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
+        public IActionResult GetCVPageVerification()
+        {
+            var editDoctorDtos = _doctorAccountService.GetInactiveDoctors();
+            return View("CVPageVerification", editDoctorDtos);
+        }
+
+        public ActionResult OpenCV(int cvId)
+        {
+            CVModel doctorCV = _doctorAccountService.GetDoctorCV(cvId);
+            if (doctorCV != null)
+            {
+                byte[] fileContent = doctorCV.DataFiles;
+                string fileType = doctorCV.FileType;
+                string fileName = doctorCV.Name;
+
+                return File(fileContent, "application/" + fileType, fileName);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public ActionResult ActivateUser(Guid id)
+        {
+           var result =  _doctorAccountService.ActivateUser(id);
+            if (result == true)
+            {
+                return RedirectToAction("GetCVPageVerification");
+            }
+            else
+            {
+                return View("Actiunea nu a avut succes");
+            }
+        }
 
         [HttpGet]
         public IActionResult RegisterDoctor()
@@ -269,12 +310,17 @@ namespace MentalHealthApp.WebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> RegisterDoctor(RegisterDoctorModel model)
         {
-            if (model == null)
-            {
-                return View("PageNotFound");
-            }
             //string responseBody = await client.GetStringAsync("https://regmed.cmr.ro/api/v2/public/medic/cautare/" + model.LastName + model.FirstName);
             HttpResponseMessage response = await client.GetAsync("https://regmed.cmr.ro/api/v2/public/medic/cautare/" + model.LastName + model.FirstName);
+            if (response == null)
+            {
+                response = await client.GetAsync("https://regmed.cmr.ro/api/v2/public/medic/cautare/" + model.FirstName + model.LastName);
+            }
+            if(model.Specialty == "Psihoterapie" || model.Specialty == "Psihologie")
+            {
+                _doctorAccountService.RegisterNewDoctor(model);
+                return RedirectToAction("Index", "Home");
+            }
             response.EnsureSuccessStatusCode();
             string responseBody = await response.Content.ReadAsStringAsync();
             var responseJson = (JObject)JsonConvert.DeserializeObject(responseBody);
@@ -289,7 +335,7 @@ namespace MentalHealthApp.WebApp.Controllers
                     var isPsihiatru = (responseData["results"][i]["specialitati"].Value<dynamic>() as JArray)
                         .Select(s => (string)s.Value<dynamic>().nume)
                         .Any(s => s.ToLower() == "psihiatrie");
-                    if (status == "Activ" && judet.NormalizeString().Equals(model.County))
+                    if ((status == "Activ" && judet.NormalizeString().Equals(model.County)) || CurrentUser.isAdmin == true)
                     {
                         _doctorAccountService.RegisterNewDoctor(model);
                         return RedirectToAction("Index", "Home");
@@ -315,6 +361,8 @@ namespace MentalHealthApp.WebApp.Controllers
             _doctorAccountService.EditDoctorInfo(userDto);
             return RedirectToAction("DoctorsPage");
         }
+
+     
 
         [Authorize(Roles = "Admin")]
         [HttpGet]

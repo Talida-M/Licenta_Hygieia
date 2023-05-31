@@ -53,11 +53,20 @@ namespace MentalHealthApp.WebApp.Controllers
             return View("ConditionPost", article);
         }
 
-        public IActionResult Index()
+        public  IActionResult Index()
         {
-            var articlesList = _homePageService.GetAllArticles();
+            var articlesList =  _homePageService.GetAllArticles();
             var conditionList = _homePageService.GetFourConditions();
-            ViewData["UserImage"]  = _user.GetUserImage();
+            if(CurrentUser.isAuthenticated == true)
+            {
+                var status = _user.GetUserActiveStatus();
+                if (status != null)
+                {
+                    ViewBag.IsActiveStatus = status;
+                    ViewData["UserImage"] = _user.GetUserImage();
+                }
+            }
+           
             var model = new HomePageVM()
             {
                 TopReads = articlesList.Select(art => new TopReadsVM

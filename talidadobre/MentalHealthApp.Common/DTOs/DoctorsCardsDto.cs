@@ -12,6 +12,9 @@ namespace MentalHealthApp.Common.DTOs
         public string LastName { get; set; } = null!;
         public string FirstName { get; set; } = null!;
         public string Email { get; set; } = null!;
-        public string PhoneNumber { get; set; } = null!;
+        public string Specialitate { get; set; } = null!;
+        public string City { get; set; } = null!;
+        public int Price { get; set; } = 0;
+        public double Rating { get; set; } = 0;
     }
 }

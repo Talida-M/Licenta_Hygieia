@@ -161,3 +161,37 @@ h3, p, a {
         opacity: 1;
     }
 }
+
+
+
+.inner-wrap {
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 2rem;
+    grid-gap: 0rem 1rem;
+    display: grid;
+    margin-left: 3%;
+}
+
+#accordion_search_bar_container {
+    position: relative;
+}
+
+    #accordion_search_bar_container:after {
+        content: "\e003";
+        font-family: 'Glyphicons Halflings';
+        width: 18px;
+        height: 18px;
+        position: absolute;
+        right: 10px;
+        bottom: 10px;
+    }
+
+#accordion_search_bar {
+    display: block;
+    margin: 10px auto;
+    width: 100%;
+    padding: 7px 10px;
+    border: 1px solid black; 
+    border-radius: 25px;
+    outline: 0;
+}

@@ -90,6 +90,30 @@ namespace MentalHealthApp.BusinessLogic.Implementation.MedicalReports
                 return finalResult;
             });
         }
+
+        public List<PacientMedicalReportVM> ViewPacientMedicalHistory(Guid id)
+        {
+            return ExecuteInTransaction(uow =>
+            {
+                var reports = uow.MedicalReports.Get()
+                                                 .Include(md => md.Specialist)
+                                                 .Where(md => md.PacientId.Equals(id) )
+                                                 .Select(u => new PacientMedicalReportVM
+                                                 {
+                                                     Id = u.Id,
+                                                     UserId = id,
+                                                     Pacient = uow.IdentityUsers.Get().Where(iu => iu.Id.Equals(id)).Select(iu => $"{iu.FirstName} {iu.LastName}").Single(),
+                                                     Doctor = uow.IdentityUsers.Get().Where(iu => iu.Id.Equals(u.Specialist.SpecialistId)).Select(iu => $"{iu.FirstName} {iu.LastName}").Single(),
+                                                     ReportDate = u.ReportDate,
+                                                     MedicalHistory = u.MedicalHistory,
+                                                     Condition = u.Condition,
+                                                     Prescription = u.Prescription
+                                                 }).ToList();
+                var finalResult = reports.OrderByDescending(u => u.ReportDate).ToList();
+                return finalResult;
+            });
+        }
+
         public PacientMedicalReportVM ViewMedicalHistoryById(Guid id)
         {
             return ExecuteInTransaction(uow =>
@@ -100,7 +124,7 @@ namespace MentalHealthApp.BusinessLogic.Implementation.MedicalReports
                                                  .Select(u => new PacientMedicalReportVM
                                                  {
                                                      Id = u.Id,
-                                                     Pacient = CurrentUser.FirstName.ToString(),
+                                                     Pacient = uow.IdentityUsers.Get().Where(iu => iu.Id.Equals(u.PacientId)).Select(iu => $"{iu.FirstName} {iu.LastName}").Single(),
                                                      Doctor = uow.IdentityUsers.Get().Where(iu => iu.Id.Equals(u.Specialist.SpecialistId)).Select(iu => $"{iu.FirstName} {iu.LastName}").Single(),
                                                      ReportDate = u.ReportDate,
                                                      ReportDescription = u.ReportDescription,

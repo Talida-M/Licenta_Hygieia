@@ -18,9 +18,9 @@
 			<div class="col-lg-12 col-md-12 col-12">
 				<nav class="page-breadcrum" aria-label="breadcrumb">
 					<ol class="breadcrumb">
-						<li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Acasa</a></li>
-						<li class="breadcrumb-item"><a asp-controller="Profile" asp-action="UserProfile">Profil</a></li>
-						<li class="breadcrumb-item active" aria-current="page">Jurnalul meu</li>
+						<li class="breadcrumb-item"><a asp-controller="DoctorAccount" asp-action="GetPacients"> Pacientii mei </a></li>
+						<li class="breadcrumb-item"><a asp-controller="DoctorAccount" asp-action="GetDashboardView" asp-route-id="@ViewBag.UserId">Dashboard Pacient</a></li>
+						<li class="breadcrumb-item active" aria-current="page">Jurnalul Pacientului</li>
 
 					</ol>
 				</nav>

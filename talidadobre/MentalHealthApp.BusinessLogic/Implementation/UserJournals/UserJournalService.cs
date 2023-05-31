@@ -98,6 +98,7 @@ namespace MentalHealthApp.BusinessLogic.Implementation.UserJournals
             });
         }
 
+
         public bool ChangeDiagnosticPublicField(bool isPublic, Guid id)
         {
             return ExecuteInTransaction(uow =>

@@ -29,7 +29,7 @@
                       <nav class="page-breadcrum" aria-label="breadcrumb">
                             <ol class="breadcrumb">
                               <li class="breadcrumb-item"><a href="@Url.Action("Dashboard","Admin")">Dashboard</a></li>
-                             <li class="breadcrumb-item active" aria-current="page">Appointments Details</li>
+                             <li class="breadcrumb-item active" aria-current="page">Detalii Programari</li>
 
                               </ol>
                           </nav>
@@ -52,7 +52,7 @@
             <option>View All</option>
         </select>
 </span>
-    <button onclick="DisplayDoctorAppointment()" style=" background: radial-gradient(ellipse at bottom, #a866f1 0%, #577be7 100%); border-color: #577be7; color:white">Search</button>
+    <button onclick="DisplayDoctorAppointment()" style=" background: radial-gradient(ellipse at bottom, #a866f1 0%, #577be7 100%); border-color: #577be7; color:white">Cauta</button>
 
 </div>
    <table class="table table-bordered table-hover table-striped table-sm" id="appointment_list">
@@ -88,7 +88,7 @@
                         <button class="btn btn-std mb-link" style="background: radial-gradient(ellipse at bottom, #f7f7f7 0%, #2f6196 100%);" onclick="SaveStatus()" id="@programare.Id">Salveaza</button>
 						</div>
                         <td id="td-@programare.Id">
-                              <button  onclick="EditAppointmentTime()" id="@programare.Id" ><i class="fa fa-clock"></i><i class="fa fa-marker" ></i></button>
+                              @*<button  onclick="EditAppointmentTime()" id="@programare.Id" ><i class="fa fa-clock"></i><i class="fa fa-marker" ></i></button>*@
                               <button onclick="EditAppointmentStatus()" id="@programare.Id"  ><i class="fa fa-pen" title="Edit Status" aria-hidden="true"></i></button>
                               @*<button onclick="AcceptAppointment()" id="@programare.Id"  ><i class="fa fa-check" title="Accept Status"></i></button>*@
                         </td>
@@ -108,9 +108,9 @@
                     <tbody>
                     </tbody>
                 </table>
-            <a  class="btn btn-std mb-link" asp-action="AppointmentsDetails" asp-controller="Admin" asp-route-page="@(Model.page - 1)">Previous Page</a>
-            <a  class="btn btn-std mb-link"  asp-action="AppointmentsDetails" asp-controller="Admin" asp-route-page="@(Model.page + 1)" >Next Page</a>
-            <p id="page-number">Page @Model.page</p>
+            <a style="background-color:  #577be7; border-color:  #577be7;color: white;" class="btn btn-std mb-link" asp-action="AppointmentsDetails" asp-controller="Admin" asp-route-page="@(Model.page - 1)">Anterior</a>
+            <a style="background-color:  #577be7; border-color:  #577be7;color: white;" class="btn btn-std mb-link" asp-action="AppointmentsDetails" asp-controller="Admin" asp-route-page="@(Model.page + 1)">Urmator</a>
+            <p id="page-number">Pagina @Model.page</p>
 
 <script>
 

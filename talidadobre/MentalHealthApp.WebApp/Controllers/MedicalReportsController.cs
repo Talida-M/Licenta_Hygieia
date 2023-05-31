@@ -43,12 +43,20 @@ namespace MentalHealthApp.WebApp.Controllers
             return View("UserHistory", model);
         }
 
-        [Authorize(Roles = "Pacient")]
+
+        [Authorize(Roles = "Specialist")]
+        [HttpGet]
+        public IActionResult ViewPacientMedicalHistory(Guid id)
+        {
+            var model = _medicalReport.ViewPacientMedicalHistory(id);
+            return View("UserHistory", model);
+        }
+
         [HttpGet]
         public IActionResult ViewAReport(Guid id)
         {
             var model = _medicalReport.ViewMedicalHistoryById(id);
-
+            ViewData["UserId"] = id;
             return View("MedicalReportView", model);
         }
     }

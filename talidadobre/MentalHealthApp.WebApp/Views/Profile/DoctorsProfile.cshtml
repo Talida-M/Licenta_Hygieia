@@ -2,27 +2,25 @@
 
 
 
-<!DOCTYPE html>
-<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <script src="https://kit.fontawesome.com/bdd89edb33.js"></script>
      <script src="https://kit.fontawesome.com/049529442a.js" crossorigin="anonymous"></script>
+    @*<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">*@
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
+
     <link rel="stylesheet" href="~/css/doctorsProfile.css" />
-      <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet"> 
+     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet"> 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
 
-    <title>Profiles</title>
   </head>
 
 
-
-  <body>
        <section class="breadcrumb-bar">
           <div class="container-fluid">
               <div class="row">
@@ -37,43 +35,163 @@
                     </div>
                 </div>
             </section>
+
+<div id="accordion_search_bar_container">
+    <input type="search"
+           id="accordion_search_bar"
+           placeholder="Search" />
+</div>
+    <div class="filter-grid">
+        <div class="inner-wrap">
+            <div class="filter-cell">
+            <select class="form-control" id="specialitateFilter">
+                    <option value="*">Specialitate</option>
+                <option value="Psihiatrie">Psihiatrie</option>
+                <option value="Psihologie">Psihologie</option>
+                <option value="Psihoterapie">Psihoterapie</option>
+                </select>
+            </div>
+            <div class="filter-cell" >
+            <select class="form-control" id="orasFilter">
+                    <option value="*">Oras</option>
+                     @foreach(var city in ViewBag.CitiesList){
+                        <option value="@city">@city</option>
+
+                     }
+                </select>
+            </div>
+            <div class="filter-cell">
+            <select class="form-control" id="ratingFilter">
+                    <option value="*">Rating</option>
+                    <option value="5">5 stele</option>
+                    <option value="4">4 stele</option>
+                    <option value="3">3 stele</option>
+                    <option value="2">2 stele</option>
+                    <option value="1">1 stele</option>
+                </select>
+            </div>
+            <div class="filter-cell">
+            <select class="form-control" id="pretFilter">
+                    <option value="*">Pret</option>
+                    <option value="100"> sub 100 lei</option>
+                    <option value="200"> 100 - 200 lei </option>
+                    <option value="200+"> 200 lei > </option>
+                </select>
+            </div>
+     
+        </div>
+    <button id="filterButton" class="btn btn-primary">Filtreaza</button>
+    </div>
+
+@*style="    margin-right: -13%;"*@
+
+<span></span>
     <div class="landing">
-      <div class="container" style="    margin-right: -13%;">
+    <div class="container" data-search="true" data-striped="true">
             @{
                 foreach (var doctor in Model)
                 {
                                 var base64 = Convert.ToBase64String(@doctor.DoctorImage);                  
                                  var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
-                                          <div class="card">
-                                        <div class="top-section">
-                                        @if(@imgSrc == "data:image/gif;base64,"){
-                                            <img id="doctor-img" src="~/images/Userprofile.jpg" alt="">
+                                                                          <div class="card">
+                                                                        <div class="top-section">
+                                                                        @if(@imgSrc == "data:image/gif;base64,"){
+                                                                            <img id="doctor-img" src="~/images/Userprofile.jpg" alt="">
                                         }
                                         else{
-                                             <img id="doctor-img" src="@imgSrc" alt="" />
+                                                                             <img id="doctor-img" src="@imgSrc" alt="" />
                                         }
-                                     
-                                     <div class="name">
-                                        <span>@doctor.LastName</span>
-                                        <br />
-                                        <span>@doctor.FirstName</span>
-                                    </div>
-                                </div>
-                                <div class="info-section">
-                                    <p>
-                                        Contact: @doctor.PhoneNumber 
-                                        <br>
-                                        Email:   @doctor.Email
-                                    </p>
-                                    <div class="social">
-                                        <a class="More info" href="@Url.Action("DoctorInfo", "Profile", new { email = @doctor.Email })"  >More Info Here</a>
-                                    </div>
-                                </div>
-                            </div>
+                                                                     
+                                                                     <div class="name">
+                                                                        <span>@doctor.LastName</span>
+                                                                        <br />
+                                                                        <span>@doctor.FirstName</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="info-section">
+                                                                <p id="filter-specialitate">
+                                                                    @doctor.Specialitate
+                                                                </p>
+                                                                 <p id="filter-oras">
+                                                                    <i class="fa fa-map-marker" aria-hidden="true"></i>@doctor.City
+                                                                     </p>   
+                                                                     <p id="filter-pret">
+                                                                        Pret:   @doctor.Price
+                                                                     </p>
+                                                                     <p id="filter-rating">
+                                                                        Rating: @doctor.Rating<i class="fa fa-star-o" aria-hidden="true"> </i>
+                                                                    </p>
+                                                                    <div class="social">
+                                                                        <a class="More info" href="@Url.Action("DoctorInfo", "Profile", new { email = @doctor.Email })"  >More Info Here</a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                            
                 }
                }
       </div>
     </div>
-  </body>
-</html>
+
+<script>
+    function search() {
+        var searchInput = document.getElementById("accordion_search_bar");
+        var cards = document.getElementsByClassName("card");
+
+        for (var i = 0; i < cards.length; i++) {
+            var name = cards[i].getElementsByClassName("name")[0];
+            var lastName = name.getElementsByTagName("span")[0].innerText.toLowerCase();
+            var firstName = name.getElementsByTagName("span")[1].innerText.toLowerCase();
+            var searchTerm = searchInput.value.toLowerCase();
+
+            if (lastName.includes(searchTerm) || firstName.includes(searchTerm)) {
+                cards[i].style.display = "block";
+            } else {
+                cards[i].style.display = "none";
+            }
+        }
+    }
+    // Add event listener to the search input
+    document.getElementById("accordion_search_bar").addEventListener("input", search);
+
+    function applyFilters() {
+        var specialitateFilter = document.querySelector("#specialitateFilter");
+        var orasFilter = document.querySelector("#orasFilter");
+        var ratingFilter = document.querySelector("#ratingFilter");
+        var pretFilter = document.querySelector("#pretFilter");
+
+        var cards = document.getElementsByClassName("card");
+
+        for (var i = 0; i < cards.length; i++) {
+            var card = cards[i];
+
+            var specialitate = card.querySelector("#filter-specialitate").innerText.trim();
+            var oras = card.querySelector("#filter-oras").innerText.trim();
+           // var rating = parseFloat(card.querySelector("#filter-rating").innerText);
+            var rating = card.querySelector("#filter-rating").innerText;
+            rating = parseFloat(rating.split(" ")[1]);
+            var pret = parseFloat(card.querySelector("#filter-pret").innerText.match(/\d+/)[0]);
+
+            var specialitateFilterValue = specialitateFilter.value;
+            var orasFilterValue = orasFilter.value;
+            var ratingFilterValue = ratingFilter.value;
+            var pretFilterValue = pretFilter.value;
+
+            var specialitateMatch = (specialitateFilterValue === "*" || specialitate === specialitateFilterValue);
+            var orasMatch = (orasFilterValue === "*" || oras === orasFilterValue);
+            var ratingMatch = (ratingFilterValue === "*" || rating >= parseFloat(ratingFilterValue));
+            const pretMatch = pretFilterValue === '*' ||
+                (pretFilterValue === '100' && pret < 100) ||
+                (pretFilterValue === '200' && pret >= 100 && pret <= 200) ||
+                (pretFilterValue === '200+' && pret > 200);
+
+            if (specialitateMatch && orasMatch && ratingMatch && pretMatch) {
+                card.style.display = "block";
+            } else {
+                card.style.display = "none";
+            }
+        }
+    }
+    document.querySelector("#filterButton").addEventListener("click", applyFilters);
+
+
+</script>

@@ -17,10 +17,10 @@
 		var role = User.Claims.Where(c => c.Type == ClaimTypes.Role).FirstOrDefault().Value;
 		if (role != "Admin")
 		{
-			<h2 id="title" style="    color: white; text-shadow: 2px 2px 3px #7092b7;">Impartaseste cu restul comunitatii povestea ta</h2>
-			  <div class="container">		
-				<a href="#modal-1" class="btn btn-std mt-link" onclick="HideCards()">Adauga o discutie</a>
-			</div>
+						<h2 id="title" style="    color: white; text-shadow: 2px 2px 3px #7092b7;">Impartaseste cu restul comunitatii povestea ta</h2>
+					  	<div class="container">		
+							<a href="#modal-1" class="btn btn-std mt-link" onclick="HideCards()">Adauga o discutie</a>
+						</div>
 		}
 	}
 
@@ -28,9 +28,36 @@
 
 		<div class="modal-wrapper">
 
-			<h3 class="modal-header">Adauga o discutie</h3>
+			@*<h3 class="modal-header">Adauga o discutie</h3>*@
             <form asp-controller="Forum" asp-action="CreateDiscussion">
 			<div class="modal-body ">
+				<div class="form-group" id="modal-text">
+                    <label asp-for="Topic" class="control-label"></label>
+						<span class="custom-dropdown big">
+							<select asp-for="Topic" class="form-control">
+								<option>ADHD</option>
+								<option>Autism</option>
+								<option>Anxietate</option>
+								<option>PTSD</option>
+								<option>Depresie</option>
+								<option>Dementa</option>
+								<option>Tulburare de alimentatie</option>
+								<option>Schizofrenie</option>
+								<option>Halucinatii</option>
+								<option>Fobii</option>
+								<option>Psihoze</option>
+								<option>Abuz de substante</option>
+								<option>Auto-vătămare</option>
+								<option>Disociere, depersonalizare și derealizare </option>
+								<option>Tulburare obsesiv-compulsiva</option>
+								<option>Tulburare de panică și agorafobie</option>
+								<option>Tulburări de personalitate</option>
+								<option>Tulburare bipolara</option>
+								<option>Ate conditii si experiente</option>
+							</select>
+							<span asp-validation-for="Topic" class="text-danger"></span>
+						</span>                    <span asp-validation-for="Topic" class="text-danger"></span>
+                </div>
 		         <div class="form-group" id="modal-text">
                     <label asp-for="Title" class="control-label"></label>
                     <input asp-for="Title" class="form-control" />
@@ -53,14 +80,19 @@
 
 	<section class="main-content">
 		<div class="container">
-			<h1 style=" color: white; text-shadow: 2px 2px 3px #7092b7;">Discutii</h1>
+			<h1 id="discutie-titlu" style=" color: white; text-shadow: 2px 2px 3px #7092b7;">Discutii</h1>
 			<br>
+			<div id="accordion_search_bar_container">
+				<input type="search"
+					   id="accordion_search_bar"
+					   placeholder="Cauta discutie dupa topic: ex: Depresie, ADHD..." />
+			</div>
 			<br>
 
 			<div class="row" id="cards">
 				 @foreach(var discutie in @Model.DiscussionVMs)
                 {
-					<div class="col-sm-6 col-md-6 col-lg-4" id="discutie-@discutie.Id">
+					<div class="col-sm-6 col-md-6 col-lg-4 card-primary" id="discutie-@discutie.Id">
 						<div class="card bg-white p-3 mb-4 shadow" >
 							<div class="d-flex justify-content-between mb-4">
 								<div class="user-info">
@@ -69,10 +101,10 @@
 														var base64 = Convert.ToBase64String(@discutie.UserImage);                  
 														var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
 														if(imgSrc == "data:image/gif;base64,"){
-																<img id="doctor-img" src="~/images/Userprofile.jpg" alt="">
+																			<img id="doctor-img" src="~/images/Userprofile.jpg" alt="">
 														}
 														else{
-													 			<img id="doctor-img" src="@imgSrc" alt="" />
+																		 	<img id="doctor-img" src="@imgSrc" alt="" />
 														}
 												
 												}
@@ -80,7 +112,7 @@
 									<div class="user-info__basic">
 										<h5 style="color: #323030; font-size:16px;  text-shadow: 2px 2px 3px #7092b7; " class="mb-0">@discutie.Username</h5>
 										<p  style="color: #323030; font-size:16px;  text-shadow: 2px 2px 3px #7092b7; " class="text-muted mb-0">@discutie.CommentDate </p>
-											<h3 style="color: #323030; font-size:16px;  text-shadow: 2px 2px 3px #7092b7; " class="text-muted mb-0">Topic: @discutie.Title </h3>
+											<h3 style="color: #323030; font-size:16px;  text-shadow: 2px 2px 3px #7092b7; " class="text-muted mb-0 topic">Topic: @discutie.Topic</h3>
 									</div>
 								</div>
 								<div class="dropdown open">
@@ -91,24 +123,24 @@
 									@{
 									if (@discutie.UserId.Equals(CurrentUser.Id) || role == "Admin")
 									{
-										<div class="dropdown-menu " aria-labelledby="triggerId1" id="dropdown-menu_" >
-										<button class="dropdown-item" ><i class="fa fa-pencil mr-1"></i> Edit</button>
-										<a class="dropdown-item text-danger" data="@discutie.Id" id="@discutie.UserId"><i class="fa fa-trash mr-1"></i> Delete</a>
-									</div>
+													<div class="dropdown-menu " aria-labelledby="triggerId1" id="dropdown-menu_" >
+													<button class="dropdown-item" ><i class="fa fa-pencil mr-1"></i> Edit</button>
+													<a class="dropdown-item text-danger" data="@discutie.Id" id="@discutie.UserId"><i class="fa fa-trash mr-1"></i> Delete</a>
+												</div>
 										
 									}
 									else{
 									
-										<div class="dropdown-menu " aria-labelledby="triggerId1" id="dropdown-menu_" style="display:none">
-										<button class="dropdown-item-text" ><i class="fa fa-pencil mr-1"></i> Edit</button>
-										<a class="dropdown-item text-danger" data="@discutie.Id" id="@discutie.UserId"><i class="fa fa-trash mr-1"></i> Delete</a>
-										</div>
+													<div class="dropdown-menu " aria-labelledby="triggerId1" id="dropdown-menu_" style="display:none">
+													<button class="dropdown-item-text" ><i class="fa fa-pencil mr-1"></i> Edit</button>
+													<a class="dropdown-item text-danger" data="@discutie.Id" id="@discutie.UserId"><i class="fa fa-trash mr-1"></i> Delete</a>
+													</div>
 									
 									}
 									}
 								</div>
 							</div>
-							<p id="continut" class="mb-0" style="color: #323030; font-size:16px;  text-shadow: 2px 2px 3px #7092b7; ">@discutie.MessageContent...</p>
+							<p id="continut" class="mb-0" style="color: #323030; font-size:16px;  text-shadow: 2px 2px 3px #7092b7; ">@discutie.Title...</p>
 							<div class="d-flex justify-content-between mt-4">
 								<a class="text-success font-weight-bold" style="color:#e75757!important" asp-action="ViewDiscussion" asp-controller="Forum" asp-route-id="@discutie.Id" id="@discutie.Id" >Vezi Discutie...</a>
 							</div>
@@ -139,24 +171,62 @@
             });
 }
 	function HideCards(){
-       var element = document.getElementById("cards");      
+       var element = document.getElementById("cards");
+	   var elementTitlu = document.getElementById("discutie-titlu");
+	   var elementSearch = document.getElementById("accordion_search_bar_container");
        element.style.display = "none";
+	   elementTitlu.style.display = "none";
+	   elementSearch.style.display = "none";
 }
 	function DisplayHiddenCards() {
 		var element = document.getElementById("cards");
+		var elementTitlu = document.getElementById("discutie-titlu");
+		var elementSearch = document.getElementById("accordion_search_bar_container");
 		element.style.display = "flex";
+		elementTitlu.style.display = "flex";
+		elementSearch.style.display = "flex";
 	}
 
-//window.addEventListener("load", function() {
-//    var element = document.querySelector('[data]');
-//    alert(element);
-//    if ( element !== @CurrentUser.Id) {
-//        element.style.display = "none";
-//    }
 
-//});   
-</script> 
-<script>
+	function search() {
+		var searchInput = document.getElementById("accordion_search_bar");
+		var cards = document.getElementsByClassName("card");
+		var cardsP = document.getElementsByClassName("card-primary");
+		var visibleCards = [];
+		var hiddenCards = [];
+		for (var i = 0; i < cards.length; i++) {
+			var topicText = cards[i].querySelector(".topic").textContent;
+			var topic = topicText.split(" ")[1].toLowerCase();
+			var searchTerm = searchInput.value.toLowerCase();
+
+			if (topic.includes(searchTerm)) {
+				cards[i].style.display = "block";
+				visibleCards.push(cards[i]);
+			} else {
+				cards[i].style.display = "none";
+				hiddenCards.push(cardsP[i]);
+			}
+		}
+		//var cardsContainer = document.getElementById("cards");
+		//cardsContainer.style.display = "flex";
+		//cardsContainer.style.flexWrap = "wrap";
+		//cardsContainer.style.justifyContent = "flex-start";
+
+		for (var i = 0; i < hiddenCards.length; i++) {
+			hiddenCards[i].style.display = "contents";			
+		}
+		if (searchInput.value === "") {
+			for (var i = 0; i < hiddenCards.length; i++) {
+				hiddenCards[i].style.removeProperty("display");
+			}
+			for (var i = 0; i < visibleCards.length; i++) {
+				visibleCards[i].style.removeProperty("display");
+			}
+		}
+	}
+	// Add event listener to the search input
+	document.getElementById("accordion_search_bar").addEventListener("input", search);
+
     $(".dropdown-item").on('click', function () {
 
         const id = $(this).attr("data"); 

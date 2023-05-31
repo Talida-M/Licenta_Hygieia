@@ -26,6 +26,8 @@ namespace MentalHealthApp.Entities
         public virtual ICollection<MedicalReport> MedicalReports { get; set; }
         public virtual ICollection<DoctorSchedule> DoctorSchedule { get; set; }
         public virtual ICollection<DoctorReviews> DoctorReviews { get; set; }
+        public virtual DoctorCV DoctorCVs { get; set; } = null!;
+
 
     }
 }

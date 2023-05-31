@@ -76,6 +76,13 @@ namespace MentalHealthApp.DataAccess
         private IRepository<UserJournal> userJournals;
         public IRepository<UserJournal> UserJournals => userJournals ?? (userJournals = new BaseRepository<UserJournal>(Context));
 
+
+        private IRepository<DoctorCV> doctorCVs;
+        public IRepository<DoctorCV> DoctorCVs => doctorCVs ?? (doctorCVs = new BaseRepository<DoctorCV>(Context));
+        
+        private IRepository<PaymentDetails> paymentDetails;
+        public IRepository<PaymentDetails> PaymentsDetails => paymentDetails ?? (paymentDetails = new BaseRepository<PaymentDetails>(Context));
+
         public void SaveChanges()
         {
             Context.SaveChanges();

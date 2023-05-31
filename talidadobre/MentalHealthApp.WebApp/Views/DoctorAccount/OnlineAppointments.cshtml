@@ -1,6 +1,4 @@
 ﻿@model MentalHealthApp.BusinessLogic.Implementation.Appointments.ViewModels.AcceptedAppointmentsVM
-<!DOCTYPE html>
-<html lang="en">
 <head>
 	<meta charset="UTF-8">
 	<title>Appointment Cards</title>
@@ -9,7 +7,7 @@
 	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
 	<link rel="stylesheet" type="text/css" href="~/css/style.css">
 </head>
-<body>
+
 	<section class="main-content">
 		<div class="container">
 			<h1>Programari Online</h1>
@@ -28,18 +26,29 @@
 														var base64 = Convert.ToBase64String(@programare.UserImage);                  
 														var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
 														if(imgSrc == "data:image/gif;base64,"){
-																	<img src="~/images/Userprofile.jpg" alt="">
+																						<img src="~/images/Userprofile.jpg" alt="">
 														}
 														else{
-																 	<img  src="@imgSrc" alt="" />
+																					 	<img  src="@imgSrc" alt="" />
 														}
 												
 												}
 									</div>
 									<div class="user-info__basic">
-										<h5 class="mb-0">@programare.Pacient</h5>
-										<p class="text-muted mb-0">@programare.BirthDate, Categorie: @programare.SocialCategory </p>
-											<p class="text-muted mb-0">Asigurat: @programare.HasInsurance </p>
+									@{	var birthdateString = programare.BirthDate;
+										var birthdate = Convert.ToDateTime(birthdateString).Date;
+										var today = DateTime.UtcNow.Date;
+
+										var age = today.Year - birthdate.Year;
+										var monthDiff = today.Month - birthdate.Month;
+										if (monthDiff < 0 || (monthDiff == 0 && today.Date < birthdate.Date)) {
+											age--;
+										}
+											<h5 class="mb-0" style="color:black;">@programare.Pacient</h5>
+											<p class="text-muted mb-0" id="age-@programare.Id">Varsta: @age </p>
+											<p class="text-muted mb-0" > Categorie: @programare.SocialCategory </p>
+												<p class="text-muted mb-0">Asigurat: @programare.HasInsurance </p>
+											}
 									</div>
 								</div>
 								<div class="dropdown open">
@@ -52,13 +61,14 @@
 									</div>
 								</div>
 							</div>
+							<a href="#!"><small>Contact</small></a>
 							<h6 class="mb-0">@programare.PhoneNumber</h6>
 							<h6 class="mb-0">@programare.Email</h6>
-							<a href="#!"><small>Contact</small></a>
+							
 							<div class="d-flex justify-content-between mt-4">
 								<div>
 									<h5 class="mb-0">
-										<small class="ml-1">@programare.AppointmentDate</small>
+										<small class="ml-1" style="color:black;">@programare.AppointmentDate</small>
 									</h5>
 								</div>
 								<span class="text-success font-weight-bold">@programare.AppointmentStatus</span>
@@ -72,5 +82,3 @@
 	
 	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>

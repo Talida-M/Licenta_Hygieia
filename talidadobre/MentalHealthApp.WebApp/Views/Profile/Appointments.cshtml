@@ -4,7 +4,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet"> 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
-
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
      <script src="~/js/appointment/viewAppoinments.js"></script>
  </head>  
 @{
@@ -22,13 +23,12 @@
                   <div class="col-lg-12 col-md-12 col-12">
                       <nav class="page-breadcrum" aria-label="breadcrumb">
                             <ol class="breadcrumb">
-                              <li class="breadcrumb-item"><a href="@Url.Action("DoctorsProfile","Profile")">Doctors</a></li>
-                              <li class="breadcrumb-item"><a asp-action="DoctorInfoById" asp-controller="Profile" asp-route-id="@Model.SpecialistId">Doctor Profile</a></li>
-                             <li class="breadcrumb-item active" aria-current="page">Create Appointment</li>
+                              <li class="breadcrumb-item"><a href="@Url.Action("DoctorsProfile","Profile")">Doctori</a></li>
+                              <li class="breadcrumb-item"><a asp-action="DoctorInfoById" asp-controller="Profile" asp-route-id="@Model.SpecialistId">Profil Doctor</a></li>
+                             <li class="breadcrumb-item active" aria-current="page">Creaza o programare</li>
 
                               </ol>
                           </nav>
-                          <h3 class="breadcrumb-title">Create Appointments</h3>
                         </div>
                     </div>
                 </div>
@@ -83,39 +83,44 @@
                 <form asp-action="CreateAppointment" asp-controller="Programari">
                         <div class="col form-group">
                             <label asp-for="AppointmentDate" class="required">Data</label>
-                            <input asp-for="AppointmentDate" class="form-control date-input" type="date" id="date" data-trigger="hover" data-toggle="popover" data-content="You can select any date from today clicking on the number in the calendar" required>
+                            <input asp-for="AppointmentDate" class="form-control date-input" type="date" id="date" data-trigger="hover" data-toggle="popover" data-content="You can select any date from today clicking on the number in the calendar" required asp-format="{0:yyyy-MM-dd}">
                            <span asp-validation-for="AppointmentDate" class="text-danger"></span>
                         </div>
 
 
                      <div class="scheduler-boxes">
-                    <div class="scheduler-boxes">
+                    <div class="scheduler-boxes scheduler-boxes-buttons">
                         <label asp-for="AppointmentHour" class="required">Ora</label>
                         <input asp-for="AppointmentHour" type="hidden" id="appointment-hour" />
-
+                    </div>
                     @foreach (var programare in @Model.AcceptedAppointmentsData)
                     {
                         var ora = programare.AppointmentDate.Split(" ");
                         ora = ora[1].Split(":");
-                        dataList.Add(int.Parse(ora[0]));
+                       // dataList.Add(int.Parse(ora[0]));
                     }
+                    <div class="div-butoane" style="display:flex;">
                         @for(int h = start; h <= end; h++){
                             
-                            if (dataList.Contains(h)){
-                                continue;
-                            }
-                            else{
+                           // if (dataList.Contains(h)){
+                            //    continue;
+                            //}
+                            //else{
+                                <div  class="scheduler-boxes-buttons">
+                                    <button class="scheduler-button" type="button" onclick="setAppointmentHour(@h)" id="bt-@h">
+                                        <div class="scheduler-hour">
+                                            @( h < 10 ? $"0{h}:00" : $"{h}:00")
+                                        </div>
+                                    </button>
+                                </div>
 
-                                <button class="scheduler-button" type="button" onclick="setAppointmentHour(@h)" id="bt-@h">
-                                    <div class="scheduler-hour">
-                                        @( h < 10 ? $"0{h}:00" : $"{h}:00")
-                                    </div>
-                                </button>
-                            }
-                            
-                    }
+                           // }
+
+                        }
+                            <!-- The available appointment hours buttons will be dynamically added here -->
+                    </div>
                         <p style="color: red"> Data si ora pot fi modificate de catre specialist. Vei primi o notificare cand apare o modificare.</p>
-                        </div>
+                        
                         <h2>Tipul sedintei:</h2>
 
                         <div class="col form-group">
@@ -221,6 +226,77 @@ function PreviousPage() {
         var button = document.getElementById("bt-" + hour);
         button.style.background = "grey";
         }
+
+    function AddDateButton() {
+        var selectedDate = document.getElementById("date").value;
+        var cards = document.getElementsByClassName("scheduler-boxes-buttons");
+        const doctorId = '@Model.SpecialistId';
+        $.ajax({
+               url: '/Profile/GetFilteredAppointments',
+               method: 'GET',
+               data: { doctorId:doctorId, selectedDate: selectedDate },
+            success: function (data) {
+                let listaOre = data.map(function (appointment) {
+                    return appointment.split(' ')[1].split(':')[0];
+                });
+                for (var i = 1; i <= cards.length; i++) {
+                    var ora = cards[i].querySelector(".scheduler-hour").innerText;
+                    ora = ora.split(":")[0];
+                    if (listaOre.includes(ora)) {
+                        cards[i].style.display = "none";
+                    } else {
+                        cards[i].style.display = "block";
+                    }
+                }
+            },
+            error: function () {
+                console.log('Error occurred while retrieving filtered appointments data.');
+            }
+        });
+      
+    }
+    document.getElementById("date").addEventListener("input", function () {
+        AddDateButton();
+    });
+
+//////////////////////
+    //$(document).ready(function () {
+    //    $('#date').change(function () {
+    //        $('#appointment-hours-container').empty();
+
+    //        var selectedDate = $(this).val();
+    //        const doctorId = @Model.SpecialistId.ToString();
+    //        $.ajax({
+    //            url: '/Profile/GetFilteredAppointments',
+    //            method: 'GET',
+    //            data: { doctorId:doctorId, selectedDate: selectedDate },
+    //            success: function (data) {
+    //                var occupiedHours = data.map(function (appointment) {
+    //                    return parseInt(appointment.AppointmentDate.split(' ')[1].split(':')[0]);
+    //                });
+
+    //                var start = 9; 
+    //                var end = 18; 
+
+    //                for (var h = start; h <= end; h++) {
+    //                    if (!occupiedHours.includes(h)) {
+    //                        var button = $('<button>').addClass('scheduler-button').attr('type', 'button').attr('id', 'bt-' + h).click(function () {
+    //                            setAppointmentHour(h);
+    //                        });
+
+    //                        var div = $('<div>').addClass('scheduler-hour').text(h < 10 ? '0' + h + ':00' : h + ':00');
+
+    //                        button.append(div);
+    //                        $('#appointment-hours-container').append(button);
+    //                    }
+    //                }
+    //            },
+    //            error: function () {
+    //                console.log('Error occurred while retrieving filtered appointments data.');
+    //            }
+    //        });
+    //    });
+    //});
 
 </script>
 

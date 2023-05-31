@@ -40,7 +40,8 @@ namespace MentalHealthApp.BusinessLogic.Implementation.Account.Validations
               .NotEmpty().WithMessage("Camp Obligatoriu!");
             RuleFor(r => r.Description)
                 .NotEmpty().WithMessage("Camp Obligatoriu!");
-
+            RuleFor(r => r.CV)
+                           .NotEmpty().WithMessage("Camp Obligatoriu!");
         }
         public bool NotAlreadyExist(string email)
         {

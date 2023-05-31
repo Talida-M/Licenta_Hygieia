@@ -9,6 +9,7 @@ namespace MentalHealthApp.BusinessLogic.Implementation.MedicalReports.ViewModels
     public class PacientMedicalReportVM
     {
         public Guid Id { get; set; }
+        public Guid UserId { get; set; }
         public string Pacient { get; set; } = null!;
         public string? Doctor { get; set; }
         public DateTime ReportDate { get; set; }

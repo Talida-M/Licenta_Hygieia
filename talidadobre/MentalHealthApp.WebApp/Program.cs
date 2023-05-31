@@ -32,6 +32,8 @@ builder.Services.AddAuthentication("MentalHealthAppCookies")
         {
             options.AccessDeniedPath = new PathString("/Account/Login");
             options.LoginPath = new PathString("/Account/Login");
+            options.LoginPath = new PathString("/Account/AdminLogin");
+
         });
         
 var app = builder.Build();

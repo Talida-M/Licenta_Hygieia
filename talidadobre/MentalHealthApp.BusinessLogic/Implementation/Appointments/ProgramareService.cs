@@ -237,7 +237,7 @@ namespace MentalHealthApp.BusinessLogic.Implementation
 
             });
         }
-
+   
         public Tuple<string, string> GetSpecialistInfo(Guid id)
         {
             return ExecuteInTransaction(uow =>
@@ -287,6 +287,21 @@ namespace MentalHealthApp.BusinessLogic.Implementation
                                     .ToList();
 
 
+            });
+        }
+
+        public List<string> GetFilteredAppointments(Guid doctorId, string date)
+        {
+            return ExecuteInTransaction(uow =>
+            {
+               
+                var programari = uow.Programari.Get()
+                                      .Include(p => p.Pacient)
+                                      .Where(p => !(p.UserId.Equals(CurrentUser.Id.Value)) && p.SpecialistId.Equals(doctorId) && p.AppointmentStatus == AppointmentStatus.Programare_Acceptata.ToString())
+                                    .ToList();
+
+                var result = programari.Where(p => Convert.ToDateTime(p.AppointmentDate).Date == Convert.ToDateTime(date).Date).Select(u => u.AppointmentDate).ToList();
+                return result;
             });
         }
         public List<AcceptedAppointmentsDto> GetAllOnlineAppointments()

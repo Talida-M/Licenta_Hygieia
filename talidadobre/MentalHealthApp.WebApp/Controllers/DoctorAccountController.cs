@@ -139,6 +139,7 @@ namespace MentalHealthApp.WebApp.Controllers
         [System.Web.Mvc.HttpGet]
         public IActionResult GetJournalPagesForDoctor(Guid id)
         {
+            ViewBag.UserId = id;
             var journal = _userJournalService.ViewPacientJournalById(id);
             return View("PacientJournal", journal);
         }

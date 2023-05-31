@@ -1,7 +1,7 @@
 ﻿
 body {
     overflow-y: scroll;
-    background: radial-gradient(ellipse at bottom, #8dcdf9 0%, #322835 100%);
+    background: radial-gradient(ellipse at bottom, #f7f7f7 0%, #2f6196 100%);
     height: -webkit-fill-available;
 }
 h1, h2,  tr, label, h3, h5, p {

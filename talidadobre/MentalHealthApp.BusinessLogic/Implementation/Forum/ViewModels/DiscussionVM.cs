@@ -12,6 +12,7 @@ namespace MentalHealthApp.BusinessLogic.Implementation.Forum.ViewModels
         public string Username { get; set; } = null!;
         public Guid UserId { get; set; }
         public string Title { get; set; } = null!;
+        public string Topic { get; set; } = null!;
         public string MessageContent { get; set; } = null!;
         public DateTime CommentDate { get; set; }
         public byte[] UserImage { get; set; } = null!;

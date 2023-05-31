@@ -5,6 +5,8 @@ using MentalHealthApp.Entities.Enums;
 using MentalHealthApp.WebApp.Code.Base;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PayPal.Api;
+using System.Configuration;
 
 namespace MentalHealthApp.WebApp.Controllers
 {
@@ -12,7 +14,9 @@ namespace MentalHealthApp.WebApp.Controllers
     {
         private readonly ProgramareService _programareService;
         private readonly DoctorAccountService _doctorAccountService;
-     public ProgramariController(ControllerDependencies dependencies,
+        private readonly IConfiguration _configuration;
+
+        public ProgramariController(ControllerDependencies dependencies,
                                  ProgramareService programareService,
                                  DoctorAccountService doctorAccountService) : base(dependencies)
         { 
@@ -42,7 +46,6 @@ namespace MentalHealthApp.WebApp.Controllers
             _programareService.AddDoctorAppointment(model);
             return RedirectToAction("Appointments", "Profile", new { id = model.SpecialistId });
         }
-
 
 
     }

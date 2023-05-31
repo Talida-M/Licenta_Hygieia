@@ -10,8 +10,6 @@
 
 	<section class="main-content">
 		<div class="container">
-			<br>
-			<br>
 
 			<div class="row">
 				 @foreach(var programare in @Model.AcceptedAppointmentsVMs)
@@ -47,10 +45,9 @@
 							</div>
 							<h6 class="mb-0">@programare.PhoneNumber</h6>
 							<h6 class="mb-0">@programare.Email</h6>
-							<a href="#!"><small>Contact</small></a>
 							<div class="d-flex justify-content-between mt-4">
 								<div>
-									<h5 class="mb-0 data-programare" id="hour-@programare.Id" data="@programare.Id">@programare.AppointmentDate.Split("T")[1]</h5>
+									<h5 class="mb-0 data-programare" id="hour-@programare.Id" data="@programare.Id">@programare.AppointmentDate</h5>
 								</div>
 							</div>
 						</div>
@@ -59,7 +56,6 @@
 			
 		</div>
 	</section>
-	
 	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 
 <script>
@@ -85,7 +81,8 @@ window.addEventListener("load", function() {
 	const date = new Date(Date.now());
     const currentDate =date.getHours().toString() + ":" + date.getMinutes().toString();
     for (let i = 0; i < div_data.length; i++) {
-        let id = div_data[i].getAttribute("data");
+        let id = div_data[i].getAttribute("data");	
+
         if (div_data[i].innerHTML >= currentDate.toString() ) {
 			let buton = document.getElementById("conference-button-" + id);
             buton.removeAttribute("disabled");

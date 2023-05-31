@@ -37,6 +37,8 @@ namespace MentalHealthApp.DataAccess.Context
         public virtual DbSet<ConditionsPost> ConditionsPosts { get; set; } = null!;
         public virtual DbSet<MedicalReport> MedicalReports { get; set; } = null!;
         public virtual DbSet<DoctorReviews> DoctorReviews { get; set; } = null!;
+        public virtual DbSet<UserJournal> UserJournals { get; set; } = null!;
+        public virtual DbSet<DoctorCV> DoctorCVs { get; set; } = null!;
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -139,6 +141,64 @@ namespace MentalHealthApp.DataAccess.Context
                     .HasConstraintName("FK_UserJournal_PacientId");
             });
 
+            modelBuilder.Entity<DoctorCV>(entity =>
+            {
+                entity.ToTable("DoctorCV");
+
+                entity.Property(e => e.CVId);
+
+                entity.Property(e => e.Name)
+                .HasColumnName("Name");
+
+                entity.Property(e => e.FileType)
+                  .HasColumnName("FileType");
+
+                entity.Property(e => e.DataFiles)
+                    .HasColumnType("varbinary(MAX)")
+                    .HasColumnName("DataFiles");
+
+                entity.Property(e => e.CreatedOn)
+                .HasColumnName("CreatedOn")
+                .HasColumnType("datetime");
+
+                modelBuilder.Entity<DoctorCV>()
+                    .HasOne(d => d.Specialist)
+                    .WithOne(p => p.DoctorCVs)
+                    .HasForeignKey<DoctorCV>(d => d.SpecialistId)
+                    .HasPrincipalKey<Specialist>(p => p.SpecialistId)
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<PaymentDetails>(entity =>
+            {
+                entity.ToTable("PaymentDetails");
+
+                entity.Property(e => e.Id);
+
+                entity.Property(e => e.PaymentDate)
+                .HasColumnName("PaymentDate")
+                .HasColumnType("datetime"); ;
+
+                entity.Property(e => e.Amount)
+                  .HasColumnName("Amount")
+                  .HasColumnType("int");
+
+                entity.Property(e => e.Currency)
+                    .HasColumnType("nvarchar(3)")
+                    .HasColumnName("Currency");
+
+                entity.Property(e => e.PaymentStatus)
+                .HasColumnName("PaymentStatus")
+                .HasColumnType("nvarchar(20)");
+
+                modelBuilder.Entity<PaymentDetails>()
+                    .HasOne(d => d.Appointment)
+                    .WithOne(p => p.PaymentDetails)
+                    .HasForeignKey<PaymentDetails>(d => d.AppointmentId)
+                    .HasPrincipalKey<Appointment>(p => p.Id)
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
+
             modelBuilder.Entity<CameraConferintum>(entity =>
             {
                 entity.Property(e => e.Id).ValueGeneratedNever();
@@ -204,13 +264,13 @@ namespace MentalHealthApp.DataAccess.Context
                     .WithMany(p => p.DoctorReviews)
                     .HasForeignKey(d => d.PacientId)
                     .OnDelete(DeleteBehavior.ClientCascade)
-                    .HasConstraintName("FK_DoctorReviews_Pacient_PacientId"); ;
+                    .HasConstraintName("FK_DoctorReviews_Pacient"); ;
 
                 entity.HasOne(d => d.Specialist)
                     .WithMany(p => p.DoctorReviews)
                     .HasForeignKey(d => d.DoctorId)
                     .OnDelete(DeleteBehavior.ClientCascade)
-                    .HasConstraintName("FK_DoctorReviews_Specialist_DoctorId");
+                    .HasConstraintName("FK_DoctorReviews_Specialist");
             });
 
 
@@ -258,6 +318,9 @@ namespace MentalHealthApp.DataAccess.Context
                 entity.Property(e => e.Title)
                     .HasMaxLength(100)
                     .HasColumnName("Title");
+
+                entity.Property(e => e.Topic)
+                    .HasColumnName("Topic");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Discuties)

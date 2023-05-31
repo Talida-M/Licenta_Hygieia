@@ -1,4 +1,7 @@
 ﻿@model List<MentalHealthApp.BusinessLogic.Implementation.MedicalReports.ViewModels.PacientMedicalReportVM>
+@inject MentalHealthApp.Common.DTOs.CurrentUserDto CurrentUser
+@using System.Security.Claims
+
 <header>
     <link rel="stylesheet" src="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css"/>
     <link rel="stylesheet" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"/>
@@ -14,20 +17,42 @@
      <script src="~/js/appointment/viewAppoinments.js"></script>
  </header>  
    <!-- BREADCRUM-PART START -->
-      
-      <section class="breadcrumb-bar">
-          <div class="container-fluid">
-              <div class="row">
-                  <div class="col-lg-12 col-md-12 col-12">
-                      <nav class="page-breadcrum" aria-label="breadcrumb">
-                            <ol class="breadcrumb">
-                              <li class="breadcrumb-item"><a asp-action ="UserProfile" asp-controller="Profile"> Profil </a></li>
-                             <li class="breadcrumb-item active" aria-current="page">Istoric Medical</li>
+@{
+    var role = User.Claims.Where(c => c.Type == ClaimTypes.Role).FirstOrDefault().Value;
+    if (role == "Pacient")
+    {
+    <section class="breadcrumb-bar">
+                        <div class="container-fluid">
+                          <div class="row">
+                              <div class="col-lg-12 col-md-12 col-12">
+                                  <nav class="page-breadcrum" aria-label="breadcrumb">
+                                        <ol class="breadcrumb">
+                                          <li class="breadcrumb-item"><a asp-action ="UserProfile" asp-controller="Profile"> Profil </a></li>
+                                         <li class="breadcrumb-item active" aria-current="page">Istoric Medical</li>
 
-                              </ol>
+                                          </ol>
+                                </div>
+                            </div>
+    </section>
+    }
+    if (role == "Specialist")
+    {
+    <section class="breadcrumb-bar">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-12">
+                            <nav class="page-breadcrum" aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a asp-controller="DoctorAccount" asp-controller="DoctorAccount" asp-action="GetPacients"> Pacientii mei </a></li>
+                                    <li class="breadcrumb-item"><a asp-controller="DoctorAccount" asp-action="GetDashboardView" asp-route-id="@ViewData["UserId"]"> Dashboard Pacient </a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">Istoric Medical</li>
+
+                                </ol>
+                        </div>
                     </div>
-                </div>
-            </section>
+    </section>
+    }
+}
         <!-- BREADCRUM-PART END -->
 <h1 style="color: rgb(255, 255, 255);
     font-size: 1.4em; ">Istoric Medical<br>
@@ -44,7 +69,16 @@
         <div class="col-md-4 col-sm-6 col-xs-12" style="width: 70%;     --bs-gutter-x: 7.2rem;">
             <article class="material-card Red" style="--bs-gutter-y: 1.2rem;">
                 <h2>
-                    <span>@report.Doctor</span>
+                   @{
+                      // var rol = User.Claims.Where(c => c.Type == ClaimTypes.Role).FirstOrDefault().Value;
+                       if(role == "Pacient"){
+                                 <span>@report.Doctor</span>
+                       }
+                       if(role == "Specialist"){
+                                  <span>@report.Pacient</span>
+
+                       }
+                   }
                     <strong>
                         <i class="fa fa-fw fa-star"></i>
                         @report.ReportDate

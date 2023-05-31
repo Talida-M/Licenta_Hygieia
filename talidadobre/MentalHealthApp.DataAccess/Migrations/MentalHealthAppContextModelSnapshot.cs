@@ -194,6 +194,11 @@ namespace MentalHealthApp.DataAccess.Migrations
                         .HasColumnType("nvarchar(100)")
                         .HasColumnName("Title");
 
+                    b.Property<string>("Topic")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(200)")
+                        .HasColumnName("Topic");
+
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
@@ -258,6 +263,44 @@ namespace MentalHealthApp.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ConditionsPosts");
+                });
+
+            modelBuilder.Entity("MentalHealthApp.Entities.Entities.DoctorCV", b =>
+                {
+                    b.Property<int>("CVId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CVId"), 1L, 1);
+
+                    b.Property<DateTime?>("CreatedOn")
+                        .HasColumnType("datetime")
+                        .HasColumnName("CreatedOn");
+
+                    b.Property<byte[]>("DataFiles")
+                        .IsRequired()
+                        .HasColumnType("varbinary(MAX)")
+                        .HasColumnName("DataFiles");
+
+                    b.Property<string>("FileType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("FileType");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Name");
+
+                    b.Property<Guid>("SpecialistId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("CVId");
+
+                    b.HasIndex("SpecialistId")
+                        .IsUnique();
+
+                    b.ToTable("DoctorCV", (string)null);
                 });
 
             modelBuilder.Entity("MentalHealthApp.Entities.Entities.DoctorReviews", b =>
@@ -384,6 +427,41 @@ namespace MentalHealthApp.DataAccess.Migrations
                     b.ToTable("MedicalReport", (string)null);
                 });
 
+            modelBuilder.Entity("MentalHealthApp.Entities.Entities.PaymentDetails", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Amount")
+                        .HasColumnType("int")
+                        .HasColumnName("Amount");
+
+                    b.Property<int>("AppointmentId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Currency")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(3)")
+                        .HasColumnName("Currency");
+
+                    b.Property<DateTime?>("PaymentDate")
+                        .HasColumnType("datetime")
+                        .HasColumnName("PaymentDate");
+
+                    b.Property<string>("PaymentStatus")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(20)")
+                        .HasColumnName("PaymentStatus");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppointmentId")
+                        .IsUnique();
+
+                    b.ToTable("PaymentDetails", (string)null);
+                });
+
             modelBuilder.Entity("MentalHealthApp.Entities.Entities.TopReads", b =>
                 {
                     b.Property<Guid>("Id")
@@ -417,20 +495,19 @@ namespace MentalHealthApp.DataAccess.Migrations
 
                     b.Property<string>("Content")
                         .IsRequired()
-                        .HasMaxLength(800)
-                        .HasColumnType("nvarchar(800)")
-                        .HasColumnName("content");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Content");
 
                     b.Property<bool>("IsPublic")
                         .HasColumnType("bit")
-                        .HasColumnName("isPublic");
+                        .HasColumnName("IsPublic");
 
                     b.Property<Guid>("PacientId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("PageDate")
                         .HasColumnType("datetime")
-                        .HasColumnName("pageDate");
+                        .HasColumnName("PageDate");
 
                     b.HasKey("Id");
 
@@ -826,6 +903,17 @@ namespace MentalHealthApp.DataAccess.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("MentalHealthApp.Entities.Entities.DoctorCV", b =>
+                {
+                    b.HasOne("MentalHealthApp.Entities.Specialist", "Specialist")
+                        .WithOne("DoctorCVs")
+                        .HasForeignKey("MentalHealthApp.Entities.Entities.DoctorCV", "SpecialistId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Specialist");
+                });
+
             modelBuilder.Entity("MentalHealthApp.Entities.Entities.DoctorReviews", b =>
                 {
                     b.HasOne("MentalHealthApp.Entities.Specialist", "Specialist")
@@ -833,14 +921,14 @@ namespace MentalHealthApp.DataAccess.Migrations
                         .HasForeignKey("DoctorId")
                         .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired()
-                        .HasConstraintName("FK_DoctorReviews_Specialist_DoctorId");
+                        .HasConstraintName("FK_DoctorReviews_Specialist");
 
                     b.HasOne("MentalHealthApp.Entities.Pacient", "Pacient")
                         .WithMany("DoctorReviews")
                         .HasForeignKey("PacientId")
                         .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired()
-                        .HasConstraintName("FK_DoctorReviews_Pacient_PacientId");
+                        .HasConstraintName("FK_DoctorReviews_Pacient");
 
                     b.Navigation("Pacient");
 
@@ -883,6 +971,17 @@ namespace MentalHealthApp.DataAccess.Migrations
                     b.Navigation("Pacient");
 
                     b.Navigation("Specialist");
+                });
+
+            modelBuilder.Entity("MentalHealthApp.Entities.Entities.PaymentDetails", b =>
+                {
+                    b.HasOne("MentalHealthApp.Entities.Appointment", "Appointment")
+                        .WithOne("PaymentDetails")
+                        .HasForeignKey("MentalHealthApp.Entities.Entities.PaymentDetails", "AppointmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Appointment");
                 });
 
             modelBuilder.Entity("MentalHealthApp.Entities.Entities.UserJournal", b =>
@@ -1010,6 +1109,12 @@ namespace MentalHealthApp.DataAccess.Migrations
                     b.Navigation("IdentityUsers");
                 });
 
+            modelBuilder.Entity("MentalHealthApp.Entities.Appointment", b =>
+                {
+                    b.Navigation("PaymentDetails")
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("MentalHealthApp.Entities.Diagnostic", b =>
                 {
                     b.Navigation("IstoricDiagnosticUtilizators");
@@ -1062,6 +1167,9 @@ namespace MentalHealthApp.DataAccess.Migrations
                     b.Navigation("Appointment");
 
                     b.Navigation("CameraConferinta");
+
+                    b.Navigation("DoctorCVs")
+                        .IsRequired();
 
                     b.Navigation("DoctorReviews");
 

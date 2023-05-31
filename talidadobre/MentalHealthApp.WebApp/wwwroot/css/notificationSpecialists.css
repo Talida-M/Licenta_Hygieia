@@ -1,0 +1,76 @@
+﻿/* Mixing notification Shadow*/
+/* Notification Component */
+.c-notification {
+    -webkit-box-shadow: 7px 9px 5px -5px rgba(0, 0, 0, 0.32);
+    -moz-box-shadow: 7px 9px 5px -5px rgba(0, 0, 0, 0.32);
+    box-shadow: 7px 9px 5px -5px rgba(0, 0, 0, 0.32);
+    background: white;
+    display: block;
+    margin: 20px;
+    min-height: 60px;
+    transform: translateX(1000px);
+    transition: all 0.5s ease-in-out;
+}
+
+    .c-notification > * {
+        margin: 0;
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+.c-notification__icon {
+    width: 60px;
+    height: 60px;
+    display: table;
+    text-align: center;
+    position: absolute;
+    top: calc(50% - 30px);
+}
+
+    .c-notification__icon > * {
+        display: table-cell;
+        font-size: 20px;
+        vertical-align: middle;
+        color: white;
+    }
+
+.c-notification__icon-container {
+    height: 100%;
+    min-height: 60px;
+    width: 60px;
+    position: relative;
+}
+
+.c-notification__message {
+    min-height: 60px;
+    max-width: 500px;
+    min-width: 300px;
+    line-height: 20px;
+    padding: 20px 10px;
+    box-sizing: border-box;
+    font-weight: 450;
+    color: red;
+    background: white;
+}
+
+.c-notification__container {
+    position: absolute;
+    left: 40em;
+}
+
+.c-notification--show {
+    transform: translateX(0);
+}
+
+.c-notification--info {
+    background-color: #4a90e2;
+    background: -moz-linear-gradient(left, #4a90e2 0%, #4a90e2 50%, white 50%, white 100%);
+    background: -webkit-linear-gradient(left, #4a90e2 0%, #4a90e2 50%, white 50%, white 100%);
+    background: -o-linear-gradient(left, #4a90e2 0%, #4a90e2 50%, white 50%, white 100%);
+    background: -ms-linear-gradient(left, #4a90e2 0%, #4a90e2 50%, white 50%, white 100%);
+    background: linear-gradient(to right, #4a90e2 0%, #4a90e2 50%, white 50%, white 100%);
+}
+
+    .c-notification--info > .c-notification__icon-container {
+        background-color: #4a90e2;
+    }

@@ -11,9 +11,9 @@ namespace MentalHealthApp.BusinessLogic.Implementation.Account.ViewModels
     {
         public string LastName { get; set; } = null!;
         public string FirstName { get; set; } = null!;
-        public DateTime BirthDate { get; set; }
+        public DateTime? BirthDate { get; set; }
         public string Email { get; set; } = null!;
-        public string PhoneNumberCountryPrefix { get; set; } = null!;
+        public string PhoneNumberCountryPrefix { get; set; } = "+40";
         public string PhoneNumber { get; set; } = null!;
         public string Specialty { get; set; } = null!;
         public string Description { get; set; } = null!;
@@ -27,5 +27,7 @@ namespace MentalHealthApp.BusinessLogic.Implementation.Account.ViewModels
         public string? Sector { get; set; }
         public string? ZipCode { get; set; }
         public IFormFile UserImage { get; set; } = null!;
+        public IFormFile CV { get; set; } = null!;
+
     }
 }

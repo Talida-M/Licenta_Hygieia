@@ -16,6 +16,7 @@ using MentalHealthApp.BusinessLogic.Implementation.Admin;
 using MentalHealthApp.BusinessLogic.Implementation.MedicalReports;
 using MentalHealthApp.BusinessLogic.Implementation.Reviews;
 using MentalHealthApp.BusinessLogic.Implementation.UserJournals;
+using MentalHealthApp.BusinessLogic.Implementation.PayPal;
 
 namespace MentalHealthApp.WebApp.Code.ExtensionMethods
 {
@@ -41,6 +42,7 @@ namespace MentalHealthApp.WebApp.Code.ExtensionMethods
             services.AddScoped<DoctorReviewService>();
             services.AddScoped<ChartService>();
             services.AddScoped<UserJournalService>();
+            services.AddScoped<PaymentService>();
             return services;
         }
         public static IServiceCollection AddMentalHealthAppCurrentUser(this IServiceCollection services)

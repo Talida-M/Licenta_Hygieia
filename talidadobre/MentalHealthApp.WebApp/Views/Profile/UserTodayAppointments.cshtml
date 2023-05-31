@@ -9,7 +9,7 @@
 	<!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
 
-     <script src="~/js/appointment/viewAppoinments.js"></script>
+     @*<script src="~/js/appointment/viewAppoinments.js"></script>*@
 </head>
 
    <!-- BREADCRUM-PART START -->
@@ -46,29 +46,38 @@
 											 var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
 											 if(@imgSrc == "data:image/gif;base64,")
 											 {
-												<img src="~/images/Userprofile.jpg" alt="User Img">																									 	
+														<img src="~/images/Userprofile.jpg" alt="User Img">																									 	
 											 }
 											 else{
-												<img src="@imgSrc" alt="User Img">																									  	
+														<img src="@imgSrc" alt="User Img">																									  	
 											 }
 										 } 
 									</div>
 									<div class="user-info__basic">
-										<h5 class="mb-0">@programare.Specialist</h5>
+										<h5 class="mb-0" style="color: black;">@programare.Specialist</h5>
 									</div>
 								</div>
 								<div>
-									<a onclick="RemoveCard()" class="btn" asp-action="VideoDiscussion" asp-controller="OnlineAppointment" asp-route-id="@programare.Id" id="conference-button-@programare.Id" data="@programare.Id">
-										<i class="fa fa-video" ></i>
+								@if (ViewBag.TransactionIsMade == false)
+								{
+									<a class="btn btn-std mb-link" href="@Url.Action("InitiatePayment", "Profile",  new { id = programare.Id } )">
+										Plata
 									</a>
-								</div>
+								}
+								@if (ViewBag.TransactionIsMade == true)
+								{
+									<a onclick="RemoveCard()" class="btn video-conf" style="pointer-events: none;" asp-action="VideoDiscussion" asp-controller="OnlineAppointment" asp-route-id="@programare.Id" id="conference-button-@programare.Id" data="@programare.Id">
+										<i class="fa fa-video"></i>
+									</a>
+								}
+							</div>
 							</div>
 							<a href="#!"><small>Contact</small></a>
 							<h6 class="mb-0">@programare.PhoneNumber</h6>
 							<h6 class="mb-0">@programare.Email</h6>							
 							<div class="d-flex justify-content-between mt-4">
 								<div>
-									<h5 class="mb-0 data-programare" id="hour-@programare.Id" data="@programare.Id">@programare.AppointmentDate.Split("T")[1]</h5>
+									<h5 class="mb-0 data-programare" id="hour-@programare.Id" data="@programare.Id" style="color: black;">@programare.AppointmentDate</h5>
 								</div>
 							</div>
 						</div>

@@ -835,14 +835,14 @@ namespace MentalHealthApp.DataAccess.Migrations
                         .HasForeignKey("DoctorId")
                         .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired()
-                        .HasConstraintName("FK_DoctorReviews_Specialist_DoctorId");
+                        .HasConstraintName("FK_DoctorReviews_Specialist");
 
                     b.HasOne("MentalHealthApp.Entities.Pacient", "Pacient")
                         .WithMany("DoctorReviews")
                         .HasForeignKey("PacientId")
                         .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired()
-                        .HasConstraintName("FK_DoctorReviews_Pacient_PacientId");
+                        .HasConstraintName("FK_DoctorReviews_Pacient");
 
                     b.Navigation("Pacient");
 

@@ -8,7 +8,7 @@
 }
 
     .custom-dropdown select {
-        background: radial-gradient(ellipse at bottom, #f1b866 0%, #e75757 100%);
+        background:white;
         color: black;
         font-size: inherit;
         padding: .5em;

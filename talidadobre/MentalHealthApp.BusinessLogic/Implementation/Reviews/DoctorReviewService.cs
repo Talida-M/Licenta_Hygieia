@@ -16,10 +16,27 @@ namespace MentalHealthApp.BusinessLogic.Implementation.Reviews
     {
         public DoctorReviewService (ServiceDependencies dependencies) : base(dependencies) { }
 
-        public void  NewReview (string newReview, int stars, Guid doctorId)
+        public Guid TakeDoctorIdByEmail(string email)
         {
+            return ExecuteInTransaction(uow =>
+            {
+
+                var id = uow.IdentityUsers.Get()
+                                                .Where(cd => cd.Email.Equals(email))
+                                                .Select(cd => cd.Id)
+                                                .Single();
+                
+                return id;
+
+            });
+
+        }
+        public void  NewReview (string newReview, int stars, string email)
+        {
+
             ExecuteInTransaction(uow =>
             {
+                var doctorId = TakeDoctorIdByEmail(email);
                 var review = new DoctorReviews();
                 review.Id = Guid.NewGuid();
                 review.PacientId = (Guid)CurrentUser.Id;

@@ -48,6 +48,7 @@ namespace MentalHealthApp.BusinessLogic.Implementation
                                                           .Select(u => $"{u.LastName} {u.FirstName}")
                                                           .Single(),
                                         Title = d.Title,
+                                        Topic = d.Topic,
                                         MessageContent = d.MessageContent,
                                         CommentDate = d.CommentDate,
                                         UserImage = uow.IdentityUsers.Get().Where(u => u.Id.Equals(d.UserId)).Select(u => u.UserImage).Single(),
@@ -73,6 +74,7 @@ namespace MentalHealthApp.BusinessLogic.Implementation
                                                           .Select(u => $"{u.LastName} {u.FirstName}")
                                                           .Single(),
                                Title = d.Title,
+                               Topic = d.Topic,
                                MessageContent = d.MessageContent,
                                CommentDate = d.CommentDate,
                                UserImage = uow.IdentityUsers.Get().Where(u => u.Id.Equals(d.UserId)).Select(u => u.UserImage).Single(),
@@ -93,6 +95,7 @@ namespace MentalHealthApp.BusinessLogic.Implementation
                 discussion.Id = Guid.NewGuid();
                 discussion.UserId = (Guid)CurrentUser.Id;
                 discussion.Title = newDiscussion.Title;
+                discussion.Topic = newDiscussion.Topic;
                 discussion.MessageContent = newDiscussion.MessageContent;
                 discussion.CommentDate = DateTime.UtcNow;
                 uow.Discutii.Insert(discussion);

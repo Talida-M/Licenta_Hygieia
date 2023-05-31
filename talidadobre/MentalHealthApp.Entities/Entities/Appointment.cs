@@ -1,4 +1,5 @@
 ﻿using MentalHealthApp.Common;
+using MentalHealthApp.Entities.Entities;
 using System;
 using System.Collections.Generic;
 
@@ -16,5 +17,6 @@ namespace MentalHealthApp.Entities
 
         public virtual Specialist Specialist { get; set; } = null!;
         public virtual Pacient Pacient { get; set; } = null!;
+        public virtual PaymentDetails PaymentDetails { get; set; } = null!;
     }
 }

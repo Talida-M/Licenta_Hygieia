@@ -108,18 +108,53 @@ namespace MentalHealthApp.BusinessLogic.Implementation.Account
             var user = UnitOfWork.IdentityUsers.Get()
                                                 .Include(u => u.Roles)
                 .SingleOrDefault(u => u.Email == email);
-          
-            if (isVerified == true)
+            if (user != null)
             {
-                return new CurrentUserDto
+                var rol = user.Roles.Select(s => s.Name).First();
+                if (isVerified == true && rol != "Admin")
                 {
-                    Id = user.Id,
-                    FirstName = user.FirstName,
-                    LastName = user.LastName,
-                    Email = user.Email,
-                    isAuthenticated = true,
-                    Roles = user.Roles.Select(ur => ur.Name).ToList()
-                };
+                    return new CurrentUserDto
+                    {
+                        Id = user.Id,
+                        FirstName = user.FirstName,
+                        LastName = user.LastName,
+                        Email = user.Email,
+                        isAuthenticated = true,
+                        Roles = user.Roles.Select(ur => ur.Name).ToList()
+                    };
+                }
+            }
+            return new CurrentUserDto { isAuthenticated = false };
+        }
+
+
+        public CurrentUserDto? LoginAdmin(string email, string password)
+        {
+            var userPass = UnitOfWork.IdentityUsers.Get().Where(u => u.Email.Equals(email) && u.IsDeleted.Equals(false)).Select(u => u.PasswordHash).SingleOrDefault();
+            if (userPass is null)
+            {
+                return null;
+            }
+            string initialSalt = userPass.Split('.')[1];
+            bool isVerified = _hashAlgo.IsPasswordVerified(userPass, initialSalt, password);
+            var user = UnitOfWork.IdentityUsers.Get()
+                                                .Include(u => u.Roles)
+                .SingleOrDefault(u => u.Email == email);
+            if (user != null)
+            {
+                var rol = user.Roles.Select(s => s.Name).First();
+                if (isVerified == true && rol == "Admin")
+                {
+                    return new CurrentUserDto
+                    {
+                        Id = user.Id,
+                        FirstName = user.FirstName,
+                        LastName = user.LastName,
+                        Email = user.Email,
+                        isAuthenticated = true,
+                        Roles = user.Roles.Select(ur => ur.Name).ToList()
+                    };
+                }
             }
             return new CurrentUserDto { isAuthenticated = false };
         }
@@ -127,10 +162,21 @@ namespace MentalHealthApp.BusinessLogic.Implementation.Account
         {
             return ExecuteInTransaction(uow =>
             {
-               return uow.IdentityUsers.Get()
-                            .Where(u => u.Id == CurrentUser.Id)
-                            .Select(u => u.UserImage)
-                           .SingleOrDefault();
+                return uow.IdentityUsers.Get()
+                             .Where(u => u.Id == CurrentUser.Id)
+                             .Select(u => u.UserImage)
+                            .SingleOrDefault();
+            });
+        }
+
+        public bool GetUserActiveStatus()
+        {
+            return ExecuteInTransaction(uow =>
+            {
+                return uow.IdentityUsers.Get()
+                             .Where(u => u.Id == CurrentUser.Id)
+                             .Select(u => u.IsActive)
+                            .SingleOrDefault();
             });
         }
         public byte[] ConvertToBytes(IFormFile image)
@@ -178,7 +224,7 @@ namespace MentalHealthApp.BusinessLogic.Implementation.Account
                 registeredUser.TwoFactorEnabled = false;
                 registeredUser.CreatedAt = DateTime.UtcNow;
                 registeredUser.NumberOfFailLoginAttempts = 0;
-                registeredUser.IsActive = false;
+                registeredUser.IsActive = true;
                 registeredUser.IsDeleted = false;
                 registeredUser.Address = adresa;
                     registeredUser.UserImage = ConvertToBytes(model.UserImage);

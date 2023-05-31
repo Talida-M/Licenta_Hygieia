@@ -34,6 +34,7 @@ namespace MentalHealthApp.WebApp.Controllers
                 new Claim(ClaimTypes.Email, user.Email)
             };
             user.Roles.ForEach(role => claims.Add(new Claim(ClaimTypes.Role, role)));
+
             var identity = new ClaimsIdentity(claims, "Cookies");
             var principal = new ClaimsPrincipal(identity);
 
@@ -54,6 +55,12 @@ namespace MentalHealthApp.WebApp.Controllers
             var model = new LoginModel();
             return View(model);
         }
+        [HttpGet]
+        public IActionResult AdminLogin()
+        {
+            var model = new LoginModel();
+            return View("AdminLogin", model);
+        }
 
         [HttpPost]
         public async Task<ActionResult> Login(LoginModel model)
@@ -71,14 +78,30 @@ namespace MentalHealthApp.WebApp.Controllers
                 return View(model);
             }
             await LogIn(user);
-           // var role = _forumService.GetRole(user.Id ?? Guid.Empty);
-            //if (role.Equals(RoleTypes.Pacient.ToString()))
-            //{
-            //    return RedirectToAction("UserProfile", "Profile");
-            //}
-            //else
-            //{
+
                 return RedirectToAction("Index", "Home");
+            //}
+
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> AdminLogin(LoginModel model)
+        {
+            var user = _userAccountService.LoginAdmin(model.Email, model.Password);
+            if (user is null)
+            {
+                ModelState.AddModelError(nameof(LoginModel.Password), "Email/Password incorrect");
+                return View(model);
+            }
+
+            if (!user.isAuthenticated)
+            {
+                model.AreCredentialsInvalid = true;
+                return View(model);
+            }
+            await LogIn(user);
+
+            return RedirectToAction("Index", "Home");
             //}
 
         }

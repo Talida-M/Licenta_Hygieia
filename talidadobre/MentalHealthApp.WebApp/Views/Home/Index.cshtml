@@ -6,12 +6,14 @@
   <link rel="stylesheet" src="https://fonts.googleapis.com/css?family=Lato"/>
    <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">  
+    <link rel="stylesheet" href="https://rawgit.com/imNicoSuarez/qiot-fonts/master/style.css">
+    <link rel="stylesheet" href="~/css/notificationSpecialists.css" />
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">  
     <link rel="stylesheet" href="~/css/homePage.css" />
     <script src="https://kit.fontawesome.com/bdd89edb33.js"></script>
     <script src="https://kit.fontawesome.com/049529442a.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
-    <script src="~/js/admin/caroussel.js"></script>
 </header>
 
 <!--dust particel-->
@@ -23,26 +25,42 @@
 </div>
 <body style="display: flex;
   flex-direction: column;">
+    
     <div id="header"></div>
 
-    <div class="video" id="content" style="  height: 100%; position: relative; border:3px solid white" >
-    <h1 style=" text-align: center;
-        color: white;
-        bottom: 4px;
-        font-size:16px;
- text-shadow: 0 0 7px #fff,
-            0 0 10px #fff,
-            0 0 21px #8658f0,
-            0 0 42px #f09,
-            0 0 82px #862db9,
-            0 0 92px #f09,
-            0 0 102px #6b05a6,
-            0 0 151px #f09;">
-        Look after your mind...
-    </h1>
-        <video  autoplay muted loop style="   width: 100%;
-  object-fit: cover;" width="1000" height="300"><source src="~/videos/Mental Health Transparency - Award Winning Short Film.mp4"></video>
-</div>
+   
+    <div class="containerImages" id="content" >
+        @if (ViewBag.IsActiveStatus == false)
+        {
+
+
+            <ul class='c-notification__container'>
+                <li class='c-notification c-notification--info c-notification--show'>
+                    <div class='c-notification__icon-container'>
+                        <div class='c-notification__icon'>
+                            <i class='ic-qiot ic-qiot-info'></i>
+                        </div>
+                    </div>
+                    <div class='c-notification__message'>
+                        <strong> Contul dvs. in acest moment nu este activat complet. Adminul va verifica in decursul acestor zile CV-ul oferit.Veti avea acces nelimitat in aplicatie doar in cazul in care CV-ul va fi unul valid. Va multumim!</strong>
+                    </div>
+                </li>
+            </ul>
+        }
+       @* <img style="   width: 100%;
+  object-fit: cover; height: 500px;"  src="~/images/homeb1.png"/>*@
+
+            <div class="photoWrapper">
+                <img class='photo' src="~/images/back3.png" alt="" />
+            </div>
+            <div class="photoWrapper">
+                <img class='photo' src="~/images/back2.png" alt="" />
+            </div>
+            <div class="photoWrapper">
+                <img class='photo' src="~/images/homeb1.png" alt="" />
+            </div>
+        </div>
+
 <div></div>
 <div class="container" style="border-top:2px solid white; border-bottom:2px solid white; margin-top: 10px;"> 
   <div style="display:flex;">
@@ -80,22 +98,22 @@
                 {
                     var base64 = Convert.ToBase64String(@article.ArticleImage);
                     var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
-                                                <div class="slide" style="height:300px; width: 300px; border:1px solid white">
-                                                    <div class="top-section">
-                                                            <img style="height: 200px; width:100%; " src="@imgSrc" alt="" />
-                                                        <div class="name">
-                                                            <span>@article.ArticleTile</span>
-                                                            <br />
+                                                        <div class="slide" style="height:300px; width: 300px; border:1px solid white">
+                                                            <div class="top-section">
+                                                                    <img style="height: 200px; width:100%; " src="@imgSrc" alt="" />
+                                                                <div class="name">
+                                                                    <span>@article.ArticleTile</span>
+                                                                    <br />
+                                                                </div>
+                                                            </div>
+                                                            <div class="info-section" style="color:black">
+                                                                <span class="date">@article.Author</span>
+                                                                <p style=" text-overflow:ellipsis; color:black; font:20px; overflow:hidden; max-width: 200px; white-space:nowrap;">@article.Content</p>
+                                                                <span class="auteur">  Citeste mai departe...</span>
+                                                      
+                                                       
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="info-section" style="color:black">
-                                                        <span class="date">@article.Author</span>
-                                                        <p style=" text-overflow:ellipsis; color:black; font:20px; overflow:hidden; max-width: 200px; white-space:nowrap;">@article.Content</p>
-                                                        <span class="auteur">  Citeste mai departe...</span>
-                                              
-                                               
-                                                    </div>
-                                                </div>
 
                 }
             }

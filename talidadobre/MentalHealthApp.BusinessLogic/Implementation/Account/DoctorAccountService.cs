@@ -64,6 +64,83 @@ namespace MentalHealthApp.BusinessLogic.Implementation.Account
             });
         }
 
+        public List<InactiveDoctor> GetInactiveDoctors()
+        {
+            return ExecuteInTransaction(uow =>
+            {
+                var query = uow.IdentityUsers.Get()
+                                      .Include(u => u.Address)
+                                      .Include(u => u.Specialist)
+                                      //.ThenInclude(s => s.DoctorCVs)
+                                      .Include(u => u.Roles)
+                                      .ToList();
+                var result = query.Where(u => u.Roles.Select(r => r.Id).Contains((int)RoleTypes.Specialist) && u.IsActive == false && u.TwoFactorEnabled == false)
+                                       .Select(u => new InactiveDoctor
+
+                                       {
+                                           SpecialistId = u.Id,
+                                           LastName = u.LastName,
+                                           FirstName = u.FirstName,
+                                           Email = u.Email,
+                                           PhoneNumber = u.PhoneNumber,
+                                           Specialty = u.Specialist.Specialty,
+                                           County = u.Address.County,
+                                           City = u.Address.City,
+                                           //CV = u.Specialist.DoctorCVs.DataFiles ?? new byte[0]
+                                       })
+                                      .ToList();
+                foreach(var res in result)
+                {
+                    res.CV = uow.DoctorCVs.Get().Where(u => u.SpecialistId == res.SpecialistId).Select(u => u.DataFiles).First();
+                    res.CVId = uow.DoctorCVs.Get().Where(u => u.SpecialistId == res.SpecialistId).Select(u => u.CVId).First();
+                }
+                return result;
+
+            });
+        }
+
+        public bool ActivateUser(Guid id)
+        {
+            return ExecuteInTransaction(uow =>
+            {
+                var query = uow.IdentityUsers.Get()
+                                      .Where(u => u.Id == id)
+                                      .First();
+                if(query != null)
+                {
+                    query.IsActive = true;
+                    query.TwoFactorEnabled = true;
+                    uow.IdentityUsers.Update(query);
+                    uow.SaveChanges();
+                    return true;
+                }
+                return false;
+
+            });
+        }
+
+        public CVModel GetDoctorCV(int id)
+        {
+            return ExecuteInTransaction(uow =>
+            {
+                var query = uow.DoctorCVs.Get()
+                                     .Where(u => u.CVId == id)
+                                     .Select(u => new CVModel
+
+                                     {
+                                         SpecialistId = u.SpecialistId,
+                                         Name = u.Name,
+                                         FileType = u.FileType,
+                                         DataFiles = u.DataFiles,
+                                         CreatedOn = u.CreatedOn,                                       
+                                     })
+                                      .First();
+                             
+             
+                return query;
+
+            });
+        }
         public List<EditDoctorDto> GetPageDoctors(int pages, int numberOnPage)
         {
             return ExecuteInTransaction(uow =>
@@ -105,6 +182,31 @@ namespace MentalHealthApp.BusinessLogic.Implementation.Account
             var imageBytes = reader.ReadBytes((int)image.Length);
             return imageBytes;
         }
+
+        public double GetStarsAverageRating(Guid id)
+        {
+            var averageRating = UnitOfWork.DoctorReviews.Get().Where(sr => sr.DoctorId.Equals(id)).ToList();
+            if (averageRating.Count > 0)
+            {
+                double averageRatingAverage = averageRating.Average(cd => cd.StarsNumber);
+                return averageRatingAverage;
+            }
+            //
+            return 0;
+        }
+
+        public List<string> GetDoctorsCities()
+        {
+            return ExecuteInTransaction(uow =>
+            {
+                var query = uow.IdentityUsers.Get()
+                                      .Include(u => u.Address)
+                                      .Include(u => u.Roles)
+                                      .Where(u => u.Roles.Select(r => r.Id).Contains((int)RoleTypes.Specialist) && u.IsActive == true)
+                                      .Select(u => u.Address.City).Distinct().ToList();
+                return query;
+            });
+        }
         public List<DoctorsCardsDto> GetDoctorsInfo()
         {
             return ExecuteInTransaction(uow =>
@@ -113,16 +215,18 @@ namespace MentalHealthApp.BusinessLogic.Implementation.Account
                                       .Include(u => u.Address)
                                       .Include(u => u.Specialist)
                                       .Include(u => u.Roles).ToList();
-                return query.Where(u => u.Roles.Select(r => r.Id).Contains((int)RoleTypes.Specialist))
+                return query.Where(u => u.Roles.Select(r => r.Id).Contains((int)RoleTypes.Specialist) && u.IsActive == true)
                                       .Select(u => new DoctorsCardsDto
 
                                       {
                                           DoctorImage = u.UserImage,
                                           LastName = u.LastName,
                                           FirstName = u.FirstName,
-                                          PhoneNumber = u.PhoneNumber,
-                                          Email = u.Email
-
+                                          Email = u.Email,
+                                          Specialitate = u.Specialist.Specialty,
+                                          City = u.Address.City,
+                                          Price = u.Specialist.Price,
+                                          Rating = GetStarsAverageRating(u.Id)
                                       })
                                       .ToList();
 
@@ -156,11 +260,13 @@ namespace MentalHealthApp.BusinessLogic.Implementation.Account
                     adresa.ZipCode = model.ZipCode;
                     uow.Addresses.Insert(adresa);
 
+                     
+
                     var registeredUser = new IdentityUser();
                     registeredUser.Id = Guid.NewGuid();
                     registeredUser.FirstName = model.FirstName;
                     registeredUser.LastName = model.LastName;
-                    registeredUser.BirthDate = model.BirthDate;
+                    registeredUser.BirthDate = DateTime.UtcNow;
                     registeredUser.Email = model.Email;
                     registeredUser.EmailConfirmed = false;
                     registeredUser.PhoneNumberCountryPrefix = model.PhoneNumberCountryPrefix;
@@ -170,7 +276,7 @@ namespace MentalHealthApp.BusinessLogic.Implementation.Account
                     registeredUser.TwoFactorEnabled = false;
                     registeredUser.CreatedAt = DateTime.UtcNow;
                     registeredUser.NumberOfFailLoginAttempts = 0;
-                    registeredUser.IsActive = false;
+                    registeredUser.IsActive = true;
                     registeredUser.IsDeleted = false;
                     registeredUser.Address = adresa;
                     registeredUser.UserImage = ConvertToBytes(model.UserImage);
@@ -185,6 +291,23 @@ namespace MentalHealthApp.BusinessLogic.Implementation.Account
                     specialist.Description = model.Description;
                     specialist.AppointmentDate = model.AppointmentDate;
                     uow.Specialisti.Insert(specialist);
+
+                    var fileName = Path.GetFileName(model.CV.FileName);
+                    //Getting file Extension
+                    var fileExtension = Path.GetExtension(fileName);
+                    var fileNamewithExtension = String.Concat(Convert.ToString(Guid.NewGuid()), fileExtension);
+
+                    var cv = new DoctorCV();
+                    cv.SpecialistId = specialist.SpecialistId;
+                    cv.Name = Path.GetFileName(fileNamewithExtension);
+                    cv.FileType = fileExtension;
+                    using(var stream = new MemoryStream())
+                    {
+                        model.CV.CopyTo(stream);
+                        cv.DataFiles = stream.ToArray();
+                    }
+                    cv.CreatedOn = DateTime.UtcNow;
+                    uow.DoctorCVs.Insert(cv);
                     uow.SaveChanges();
 
                 }
