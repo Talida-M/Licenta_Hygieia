@@ -11,7 +11,7 @@
 
 	<link rel="stylesheet" type="text/css" href="~/css/style.css">
     <link rel="stylesheet" href="~/css/userDash.css"/>
-        <link  rel="stylesheet" href="~/css/createAppointments.css"/>
+    <link  rel="stylesheet" href="~/css/createAppointments.css"/>
     <!-- google font -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet"> 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
@@ -51,17 +51,17 @@
                         <table data-toggle="table" data-show-toggle="true" data-show-columns="true" data-search="true" data-striped="true" class="myTable" id="myTable">
                             <thead class="thead-dark">
         <tr>
-            <th>Last Name</th>
-            <th>First Name</th>
-            <th>Birth Date</th>
+            <th>Nume</th>
+            <th>Prenume</th>
+            <th>Zi de Nastere</th>
             <th>Email</th>
-            <th>PhoneNumber</th>
+            <th>Contact</th>
             <th>Username</th>
             <th>Categorie</th>
             <th>Asigurat</th>
             <th>Tara</th>
             <th>Judet</th>
-            <th>City</th>
+            <th>Oras</th>
             <th>Strada, Numar</th>
             <th>Bloc, Scara, Apartament</th>
             <th>Sector</th>
@@ -91,8 +91,8 @@
                     <td helper="Sector">@user.Sector</td>
                     <td helper="ZipCode">@user.ZipCode</td>
                     <td id="td-@user.Email" style="overflow:inherit">
-                      <button class="delete-btn" data="@user.Email">Delete</button>
-                                                <a style="radial-gradient(ellipse at bottom, #a866f1 0%, #577be7 100%);" href="@Url.Action("EditUser", "Admin", new { email = @user.Email })">Edit</a>
+                    <button class="delete-btn" data="@user.Email">Delete</button>
+                    <a style="background:radial-gradient(ellipse at bottom, #a866f1 0%, #577be7 100%);color:white;" href="@Url.Action("EditUser", "Admin", new { email = @user.Email })">Edit</a>
                     </td>
                     
                 </tr>
@@ -105,8 +105,8 @@
         </div>
 
     </div>
-        <a class="btn btn-std mb-link" asp-action="UsersPage" asp-controller="Admin" asp-route-page="@(Model.page - 1)" style="background: radial-gradient(ellipse at bottom, #2f6196 0%, #ffffff 100%);">Previous Page</a>
-        <a class="btn btn-std mb-link" asp-action="UsersPage" asp-controller="Admin" asp-route-page="@(Model.page + 1)" style="background: radial-gradient(ellipse at bottom, #2f6196 0%, #ffffff 100%);">Next Page</a>
+        <a class="btn btn-std mb-link" asp-action="UsersPage" asp-controller="Admin" asp-route-page="@(Model.page - 1)" style="background: radial-gradient(ellipse at bottom, #2f6196 0%, #ffffff 100%);">Anterior</a>
+        <a class="btn btn-std mb-link" asp-action="UsersPage" asp-controller="Admin" asp-route-page="@(Model.page + 1)" style="background: radial-gradient(ellipse at bottom, #2f6196 0%, #ffffff 100%);">Urmator</a>
             <p id="page-number">Page @Model.page</p>
         
 </div>
@@ -200,13 +200,6 @@ function NextPage() {
                             if (!helperAttr || helperAttr === null) {
                                 continue;
                             }
-                            //if (helperAttr === "td-two-childrens") {
-                            //    const childAttr = td.children[0].getAttribute("helper");
-                            //    const helperLowerCase = childAttr.charAt(0).toLowerCase() + childAttr.slice(1);
-                            //    const helper = newRow[helperLowerCase];
-                            //    td.children[0].innerHTML = helper;
-                            //}
-                            //else {
                                 const helperLowerCase = helperAttr.charAt(0).toLowerCase() + helperAttr.slice(1);
                                 const helper = newRow[helperLowerCase];
                                 td.innerHTML = helper;
@@ -249,13 +242,6 @@ function PreviousPage() {
                     if (!helperAttr || helperAttr === null) {
                         continue;
                     }
-                    //if (helperAttr === "td-two-childrens") {
-                    //    const childAttr = td.children[0].getAttribute("helper");
-                    //    const helperLowerCase = childAttr.charAt(0).toLowerCase() + childAttr.slice(1);
-                    //    const helper = newRow[helperLowerCase];
-                    //    td.children[0].innerHTML = helper;
-                    //}
-                   // else {
                         const helperLowerCase = helperAttr.charAt(0).toLowerCase() + helperAttr.slice(1);
                         const helper = newRow[helperLowerCase];
                         td.innerHTML = helper;

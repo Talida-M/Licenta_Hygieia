@@ -34,10 +34,10 @@
 														var base64 = Convert.ToBase64String(@Model.UserImage);                  
 														var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
 														if(imgSrc == "data:image/gif;base64,"){
-																	<img src="~/images/Userprofile.jpg" alt="">
+																		<img src="~/images/Userprofile.jpg" alt="">
 														}
 														else{
-																 	<img  src="@imgSrc" alt="" />
+																	 	<img  src="@imgSrc" alt="" />
 														}
 												
 												}
@@ -56,17 +56,17 @@
 					var role = User.Claims.Where(c => c.Type == ClaimTypes.Role).FirstOrDefault().Value;
 					if (@Model.UserId.Equals(CurrentUser.Id) || role == "Admin")
 					{
-														<div class="dropdown-menu" aria-labelledby="triggerId1">
-																<a class="dropdown-item-text" data="@Model.Id" href="#"><i class="fa fa-pencil mr-1"></i> Edit</a>
-																<a class="dropdown-item text-danger" href="#"><i class="fa fa-trash mr-1"></i> Delete</a>
-												</div>
+															<div class="dropdown-menu" aria-labelledby="triggerId1">
+																	<a class="dropdown-item-text" data="@Model.Id" href="#"><i class="fa fa-pencil mr-1"></i> Edit</a>
+																	<a class="dropdown-item text-danger" href="#"><i class="fa fa-trash mr-1"></i> Delete</a>
+													</div>
 					}
 					else
 					{
-													<div class="dropdown-menu" aria-labelledby="triggerId1" style="display:none">
-																<a class="dropdown-item-text" data="@Model.Id"><i class="fa fa-pencil mr-1"></i> Edit</a>
-																<a class="dropdown-item text-danger" href="#"><i class="fa fa-trash mr-1"></i> Delete</a>
-												</div>
+														<div class="dropdown-menu" aria-labelledby="triggerId1" style="display:none">
+																	<a class="dropdown-item-text" data="@Model.Id"><i class="fa fa-pencil mr-1"></i> Edit</a>
+																	<a class="dropdown-item text-danger" href="#"><i class="fa fa-trash mr-1"></i> Delete</a>
+													</div>
 					}
 					
 					}
@@ -94,35 +94,35 @@
 
 			if(role == "Admin")
 			{
-								<form asp-controller="Forum" asp-action="CreateDiscussionComment" style="display:none">
-						 	<div class="form-group" id="modal-text">
-								<label asp-for="MessageContent" class="control-label"></label>
-								<textarea asp-for="MessageContent" class="form-control" style="margin-bottom: -14px">Write yout thoughts...</textarea>
-								<span asp-validation-for="MessageContent" class="text-danger"></span>
-						 	</div>
-						 	<div class="form-group" id="modal-text" hidden="hidden">
-										<label asp-for="Id" class="control-label"></label>
-										<input asp-for="Id" class="form-control" id="modelId" value="@Model.Id"/>
-										<span asp-validation-for="Id" class="text-danger"></span>
-						 	</div>
-							<button class="btn btn-std mb-link" type="submit" value="Save" onclick="AddComment()" style="margin-bottom:6px">Salveaza</button>
-								</form>
+									<form asp-controller="Forum" asp-action="CreateDiscussionComment" style="display:none">
+							 	<div class="form-group" id="modal-text">
+									<label asp-for="MessageContent" class="control-label"></label>
+									<textarea asp-for="MessageContent" class="form-control" style="margin-bottom: -14px">Scrie ceea ce gandesti...</textarea>
+									<span asp-validation-for="MessageContent" class="text-danger"></span>
+							 	</div>
+							 	<div class="form-group" id="modal-text" hidden="hidden">
+											<label asp-for="Id" class="control-label"></label>
+											<input asp-for="Id" class="form-control" id="modelId" value="@Model.Id"/>
+											<span asp-validation-for="Id" class="text-danger"></span>
+							 	</div>
+								<button class="btn btn-std mb-link" type="submit" value="Save" onclick="AddComment()" style="margin-bottom:6px">Salveaza</button>
+									</form>
 			}
 			else
 			{
-								<form asp-controller="Forum" asp-action="CreateDiscussionComment" >
-						 	<div class="form-group" id="modal-text">
-						<label asp-for="MessageContent" class="control-label"></label>
-						<textarea asp-for="MessageContent" class="form-control" style="margin-bottom: -14px" >...</textarea>
-						<span asp-validation-for="MessageContent" class="text-danger"></span>
-						 	</div>
-						 	<div class="form-group" id="modal-text" hidden="hidden">
-										<label asp-for="Id" class="control-label"></label>
-										<input asp-for="Id" class="form-control" id="modelId" value="@Model.Id"/>
-										<span asp-validation-for="Id" class="text-danger"></span>
-						 	</div>
-							<button class="btn btn-std mb-link" type="submit" value="Save" onclick="AddComment()" style="margin-bottom:6px">Salveaza</button>
-						 	</form>
+									<form asp-controller="Forum" asp-action="CreateDiscussionComment" >
+							 	<div class="form-group" id="modal-text">
+							<label asp-for="MessageContent" class="control-label">Alatura-te discutiei</label>
+							<textarea asp-for="MessageContent" class="form-control" style="margin-bottom: -14px" >...</textarea>
+							<span asp-validation-for="MessageContent" class="text-danger"></span>
+							 	</div>
+							 	<div class="form-group" id="modal-text" hidden="hidden">
+											<label asp-for="Id" class="control-label"></label>
+											<input asp-for="Id" class="form-control" id="modelId" value="@Model.Id"/>
+											<span asp-validation-for="Id" class="text-danger"></span>
+							 	</div>
+								<button class="btn btn-std mb-link" type="submit" value="Save" onclick="AddComment()" style="margin-bottom:6px">Adauga comentariu</button>
+							 	</form>
 			}
 			
 	}
@@ -138,16 +138,16 @@
 														var base642 = Convert.ToBase64String(@comment.UserImage);                  
 														var imgSrcc = String.Format("data:image/gif;base64,{0}", base642);
 														if(imgSrc == "data:image/gif;base64,"){
-																	<img src="~/images/Userprofile.jpg" alt="">
+																		<img src="~/images/Userprofile.jpg" alt="">
 														}
 														else{
-																 	<img  src="@imgSrcc" alt="" />
+																	 	<img  src="@imgSrcc" alt="" />
 														}
 												
 												}
 											</div>
 											<div class="user-info__basic">
-												<h5 class="mb-0">@comment.Username</h5>
+												<h5 class="mb-0" style="color:black;">@comment.Username</h5>
 											</div>
 										</div>
 										<div class="dropdown open">
@@ -159,17 +159,17 @@
 										if (@comment.UserId.Equals(CurrentUser.Id) || rol == "Admin")
 					{
 					
-																		<div class="dropdown-menu" aria-labelledby="triggerId1">
-																			<a class="dropdown-item-text" data="@comment.Id"><i class="fa fa-pencil mr-1"></i> Edit</a>
-																			<a class="dropdown-item text-danger" data="@comment.Id" id="@comment.UserId"><i class="fa fa-trash mr-1"></i> Delete</a>
-																		</div>
+																			<div class="dropdown-menu" aria-labelledby="triggerId1">
+																				<a class="dropdown-item-text" data="@comment.Id"><i class="fa fa-pencil mr-1"></i> Edit</a>
+																				<a class="dropdown-item text-danger" data="@comment.Id" id="@comment.UserId"><i class="fa fa-trash mr-1"></i> Delete</a>
+																			</div>
 										}
 										else
 										{
-																		<div class="dropdown-menu" aria-labelledby="triggerId1" style="display:none">
-																			<a class="dropdown-item-text" ><i class="fa fa-pencil mr-1"></i> Edit</a>
-																			<a class="dropdown-item text-danger" ><i class="fa fa-trash mr-1"></i> Delete</a>
-																		</div>
+																			<div class="dropdown-menu" aria-labelledby="triggerId1" style="display:none">
+																				<a class="dropdown-item-text" ><i class="fa fa-pencil mr-1"></i> Edit</a>
+																				<a class="dropdown-item text-danger" ><i class="fa fa-trash mr-1"></i> Delete</a>
+																			</div>
 								
 										}
 											}

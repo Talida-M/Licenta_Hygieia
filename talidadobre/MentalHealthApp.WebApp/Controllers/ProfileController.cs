@@ -227,21 +227,22 @@ namespace MentalHealthApp.WebApp.Controllers
 
 
         //////////
-        public  IActionResult InitiatePayment(int id)//int pret
+        public async Task<IActionResult> InitiatePayment(int id)//int pret
         {
             // Create a new APIContext instance using your PayPal credentials
                     var apiContext = new APIContext(new OAuthTokenCredential(
-                        _configuration["PayPalSettings:ClientId"],
-                        _configuration["PayPalSettings:ClientSecret"]
+                        _configuration["PayPalSettings:SandboxClientId"],
+                        _configuration["PayPalSettings:SandboxClientSecret"]
             //_configuration["PayPalSettings:SandboxClientId"],
             //_configuration["PayPalSettings:SandboxClientSecret"]
             ).GetAccessToken());
             var appointmentResult = _paymentService.GetAppointmentDetail(id);
             // Create a new payment object
-           // var conversion = (double) await _paymentService.ConvertCurrencyAsync(appointmentResult.Pret, "RON", "USD");
-            //if ((int)conversion == 0) {
-            //    conversion = 1.49;
-            //}
+            var conversion = (double)await _paymentService.ConvertCurrencyAsync(appointmentResult.Pret, "RON", "USD");
+            if ((int)conversion == 0)
+            {
+                conversion = 1.49;
+            }
             var payment = new Payment
             {
                 intent = "sale",
@@ -252,8 +253,8 @@ namespace MentalHealthApp.WebApp.Controllers
             {
                 amount = new Amount
                 {
-                    total = appointmentResult.Pret != 0 ? appointmentResult.Pret.ToString()  : "5", //pret.ToString(),
-                    currency = "RON"
+                    total =  conversion.ToString(),//appointmentResult.Pret != 0 ? appointmentResult.Pret.ToString()  : "5", //pret.ToString(),
+                    currency = "USD"
                 },
                 description = "Plata realizata de catre " + appointmentResult.Pacient + " pentru consultatia din " + appointmentResult.AppointmentDate + " la medicul " + appointmentResult.Doctor ,
             }
@@ -277,8 +278,8 @@ namespace MentalHealthApp.WebApp.Controllers
         {
             // Create a new APIContext instance using your PayPal credentials
                     var apiContext = new APIContext(new OAuthTokenCredential(
-                        _configuration["PayPalSettings:ClientId"],
-                        _configuration["PayPalSettings:ClientSecret"]
+                        _configuration["PayPalSettings:SandboxClientId"],
+                        _configuration["PayPalSettings:SandboxClientSecret"]
            //_configuration["PayPalSettings:SandboxClientId"],
            //_configuration["PayPalSettings:SandboxClientSecret"]
            ).GetAccessToken());
@@ -286,9 +287,9 @@ namespace MentalHealthApp.WebApp.Controllers
             // Retrieve the payment by paymentId
             var payment = Payment.Get(apiContext, paymentId);
             var execution = new PaymentExecution { payer_id = PayerID };
-            var executedPayment = payment.Execute(apiContext, execution);
+            //var executedPayment = payment.Execute(apiContext, execution);
             // Execute the payment
-            //var executedPayment = payment.Execute(apiContext, new PaymentExecution { payer_id = PayerID });
+            var executedPayment = payment.Execute(apiContext, new PaymentExecution { payer_id = PayerID });
            // var id = _paymentService.GetAppointmentByPacient().Id;
             // Handle the payment execution response
             if (executedPayment.state == "approved")

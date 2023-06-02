@@ -3,9 +3,12 @@
     ViewData["Title"] = "View";
 }
 
+<head>
+    <link rel="stylesheet" type="text/css" href="~/css/dropdownAppointments.css">
 
+</head>
 
-<h1>Register User</h1>
+<h1>Creare Cont</h1>
 
 <hr />
 <div class="row">
@@ -48,14 +51,26 @@
                 <span asp-validation-for="Username" class="text-danger"></span>
             </div>
                <div class="form-group">
-                <label asp-for="SocialCategory" class="control-label"></label>
-                <input asp-for="SocialCategory" class="form-control" />
-                <span asp-validation-for="SocialCategory" class="text-danger"></span>
+                <label asp-for="SocialCategory" class="control-label">Categorie Sociala</label>
+                <span class="custom-dropdown big">
+                    <select asp-for="SocialCategory" class="form-control">
+                        <option>Elev</option>
+                        <option>Student</option>
+                        <option>Angajat</option>
+                        <option>Pensionar</option>
+                    </select>
+                    <span asp-validation-for="SocialCategory" class="text-danger"></span>
+                </span>
             </div>
                <div class="form-group">
                 <label asp-for="HasInsurance" class="control-label">Asigurare medicala(Da/Nu)</label>
-                <input asp-for="HasInsurance" class="form-control" />
-                <span asp-validation-for="HasInsurance" class="text-danger"></span>
+               <span class="custom-dropdown big" >                  
+                    <select asp-for="HasInsurance" class="form-control">
+                        <option >Da</option>
+                        <option>Nu</option>
+                         </select>
+                    <span asp-validation-for="HasInsurance" class="text-danger"></span>
+                </span>
             </div>
             <div class="form-group">
                 <label asp-for="PasswordHash" class="control-label">Parola</label>
@@ -103,7 +118,7 @@
                 <span asp-validation-for="UserImage" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Creaza Cont" class="btn btn-primary" />
             </div>
         </form>
     </div>

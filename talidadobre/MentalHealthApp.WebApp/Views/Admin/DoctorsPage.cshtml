@@ -37,7 +37,7 @@
                 </div>
                 </div>
             </section>
-    <h1>Doctors Info</h1>
+    <h1>Informatii Specialisti</h1>
 <a class="btn btn-std mt-link" style="background: radial-gradient(ellipse at bottom, #f7f7f7 0%, #2f6196 100%); border-color:  #577be7; color:white" asp-controller="Admin" asp-action="RegisterDoctor">Register Doctor</a>
 
     <div>
@@ -51,11 +51,11 @@
                         <table data-toggle="table" data-show-toggle="true" data-show-columns="true" data-search="true" data-striped="true" class="myTable"  id="myTable">
                             <thead class="thead-dark">
         <tr>
-            <th scope="col" class="text-center align-middle">Last Name</th>
-            <th scope="col" class="text-center align-middle">First Name</th>
+            <th scope="col" class="text-center align-middle">Nume</th>
+            <th scope="col" class="text-center align-middle">Prenume</th>
             <th scope="col" class="text-center align-middle">Email</th>
-            <th scope="col" class="text-center align-middle">PhoneNumber Prefix</th>
-            <th scope="col" class="text-center align-middle">PhoneNumber</th>
+            <th scope="col" class="text-center align-middle">Prefix telefonic</th>
+            <th scope="col" class="text-center align-middle">Contact</th>
             <th scope="col" class="text-center align-middle">Specialitate</th>
             <th scope="col" class="text-center align-middle">Descriere</th>
             <th scope="col" class="text-center align-middle">Durata Sedinta</th>
@@ -111,8 +111,8 @@
         </div>
 
     </div>
-    <a class="btn btn-std mb-link" asp-action="DoctorsPage" asp-controller="Admin" asp-route-page="@(Model.page - 1)" style="background: radial-gradient(ellipse at bottom, #2f6196 0%, #ffffff 100%);">Previous Page</a>
-    <a class="btn btn-std mb-link" asp-action="DoctorsPage" asp-controller="Admin" asp-route-page="@(Model.page + 1)" style="background: radial-gradient(ellipse at bottom, #2f6196 0%, #ffffff 100%);">Next Page</a>
+    <a class="btn btn-std mb-link" asp-action="DoctorsPage" asp-controller="Admin" asp-route-page="@(Model.page - 1)" style="background: radial-gradient(ellipse at bottom, #2f6196 0%, #ffffff 100%);">Anterior</a>
+    <a class="btn btn-std mb-link" asp-action="DoctorsPage" asp-controller="Admin" asp-route-page="@(Model.page + 1)" style="background: radial-gradient(ellipse at bottom, #2f6196 0%, #ffffff 100%);">Urmator</a>
             <p id="page-number">Page @Model.page</p>
     </div>
 

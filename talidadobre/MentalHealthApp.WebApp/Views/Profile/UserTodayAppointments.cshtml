@@ -58,18 +58,20 @@
 									</div>
 								</div>
 								<div>
-								@if (ViewBag.TransactionIsMade == false)
+								@*@if (ViewBag.TransactionIsMade == true)
 								{
 									<a class="btn btn-std mb-link" href="@Url.Action("InitiatePayment", "Profile",  new { id = programare.Id } )">
 										Plata
 									</a>
 								}
-								@if (ViewBag.TransactionIsMade == true)
+								@if (ViewBag.TransactionIsMade == false)
 								{
-									<a onclick="RemoveCard()" class="btn video-conf" style="pointer-events: none;" asp-action="VideoDiscussion" asp-controller="OnlineAppointment" asp-route-id="@programare.Id" id="conference-button-@programare.Id" data="@programare.Id">
-										<i class="fa fa-video"></i>
-									</a>
-								}
+								}*@
+								@*<a onclick="OpenDiscussion()" class="btn video-conf" style="pointer-events: none;" href="@Url.Action("VideoDiscussion", "OnlineAppointment",  new { id = @programare.Id } )" id="conference-button-@programare.Id" data="@programare.Id">*@
+								<button onclick="OpenDiscussion(@programare.Id)" class="btn video-conf" id="conference-button-@programare.Id" data="@programare.Id">
+
+									<i class="fa fa-video"></i>
+									</button>
 							</div>
 							</div>
 							<a href="#!"><small>Contact</small></a>
@@ -94,12 +96,11 @@ function RemoveCard() {
     id = event.srcElement.data;
     document.getElementById("Appcard-" + id);
 };
-	function OpenDiscussion() {
-        const idDiscussion = event.srcElement.data.value;
+	function OpenDiscussion(id) {
 	   $.ajax({
         url: "/OnlineAppointment/VideoDiscussion",
         type: "GET",
-        data: {id: idDiscussion},
+        data: {id: id},
 		success: function() {
             window.location = "/OnlineAppointment/VideoDiscussion";
         }

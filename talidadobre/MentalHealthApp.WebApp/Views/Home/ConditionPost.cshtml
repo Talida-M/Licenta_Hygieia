@@ -1,4 +1,29 @@
 ﻿@model MentalHealthApp.BusinessLogic.Implementation.Admin.ViewModels.ConditionsPostVM
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <script src="https://kit.fontawesome.com/bdd89edb33.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+
+</head>
+<section class="breadcrumb-bar">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-12">
+                <nav class="page-breadcrum" aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="@Url.Action("Index","Home")">Home</a></li>
+                        <li class="breadcrumb-item"><a href="@Url.Action("AllConditionsPosts","Home")">Postari conditii medicale</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">@Model.ConditionName</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+</section>
 <header style="margin-top: 3%">
 	<h1>@Model.ConditionName</h1>
 </header>
@@ -30,6 +55,12 @@ min-height: 100vh;
 
 .article-text {
   margin: 0 20px 20px 0;
+        font-style: oblique;
+        font-family: sans-serif;
+        background: #ffffffb3;
+        font-size: 16px;
+        font-weight: 500 !important;
+        line-height: 1.5;
 }
 
 
