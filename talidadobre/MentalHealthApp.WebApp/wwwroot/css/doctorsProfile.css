@@ -141,9 +141,10 @@ p {
     margin: 10px auto;
     width: 100%;
     padding: 7px 10px;
-    border: 1px solid black; /* Replace $grey with the desired color value */
+    border: 1px solid black;
     border-radius: 25px;
     outline: 0;
+    margin-left: 18px;
 }
 
 

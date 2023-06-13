@@ -93,39 +93,39 @@
                 {
                                 var base64 = Convert.ToBase64String(@doctor.DoctorImage);                  
                                  var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
-                                                                          <div class="card">
-                                                                        <div class="top-section">
-                                                                        @if(@imgSrc == "data:image/gif;base64,"){
-                                                                            <img id="doctor-img" src="~/images/Userprofile.jpg" alt="">
+                                                                              <div class="card">
+                                                                            <div class="top-section">
+                                                                            @if(@imgSrc == "data:image/gif;base64,"){
+                                                                                <img id="doctor-img" src="~/images/Userprofile.jpg" alt="">
                                         }
                                         else{
-                                                                             <img id="doctor-img" src="@imgSrc" alt="" />
+                                                                                 <img id="doctor-img" src="@imgSrc" alt="" />
                                         }
-                                                                     
-                                                                     <div class="name">
-                                                                        <span>@doctor.LastName</span>
-                                                                        <br />
-                                                                        <span>@doctor.FirstName</span>
+                                                                         
+                                                                         <div class="name">
+                                                                            <span>@doctor.LastName</span>
+                                                                            <br />
+                                                                            <span>@doctor.FirstName</span>
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                                <div class="info-section">
-                                                                <p id="filter-specialitate">
-                                                                    @doctor.Specialitate
-                                                                </p>
-                                                                 <p id="filter-oras">
-                                                                    <i class="fa fa-map-marker" aria-hidden="true"></i>@doctor.City
-                                                                     </p>   
-                                                                     <p id="filter-pret">
-                                                                        Pret:   @doctor.Price
-                                                                     </p>
-                                                                     <p id="filter-rating">
-                                                                        Rating: @doctor.Rating<i class="fa fa-star-o" aria-hidden="true"> </i>
+                                                                    <div class="info-section">
+                                                                    <p id="filter-specialitate">
+                                                                        @doctor.Specialitate
                                                                     </p>
-                                                                    <div class="social">
-                                                                        <a class="More info" href="@Url.Action("DoctorInfo", "Profile", new { email = @doctor.Email })"  >More Info Here</a>
+                                                                     <p id="filter-oras">
+                                                                        <i class="fa fa-map-marker" aria-hidden="true"></i>@doctor.City
+                                                                         </p>   
+                                                                         <p id="filter-pret">
+                                                                            Pret:   @doctor.Price
+                                                                         </p>
+                                                                         <p id="filter-rating">
+                                                                            Rating: @doctor.Rating<i class="fa fa-star-o" aria-hidden="true"> </i>
+                                                                        </p>
+                                                                        <div class="social">
+                                                                            <a class="More info" href="@Url.Action("DoctorInfo", "Profile", new { email = @doctor.Email })"  >More Info Here</a>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
                            
                 }
                }
@@ -195,3 +195,8 @@
 
 
 </script>
+<style>
+    main{
+        margin-left: 5%;
+    }
+</style>

@@ -41,7 +41,9 @@ namespace MentalHealthApp.WebApp.Controllers
             var check =  _programareService.CheckDate(model.AppointmentDate, model.AppointmentHour, model.SpecialistId);
             if(check == false)
             {
-                return StatusCode(StatusCodes.Status409Conflict, "Error - Appointment time does not check doctor work program");
+                ViewBag.ErrorMessage = "Appointment time does not check doctor work program";
+                return RedirectToAction("PageNotFound", "Home");
+                //return StatusCode(StatusCodes.Status409Conflict, "Appointment time does not check doctor work program");
             }
             _programareService.AddDoctorAppointment(model);
             return RedirectToAction("Appointments", "Profile", new { id = model.SpecialistId });

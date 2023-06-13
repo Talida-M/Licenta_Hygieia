@@ -140,6 +140,11 @@ namespace MentalHealthApp.WebApp.Controllers
         {
             var profile = await _doctorAccountService.GetDoctorById(id);
             // var model = _mapper.Map<DoctorVM>(profile);
+            if(profile == null)
+            {
+                ViewBag.ErrorMessage = "We're sorry, the page you were looking for isn't found here. The link you followed may either be broken or the doctor infos no longer exists.";
+                return RedirectToAction("PageNotFound", "Home");
+            }
             return View("DoctorInfo", profile);
 
         }
