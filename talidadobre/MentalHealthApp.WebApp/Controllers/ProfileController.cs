@@ -236,10 +236,10 @@ namespace MentalHealthApp.WebApp.Controllers
         {
             // Create a new APIContext instance using your PayPal credentials
                     var apiContext = new APIContext(new OAuthTokenCredential(
-                        _configuration["PayPalSettings:SandboxClientId"],
-                        _configuration["PayPalSettings:SandboxClientSecret"]
             //_configuration["PayPalSettings:SandboxClientId"],
             //_configuration["PayPalSettings:SandboxClientSecret"]
+                        _configuration["PayPalSettings:ClientId"],
+                        _configuration["PayPalSettings:ClientSecret"]
             ).GetAccessToken());
             var appointmentResult = _paymentService.GetAppointmentDetail(id);
             // Create a new payment object
@@ -283,10 +283,10 @@ namespace MentalHealthApp.WebApp.Controllers
         {
             // Create a new APIContext instance using your PayPal credentials
                     var apiContext = new APIContext(new OAuthTokenCredential(
-                        _configuration["PayPalSettings:SandboxClientId"],
-                        _configuration["PayPalSettings:SandboxClientSecret"]
            //_configuration["PayPalSettings:SandboxClientId"],
            //_configuration["PayPalSettings:SandboxClientSecret"]
+                           _configuration["PayPalSettings:SandboxClientId"],
+                           _configuration["PayPalSettings:SandboxClientSecret"]
            ).GetAccessToken());
 
             // Retrieve the payment by paymentId
