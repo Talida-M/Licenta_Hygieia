@@ -9,3 +9,4 @@ vindecare mai usor cu ajutorul specialistilor nostri licentiati.
 
 
 ![p0](https://github.com/Talida-M/Licenta_Hygieia/assets/75331740/7e38a6bc-c05e-4d1e-a1e1-6a2495ee2e3b)
+
